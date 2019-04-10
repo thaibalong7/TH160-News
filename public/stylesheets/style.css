@@ -1,0 +1,35 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+
+/* 
+Template Name: WebMag Html Template
+
+Author: yaminncco
+
+Colors:
+	Body : #3d455c
+	Headers : #212631
+	Primary : #212631 #4BB92F #ff8700 #0078ff #8d00ff
+	Dark : #212631
+	Grey : #eceef2 #a7b3c6 #fbfbfd
+
+Fonts: Nunito & Nunito-Sans
+
+Table OF Contents
+------------------------------------
+GENERAL
+NAVIGATION
+HEADER
+POST
+POST PAGE
+ASIDE
+FOOTER
+RESPONSIVE
+------------------------------------*/

@@ -6,18 +6,21 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.3",
+    "cookie-parser": "^1.4.4",
     "debug": "~2.6.9",
     "ejs": "^2.6.1",
     "express": "~4.16.0",
     "express-handlebars": "^3.0.2",
+    "express-handlebars-sections": "^1.0.1",
+    "express-session": "^1.16.1",
     "handlebars": "^4.1.1",
     "hbs": "^4.0.3",
-    "http-errors": "~1.6.2",
-    "jade": "~1.11.0"
+    "http-errors": "^1.6.3",
+    "jade": "~1.11.0",
+    "wnumb": "^1.1.0"
   },
   "devDependencies": {
-    "morgan": "~1.9.0",
+    "morgan": "^1.9.1",
     "nodemon": "^1.18.10"
   }
 }

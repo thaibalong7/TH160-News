@@ -2,7 +2,6 @@
 Final project of web application development subject.
 
 
------------------
 ## Install
     npm install
     npm start

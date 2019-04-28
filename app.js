@@ -17,7 +17,7 @@ var path = require('path');
 var app = express();
 
 app.engine("hbs", handlebars({	
-	defaultLayout: "main",
+	defaultLayout: "blog-post",
 	layoutsDir: "views/layouts",
 	helpers:{
 		session: handlebars_sections(),
@@ -73,6 +73,7 @@ app.use(body_parser.urlencoded({
 // }));
 
 app.use("/", indexRouter);
+app.use("/blog-post", indexRouter);
 app.get("/a",usersRouter);
 
 // catch 404 and forward to error handler
@@ -90,5 +91,7 @@ app.use(function(err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error');
 });
+
+
 
 module.exports = app;

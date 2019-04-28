@@ -38,6 +38,15 @@ RESPONSIVE
      padding: 0;
      overflow-x: hidden;
 }
+.btn-login
+{
+    background-color: rgb(212, 231, 225);
+    padding: 10px;
+    border-radius: 24px;
+    color:black;
+
+}
+
  h1, h2, h3, h4, h5, h6 {
      font-family: 'Nunito Sans', sans-serif;
      font-weight: 700;

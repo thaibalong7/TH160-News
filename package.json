@@ -13,8 +13,8 @@
     "express-handlebars": "^3.0.2",
     "express-handlebars-sections": "^1.0.1",
     "express-session": "^1.16.1",
-    "handlebars": "^4.1.1",
-    "hbs": "^4.0.3",
+    "handlebars": "^4.1.2",
+    "hbs": "^4.0.4",
     "http-errors": "^1.6.3",
     "jade": "~1.11.0",
     "wnumb": "^1.1.0"

@@ -17,7 +17,7 @@ var path = require('path');
 var app = express();
 
 app.engine("hbs", handlebars({	
-	defaultLayout: "blog-post",
+	defaultLayout: "main",
 	layoutsDir: "views/layouts",
 	helpers:{
 		session: handlebars_sections(),

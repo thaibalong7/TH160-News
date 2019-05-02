@@ -16,12 +16,12 @@ var path = require('path');
 
 var app = express();
 
-app.engine("hbs", handlebars({	
+app.engine("hbs", handlebars({
 	defaultLayout: "main",
 	layoutsDir: "views/layouts",
-	helpers:{
+	helpers: {
 		session: handlebars_sections(),
-		number_format: n=>{
+		number_format: n => {
 			var nf = wnumb({
 				thousand: ","
 			});
@@ -43,7 +43,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({
-    extended: false
+	extended: false
 }));
 
 
@@ -73,16 +73,14 @@ app.use(body_parser.urlencoded({
 // }));
 
 app.use("/", indexRouter);
-app.use("/blog-post", indexRouter);
-app.get("/a",usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
 	next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
 	// set locals, only providing error in development
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};

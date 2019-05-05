@@ -30,4 +30,12 @@ router.get('/log-in', function (req, res, next) {
 	res.render('log-in', { title: 'Express' });
 })
 
+router.get('/change-password', function (req, res, next) {
+	res.render('changepassword', { title: 'Express' });
+})
+
+router.get('/forgot-password', function (req, res, next) {
+	res.render('forgotpassword', { title: 'Express' });
+})
+
 module.exports = router;

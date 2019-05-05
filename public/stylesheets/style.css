@@ -994,6 +994,13 @@ RESPONSIVE
     border: none;
     cursor: hand;
 }
+.drop-login
+{
+    font-size: 16px;
+    border: none;
+    cursor: hand;
+    background-color: white;
+}
 
 .dropbtnbusiness{
     background-color: #4BB92F;
@@ -1021,7 +1028,7 @@ RESPONSIVE
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
+    min-width: 200px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
   }

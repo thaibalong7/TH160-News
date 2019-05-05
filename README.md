@@ -13,6 +13,6 @@ Final project of web application development subject.
  ## Member
  | Student ID | Name | Email |
  | ------ | ----------- | ------|
- | 1512215   | Nguyển Huy Hùng | ... |
+ | 1512215   | Nguyển Huy Hùng | huyhungpq64@gmail.com |
  | 1512296 | Thái Bá Long | thaibalong7@gmail.com |
- | 1512313 | Lê Hữu Lý | ... |
+ | 1512313 | Lê Hữu Lý |  |

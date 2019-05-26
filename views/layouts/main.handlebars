@@ -1,264 +1,250 @@
 <!-- views/pages/index.ejs -->
 
-<html lang="en"><head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<html lang="en">
 
-		<title>Main HTML Template</title>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<!-- Google font -->
-		<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:700%7CNunito:300,600" rel="stylesheet"> 
+	<title>{{title}}</title>
 
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- Google font -->
+	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:700%7CNunito:300,600" rel="stylesheet">
 
-        <link rel="stylesheet" href="stylesheets/font-awesome-4.7.0/css/font-awesome.css">
-		<link rel="stylesheet" href="stylesheets/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-        <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" href="stylesheets/font-awesome-4.7.0/css/font-awesome.css">
+	<link rel="stylesheet" href="stylesheets/font-awesome-4.7.0/css/font-awesome.min.css">
 
-        <link type="text/css" rel="stylesheet" href="stylesheets/style.css">
-		
+	<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
 
-    </head>
-	<body>
+	<link type="text/css" rel="stylesheet" href="stylesheets/style.css">
 
-		<!-- Header -->
-		<header id="header">
 
-			<!-- Nav -->
-			<div id="nav">
+</head>
 
-				<!-- Main Nav -->
-				<div id="nav-fixed">
-					<div class="container">
-						<!-- logo -->
-						<div class="nav-logo">
-							<a href="/" class="logo"><img src="/img/news.png" alt=""></a>
-						</div>
-						<!-- /logo -->
+<body>
 
-						<!-- nav -->
-						<ul class="nav-menu nav navbar-nav">
-							<li><a href="/blog-post">News</a></li>
-							<li><a href="/blog-post">Popular</a></li>
-							<li class="cat-1">
-								<div class="dropdown">
-									<button class="drop dropbtnbusiness">Business</button>
-									<div class="dropdown-content">
-									<a href="/catalog-business">Agricultural</a>
-									<a href="/catalog-business">seafood</a>
-  								</div>
-								</div>
-								</li>
-							<li class="cat-2">
-								<div class="dropdown">
-									<button class="drop dropbtnsport">Sport</button>
-									<div class="dropdown-content">
-									<a href="/catalog-sport">Football</a>
-									<a href="/catalog-sport">Athletics</a>
-  								</div>
-								</div>
-							</li>
-							<li class="cat-3">
-								<div class="dropdown">
-									<button class="drop dropbtntravel">Travel</button>
-									<div class="dropdown-content">
-									<a href="/catalog-travel">Domestic</a>
-									<a href="/catalog-travel">foreign</a>
-  								</div>
-								</div>
-							</li>
-							<li class="cat-4">
-								<div class="dropdown">
-									<button class="drop dropbtnheath">Health</button>
-									<div class="dropdown-content">
-									<a href="/catalog-health">Male</a>
-									<a href="/catalog-health">Female</a>
-  								</div>
-							</li>
-						</ul>
-						<!-- /nav -->
+	<!-- Header -->
+	<header id="header">
 
-						<!-- search & aside toggle -->
-						<div class="nav-btns">
-							<button class="aside-btn"><i class="fa fa-bars"></i></button>
-							<button class="search-btn"><i class="fa fa-search"></i></button>
-							<div class="dropdown">
-									<button class="drop-login"><img src="img/avatar.png" alt="Avatar" style="width:50px;">Name</button>
-									<div class="dropdown-content">
-									<a href="/log-in">Log in</a>
-									<a href="/change-password">Change password</a>
-									<a href="/forgot-password">Forgot password</a>
-  								</div>
-								</div>
-		
-							<div class="search-form">
-								<input class="search-input" type="text" name="search" placeholder="Enter Your Search ...">
-								<button class="search-close"><i class="fa fa-times"></i></button>
-							</div>
-						</div>
-						<!-- /search & aside toggle -->
+		<!-- Nav -->
+		<div id="nav">
+
+			<!-- Main Nav -->
+			<div id="nav-fixed">
+				<div class="container">
+					<!-- logo -->
+					<div class="nav-logo">
+						<a href="/" class="logo"><img src="/img/news.png" alt=""></a>
 					</div>
-				</div>
-				<!-- /Main Nav -->
+					<!-- /logo -->
 
-				<!-- Aside Nav -->
-				<div id="nav-aside">
 					<!-- nav -->
-					<div class="section-row">
-						<ul class="nav-aside-menu">
-							<li><a>Home</a></li>
-							<li><a>About Us</a></li>
-							<li><a>Join Us</a></li>
-							<li><a>Advertisement</a></li>
-							<li><a>Contacts</a></li>
-						</ul>
-					</div>
+					<ul class="nav-menu nav navbar-nav">
+						{{#each nav}}
+						<li class="cat-1">
+							<div class="dropdown">
+								<button class="drop dropbtnbusiness">{{this.name}}</button>
+								<div class="dropdown-content">
+									{{#each this.sub}}
+									<a href={{this.link}}>{{this.name}}</a>
+									{{/each}}
+								</div>
+							</div>
+						</li>
+						{{/each}}
+					</ul>
 					<!-- /nav -->
 
-					<!-- widget posts -->
-					<div class="section-row">
-						<h3>Recent Posts</h3>
-						<div class="post post-widget">
-							<a class="post-img" href="/blog-post"><img src="/img/widget-2.jpg" alt=""></a>
-							<div class="post-body">
-								<h3 class="post-title"><a href="/blog-post">Pagedraw UI Builder Turns Your Website Design Mockup Into Code Automatically</a></h3>
+					<!-- search & aside toggle -->
+					<div class="nav-btns">
+						<button class="aside-btn"><i class="fa fa-bars"></i></button>
+						<button class="search-btn"><i class="fa fa-search"></i></button>
+						<div class="dropdown">
+							<button class="drop-login"><img src="img/avatar.png" alt="Avatar" style="width:50px;">Name</button>
+							<div class="dropdown-content">
+								<a href="/log-in">Log in</a>
+								<a href="/change-password">Change password</a>
+								<a href="/forgot-password">Forgot password</a>
 							</div>
 						</div>
 
-						<div class="post post-widget">
-							<a class="post-img" href="/blog-post"><img src="/img/widget-3.jpg" alt=""></a>
-							<div class="post-body">
-								<h3 class="post-title"><a href="/blog-post">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
+						<div class="search-form">
+							<input class="search-input" type="text" name="search" placeholder="Enter Your Search ...">
+							<button class="search-close"><i class="fa fa-times"></i></button>
+						</div>
+					</div>
+					<!-- /search & aside toggle -->
+				</div>
+			</div>
+			<!-- /Main Nav -->
+
+			<!-- Aside Nav -->
+			<div id="nav-aside">
+				<!-- nav -->
+				<div class="section-row">
+					<ul class="nav-aside-menu">
+						<li><a>Home</a></li>
+						<li><a>About Us</a></li>
+						<li><a>Join Us</a></li>
+						<li><a>Advertisement</a></li>
+						<li><a>Contacts</a></li>
+					</ul>
+				</div>
+				<!-- /nav -->
+
+				<!-- widget posts -->
+				<div class="section-row">
+					<h3>Recent Posts</h3>
+					<div class="post post-widget">
+						<a class="post-img" href="/blog-post"><img src="/img/widget-2.jpg" alt=""></a>
+						<div class="post-body">
+							<h3 class="post-title"><a href="/blog-post">Pagedraw UI Builder Turns Your Website Design Mockup Into Code
+									Automatically</a></h3>
+						</div>
+					</div>
+
+					<div class="post post-widget">
+						<a class="post-img" href="/blog-post"><img src="/img/widget-3.jpg" alt=""></a>
+						<div class="post-body">
+							<h3 class="post-title"><a href="/blog-post">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
+						</div>
+					</div>
+
+					<div class="post post-widget">
+						<a class="post-img" href="/blog-post"><img src="/img/widget-4.jpg" alt=""></a>
+						<div class="post-body">
+							<h3 class="post-title"><a href="/blog-post">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
+						</div>
+					</div>
+				</div>
+				<!-- /widget posts -->
+
+				<!-- social links -->
+				<div class="section-row">
+					<h3>Follow us</h3>
+					<ul class="nav-aside-social">
+						<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+						<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+						<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+						<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+					</ul>
+				</div>
+				<!-- /social links -->
+
+				<!-- aside nav close -->
+				<button class="nav-aside-close"><i class="fa fa-times"></i></button>
+				<!-- /aside nav close -->
+			</div>
+			<!-- Aside Nav -->
+
+		</div>
+		<!-- /Nav -->
+
+	</header>
+	<!-- /Header -->
+
+	{{{body}}}
+
+	<!-- Footer -->
+	<footer id="footer">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-5">
+					<div class="footer-widget">
+						<div class="footer-logo">
+							<a href="index.html" class="logo"><img src="/img/news.png" alt=""></a>
+						</div>
+						<ul class="footer-nav">
+							<li><a href="#">Privacy Policy</a></li>
+							<li><a href="#">Advertisement</a></li>
+						</ul>
+						<div class="footer-copyright">
+							<span>©
+								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+								Copyright ©
+								<script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+								<script type="text/javascript">document.write(new Date().getFullYear());</script>2019 All rights reserved |
+								This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
+								 target="_blank">Colorlib</a>
+								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="footer-widget">
+								<h3 class="footer-title">About Us</h3>
+								<ul class="footer-links">
+									<li><a href="about.html">About Us</a></li>
+									<li><a href="#">Join Us</a></li>
+									<li><a href="contact.html">Contacts</a></li>
+								</ul>
 							</div>
 						</div>
-
-						<div class="post post-widget">
-							<a class="post-img" href="/blog-post"><img src="/img/widget-4.jpg" alt=""></a>
-							<div class="post-body">
-								<h3 class="post-title"><a href="/blog-post">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
+						<div class="col-md-6">
+							<div class="footer-widget">
+								<h3 class="footer-title">Catagories</h3>
+								<ul class="footer-links">
+									<li><a href="category.html">Business</a></li>
+									<li><a href="category.html">Sport</a></li>
+									<li><a href="category.html">Travel</a></li>
+									<li><a href="category.html">Health</a></li>
+								</ul>
 							</div>
 						</div>
 					</div>
-					<!-- /widget posts -->
+				</div>
 
-					<!-- social links -->
-					<div class="section-row">
-						<h3>Follow us</h3>
-						<ul class="nav-aside-social">
+				<div class="col-md-3">
+					<div class="footer-widget">
+						<h3 class="footer-title">Join our Newsletter</h3>
+						<div class="footer-newsletter">
+							<form>
+								<input class="input" type="email" name="newsletter" placeholder="Enter your email">
+								<button class="newsletter-btn"><i class="fa fa-paper-plane"></i></button>
+							</form>
+						</div>
+						<ul class="footer-social">
 							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
 							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
 							<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
 							<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
 						</ul>
 					</div>
-					<!-- /social links -->
-
-					<!-- aside nav close -->
-					<button class="nav-aside-close"><i class="fa fa-times"></i></button>
-					<!-- /aside nav close -->
 				</div>
-				<!-- Aside Nav -->
 
 			</div>
-			<!-- /Nav -->
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</footer>
+	<!-- /Footer -->
 
-		</header>
-		<!-- /Header -->
+	<!-- jQuery Plugins -->
 
-		{{{body}}}
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script src="/js/jquery.min.js" type="text/javascript"></script>
+	<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="/js/main.js" type="text/javascript"></script>
 
-		<!-- Footer -->
-		<footer id="footer">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<div class="col-md-5">
-						<div class="footer-widget">
-							<div class="footer-logo">
-								<a href="index.html" class="logo"><img src="/img/news.png" alt=""></a>
-							</div>
-							<ul class="footer-nav">
-								<li><a href="#">Privacy Policy</a></li>
-								<li><a href="#">Advertisement</a></li>
-							</ul>
-							<div class="footer-copyright">
-								<span>© <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright ©<script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript">document.write(new Date().getFullYear());</script>2019 All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
-							</div>
-						</div>
-					</div>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13" type="text/javascript"></script>
+	<script type="text/javascript">
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
 
-					<div class="col-md-4">
-						<div class="row">
-							<div class="col-md-6">
-								<div class="footer-widget">
-									<h3 class="footer-title">About Us</h3>
-									<ul class="footer-links">
-										<li><a href="about.html">About Us</a></li>
-										<li><a href="#">Join Us</a></li>
-										<li><a href="contact.html">Contacts</a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="footer-widget">
-									<h3 class="footer-title">Catagories</h3>
-									<ul class="footer-links">
-										<li><a href="category.html">Business</a></li>
-										<li><a href="category.html">Sport</a></li>
-										<li><a href="category.html">Travel</a></li>
-										<li><a href="category.html">Health</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
+		gtag('config', 'UA-23581568-13');
+	</script>
 
-					<div class="col-md-3">
-						<div class="footer-widget">
-							<h3 class="footer-title">Join our Newsletter</h3>
-							<div class="footer-newsletter">
-								<form>
-									<input class="input" type="email" name="newsletter" placeholder="Enter your email">
-									<button class="newsletter-btn"><i class="fa fa-paper-plane"></i></button>
-								</form>
-							</div>
-							<ul class="footer-social">
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-								<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-							</ul>
-						</div>
-					</div>
+</body>
 
-				</div>
-				<!-- /row -->
-			</div>
-			<!-- /container -->
-		</footer>
-		<!-- /Footer -->
-
-		<!-- jQuery Plugins -->
-
-		<!-- Global site tag (gtag.js) - Google Analytics -->
-		<script src="js/jquery.min.js" type="text/javascript"></script>
-		<script src="js/bootstrap.min.js" type="text/javascript"></script>
-		<script src="js/main.js" type="text/javascript"></script>
-
-		<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13" type="text/javascript"></script>
-<script type="text/javascript">
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-23581568-13');
-</script>
-
-</body></html>
+</html>

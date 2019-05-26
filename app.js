@@ -8,7 +8,6 @@ var logger = require('morgan');
 var wnumb = require('wnumb');
 var cookieParser = require('cookie-parser');
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var session = require('express-session');
 //var MySQLStore = require('express-mysql-session')(session);
 var body_parser = require('body-parser');
@@ -47,33 +46,21 @@ app.use(body_parser.urlencoded({
 }));
 
 
+//Models
+var models = require("./models");
 
-// var sessionStore = new MySQLStore({
-//     host: 'localhost',
-//     port: 3306,
-//     user: 'root',
-//     password: 'msqlntk100397',
-//     database: 'camera',
-//     schema: {
-//         tableName: 'sessions',
-//         columnNames: {
-//             session_id: 'session_id',
-//             expires: 'expires',
-//             data: 'data'
-//         }
-//     }
-// });
+//setting middleware
+// require('./app/config/passport')(passport);
 
-// app.use(session({
-//     key: 'session_cookie_name',
-//     secret: 'session_cookie_secret',
-//     store: sessionStore,
-//     resave: false,
-//     saveUninitialized: false
-// }));
+//Sync Database
+models.sequelize.sync().then(function () {
+    console.log('Nice! Database looks fine')
+}).catch(function (err) {
+    console.log(err, "Something went wrong with the Database Update!")
+});
 
 app.use("/", indexRouter);
-
+app.use('/api', require('./routes/api'));
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
 	next(createError(404));

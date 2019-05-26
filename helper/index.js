@@ -1,4 +1,4 @@
-exports.slugify = (str) => {
+const slugify = (str) => {
     if (!str || str == '') {
         return 'unknown'
     }
@@ -25,7 +25,7 @@ exports.slugify = (str) => {
 const arr_days_of_week = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba',
     'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy']
 
-exports.toStringDatetime = (date) => {
+const toStringDatetime = (date) => {
     var ampm = date.getHours() >= 12 ? 'PM' : 'AM';
     let hour = date.getHours();
     if (hour < 10) hour = '0' + hour
@@ -34,10 +34,27 @@ exports.toStringDatetime = (date) => {
     return hour + ':' + min + ' ' + ampm + ' ' + arr_days_of_week[date.getDay()] + ', ' + date.getDate() + ' Thg ' + (date.getMonth() + 1) + ' ' + date.getFullYear();
 }
 
-exports.toStringDate = (date) => {
+const toStringDate = (date) => {
     return arr_days_of_week[date.getDay()] + ', ' + date.getDate() + ' Thg ' + (date.getMonth() + 1) + ' ' + date.getFullYear();
 }
 
-exports.formatNumber = (num) => {
+const formatNumber = (num) => {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+const fixNews = async (news) => {
+    for (let i = 0, l = news.length; i < l; i++) {
+        news[i].dataValues.link = '/new/' + news[i].id + '/' + slugify(news[i].title);
+        news[i].dataValues.createdAt = toStringDate(new Date(news[i].dataValues.createdAt));
+        news[i].dataValues.avatar = '/img/news_avatar/' + news[i].avatar;
+        news[i] = news[i].dataValues;
+    }
+}
+
+module.exports = {
+    slugify,
+    toStringDatetime,
+    toStringDate,
+    formatNumber,
+    fixNews
 }

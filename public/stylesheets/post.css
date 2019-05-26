@@ -57,6 +57,7 @@ post
   .post .post-title {
     font-size: 18px;
     margin-bottom: 0px;
+    text-transform: capitalize;
   }
   .post-tags li {
     display:inline-block;
@@ -98,10 +99,12 @@ post
     color: #eceef2;
   }
   .post.post-thumb .post-title {
+    text-transform: capitalize;
     font-size: 22px;
   }
   .post.post-thumb .post-title > a {
     color: #FFF;
+    text-transform: capitalize;
   }
   /*----------------------------*\
   post widget

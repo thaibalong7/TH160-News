@@ -570,6 +570,7 @@ RESPONSIVE
  .post .post-title {
      font-size: 18px;
      margin-bottom: 0px;
+     text-transform: capitalize;
 }
  .post-tags li {
      display:inline-block;

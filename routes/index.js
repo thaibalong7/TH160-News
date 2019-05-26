@@ -5,6 +5,8 @@ const indexController = require('../controller');
 /* GET home page. */
 router.get('/', indexController.home);
 
+router.get('/category/:id/:name', indexController.category);
+
 router.get('/blog-post', function (req, res, next) {
 	res.render('blog-post', { title: 'Express' });
 })

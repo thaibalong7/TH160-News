@@ -1,6 +1,22 @@
 (function ($) {
     "use strict"
 
+    if (!String.prototype.includes) {
+        String.prototype.includes = function (search, start) {
+            'use strict';
+            if (typeof start !== 'number') {
+                start = 0;
+            }
+
+            if (start + search.length > this.length) {
+                return false;
+            } else {
+                return this.indexOf(search, start) !== -1;
+            }
+        };
+    }
+
+
     // Fixed Nav
     var lastScrollTop = 0;
     $(window).on('scroll', function () {
@@ -87,5 +103,39 @@
     });
 
     setStickyPos();
+
+    if (location.pathname.includes("/category/")) {
+        $.ajax("/api/getLatestNews", {
+            type: 'GET',
+            dataType: 'json',
+        }).then((_news) => {
+            const post_widget = $("#post-widget");
+            if (post_widget) {
+                for (let i = 0, l = _news.data.length; i < l; i++) {
+                    post_widget.append(`<div class="post post-widget">
+                    <a class="post-img" href="${_news.data[i].link}"><img src="/img/news_avatar/${_news.data[i].avatar}" alt=""></a>
+                    <div class="post-body">
+                        <h3 class="post-title"><a href="${_news.data[i].link}">${_news.data[i].title}</a></h3>
+                    </div>
+                    </div>`)
+                }
+            }
+        });
+
+        $.ajax("/api/getCategoriesAndNumNews", {
+            type: 'GET',
+            dataType: 'json',
+        }).then((categories) => {
+            const ul_category_widget = $("#ul-category-widget");
+            if (ul_category_widget) {
+                for (let i = 0, l = categories.data.length; i < l; i++) {
+                    ul_category_widget.append(`<li><a href="${categories.data[i].link}" class="cat-2">${categories.data[i].name}<span>${categories.data[i].num_news}</span></a></li>`)
+                }
+            }
+        })
+    }
+
+
+
 
 })(jQuery);

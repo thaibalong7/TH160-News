@@ -35,7 +35,8 @@ const toStringDatetime = (date) => {
 }
 
 const toStringDate = (date) => {
-    return arr_days_of_week[date.getDay()] + ', ' + date.getDate() + ' Thg ' + (date.getMonth() + 1) + ' ' + date.getFullYear();
+    // return arr_days_of_week[date.getDay()] + ', ' + date.getDate() + ' Thg ' + (date.getMonth() + 1) + ' ' + date.getFullYear();
+    return date.getDate() + ' Thg ' + (date.getMonth() + 1) + ' ' + date.getFullYear();
 }
 
 const formatNumber = (num) => {

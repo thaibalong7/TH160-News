@@ -44,7 +44,7 @@ exports.category = async (req, res) => {
     try {
         const category = await db.sub_categories.findByPk(req.params.id);
         if (category && helper.slugify(category.name) === req.params.name) {
-            const num_each_page = 5
+            const num_each_page = 4;
             const query = {
                 where: {
                     fk_sub_category: req.params.id
@@ -79,7 +79,8 @@ exports.category = async (req, res) => {
             return res.render('index', {
                 title: 'News',
                 nav: await getNav(),
-                isUser: true
+                isUser: true,
+                cat: 'cat-3'
             })
         }
     } catch (error) {

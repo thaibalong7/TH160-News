@@ -41,14 +41,13 @@
                     <!-- post -->
                     <div class="col-md-6">
                         <div class="post">
-                            <a class="post-img" href="blog-post"><img src="/img/post-6.jpg" alt=""></a>
+                            <a class="post-img" href={{new3.link}}><img src={{new3.avatar}} alt=""></a>
                             <div class="post-body">
                                 <div class="post-meta">
-                                    <a class="post-category cat-4" href="#">travel</a>
-                                    <span class="post-date">March 27, 2018</span>
+                                    <a class="post-category cat-4" href={{category.link}}>{{category.name}}</a>
+                                    <span class="post-date">{{new3.createdAt}}</span>
                                 </div>
-                                <h3 class="post-title"><a href="blog-post">Why Node.js Is The Coolest Kid On The
-                                        Backend Development Block!</a></h3>
+                                <h3 class="post-title"><a href={{new3.link}}>{{new3.title}}</a></h3>
                             </div>
                         </div>
                     </div>
@@ -67,78 +66,26 @@
                     <!-- ad -->
 
                     <!-- post -->
+                    {{#each news}}
                     <div class="col-md-12">
                         <div class="post post-row">
-                            <a class="post-img" href="blog-post"><img src="/img/post-2.jpg" alt=""></a>
+                            <a class="post-img" href={{this.link}}><img src={{this.avatar}} alt=""></a>
                             <div class="post-body">
                                 <div class="post-meta">
-                                    <a class="post-category cat-4" href="#">travel</a>
-                                    <span class="post-date">March 27, 2018</span>
+                                    <a class="post-category cat-4" href={{category.link}}>{{category.name}}</a>
+                                    <span class="post-date">{{this.createdAt}}</span>
                                 </div>
-                                <h3 class="post-title"><a href="blog-post">Ask HN: Does Anybody Still Use JQuery?</a></h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
+                                <h3 class="post-title"><a href={{this.link}}>{{this.title}}</a></h3>
+                                <p class="post-abstract">{{this.abstract}}</p>
                             </div>
                         </div>
                     </div>
-                    <!-- /post -->
-
-                    <!-- post -->
-                    <div class="col-md-12">
-                        <div class="post post-row">
-                            <a class="post-img" href="blog-post"><img src="/img/post-5.jpg" alt=""></a>
-                            <div class="post-body">
-                                <div class="post-meta">
-                                    <a class="post-category cat-4" href="#">travel</a>
-                                    <span class="post-date">March 27, 2018</span>
-                                </div>
-                                <h3 class="post-title"><a href="blog-post">Microsoft’s TypeScript Fills A Long-standing
-                                        Void In travel</a></h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /post -->
-
-                    <!-- post -->
-                    <div class="col-md-12">
-                        <div class="post post-row">
-                            <a class="post-img" href="blog-post"><img src="/img/post-3.jpg" alt=""></a>
-                            <div class="post-body">
-                                <div class="post-meta">
-                                    <a class="post-category cat-4" href="#">travel</a>
-                                    <span class="post-date">March 27, 2018</span>
-                                </div>
-                                <h3 class="post-title"><a href="blog-post">travel : Prototype vs Class</a></h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /post -->
-
-                    <!-- post -->
-                    <div class="col-md-12">
-                        <div class="post post-row">
-                            <a class="post-img" href="blog-post"><img src="/img/post-1.jpg" alt=""></a>
-                            <div class="post-body">
-                                <div class="post-meta">
-                                    <a class="post-category cat-4" href="#">travel</a>
-                                    <span class="post-date">March 27, 2018</span>
-                                </div>
-                                <h3 class="post-title"><a href="blog-post">Why Node.js Is The Coolest Kid On The
-                                        Backend Development Block!</a></h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                            </div>
-                        </div>
-                    </div>
+                    {{/each}}
                     <!-- /post -->
 
                     <div class="col-md-12">
                         <div class="section-row">
-                            <button class="primary-button center-block">Load More</button>
+                            <button class="primary-button center-block">Xem Thêm</button>
                         </div>
                     </div>
                 </div>
@@ -156,39 +103,11 @@
                 <!-- post widget -->
                 <div class="aside-widget">
                     <div class="section-title">
-                        <h2>Most Read</h2>
+                        <h2>Mới nhất</h2>
                     </div>
 
-                    <div class="post post-widget">
-                        <a class="post-img" href="blog-post"><img src="/img/widget-1.jpg" alt=""></a>
-                        <div class="post-body">
-                            <h3 class="post-title"><a href="blog-post">Tell-A-Tool: Guide To Web Design And Development
-                                    Tools</a></h3>
-                        </div>
-                    </div>
+                    <div id="post-widget">
 
-                    <div class="post post-widget">
-                        <a class="post-img" href="blog-post"><img src="/img/widget-2.jpg" alt=""></a>
-                        <div class="post-body">
-                            <h3 class="post-title"><a href="blog-post">Pagedraw UI Builder Turns Your Website Design
-                                    Mockup Into Code Automatically</a></h3>
-                        </div>
-                    </div>
-
-                    <div class="post post-widget">
-                        <a class="post-img" href="blog-post"><img src="/img/widget-3.jpg" alt=""></a>
-                        <div class="post-body">
-                            <h3 class="post-title"><a href="blog-post">Why Node.js Is The Coolest Kid On The Backend
-                                    Development Block!</a></h3>
-                        </div>
-                    </div>
-
-                    <div class="post post-widget">
-                        <a class="post-img" href="blog-post"><img src="/img/widget-4.jpg" alt=""></a>
-                        <div class="post-body">
-                            <h3 class="post-title"><a href="blog-post">Tell-A-Tool: Guide To Web Design And Development
-                                    Tools</a></h3>
-                        </div>
                     </div>
                 </div>
                 <!-- /post widget -->
@@ -196,14 +115,11 @@
                 <!-- catagories -->
                 <div class="aside-widget">
                     <div class="section-title">
-                        <h2>Catagories</h2>
+                        <h2>Chuyên Mục</h2>
                     </div>
                     <div class="category-widget">
-                        <ul>
-                            <li><a href="#" class="cat-1">Business<span>340</span></a></li>
-                            <li><a href="#" class="cat-2">Sport<span>74</span></a></li>
-                            <li><a href="#" class="cat-4">Travel<span>41</span></a></li>
-                            <li><a href="#" class="cat-3">Health<span>35</span></a></li>
+                        <ul id="ul-category-widget">
+                           
                         </ul>
                     </div>
                 </div>

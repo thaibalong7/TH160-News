@@ -1,6 +1,5 @@
 (function ($) {
     "use strict"
-
     if (!String.prototype.includes) {
         String.prototype.includes = function (search, start) {
             'use strict';
@@ -104,13 +103,14 @@
 
     setStickyPos();
 
-    if (location.pathname.includes("/category/")) {
-        $.ajax("/api/getLatestNews", {
-            type: 'GET',
-            dataType: 'json',
-        }).then((_news) => {
-            const post_widget = $("#post-widget");
-            if (post_widget) {
+    if (location.pathname.includes("/category/") || location.pathname.includes("/news/")) {
+        const post_widget = $("#post-widget");
+        if (post_widget) {
+            $.ajax("/api/getLatestNews", {
+                type: 'GET',
+                dataType: 'json',
+            }).then((_news) => {
+
                 for (let i = 0, l = _news.data.length; i < l; i++) {
                     post_widget.append(`<div class="post post-widget">
                     <a class="post-img" href="${_news.data[i].link}"><img src="/img/news_avatar/${_news.data[i].avatar}" alt=""></a>
@@ -119,23 +119,36 @@
                     </div>
                     </div>`)
                 }
-            }
-        });
+            });
+        }
 
-        $.ajax("/api/getCategoriesAndNumNews", {
-            type: 'GET',
-            dataType: 'json',
-        }).then((categories) => {
-            const ul_category_widget = $("#ul-category-widget");
-            if (ul_category_widget) {
+        const ul_category_widget = $("#ul-category-widget");
+        if (ul_category_widget) {
+            $.ajax("/api/getCategoriesAndNumNews", {
+                type: 'GET',
+                dataType: 'json',
+            }).then((categories) => {
+
                 for (let i = 0, l = categories.data.length; i < l; i++) {
                     ul_category_widget.append(`<li><a href="${categories.data[i].link}" class="cat-2">${categories.data[i].name}<span>${categories.data[i].num_news}</span></a></li>`)
                 }
-            }
-        })
+            })
+        }
     }
 
+    if (location.pathname.includes("/news")) {
+        const news_post = $('#news-content');
+        if (news_post) {
+            $.ajax("/api/getNewsById/" + news_post.attr('params')).done(news => {
+                console.log(news)
+                news_post.append(news.data.content);
+                window.scrollTo(0, 0);
+            }).fail(function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText);
+            });
+        }
 
 
+    }
 
 })(jQuery);

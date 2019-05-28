@@ -48,7 +48,7 @@
 						{{#each nav}}
 						<li class="cat-1">
 							<div class="dropdown">
-								<button class="drop dropbtnbusiness">{{this.name}}</button>
+								<a class="dropbtnbusiness" href={{this.link}}><button class="drop dropbtnbusiness">{{this.name}}</button></a>
 								<div class="dropdown-content">
 									{{#each this.sub}}
 									<a href={{this.link}}>{{this.name}}</a>
@@ -83,7 +83,8 @@
 			</div>
 			<!-- /Main Nav -->
 
-			{{!-- <!-- Aside Nav -->
+			{{!--
+			<!-- Aside Nav -->
 			<div id="nav-aside">
 				<!-- nav -->
 				<div class="section-row">

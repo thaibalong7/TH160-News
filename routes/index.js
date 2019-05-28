@@ -3,9 +3,11 @@ var router = express.Router();
 const indexController = require('../controller');
 
 /* GET home page. */
-router.get('/', indexController.home);
+router.get('/', indexController.home_page);
 
-router.get('/category/:id/:name', indexController.category);
+router.get('/category/:id/:name', indexController.category_page);
+
+router.get('/news/:id/:name', indexController.news_page)
 
 router.get('/blog-post', function (req, res, next) {
 	res.render('blog-post', { title: 'Express' });

@@ -109,8 +109,7 @@
             $.ajax("/api/getLatestNews", {
                 type: 'GET',
                 dataType: 'json',
-            }).then((_news) => {
-
+            }).done((_news) => {
                 for (let i = 0, l = _news.data.length; i < l; i++) {
                     post_widget.append(`<div class="post post-widget">
                     <a class="post-img" href="${_news.data[i].link}"><img src="/img/news_avatar/${_news.data[i].avatar}" alt=""></a>
@@ -119,7 +118,9 @@
                     </div>
                     </div>`)
                 }
-            });
+            }).fail(function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText);
+            });;
         }
 
         const ul_category_widget = $("#ul-category-widget");
@@ -127,24 +128,48 @@
             $.ajax("/api/getCategoriesAndNumNews", {
                 type: 'GET',
                 dataType: 'json',
-            }).then((categories) => {
+            }).done((categories) => {
 
                 for (let i = 0, l = categories.data.length; i < l; i++) {
                     ul_category_widget.append(`<li><a href="${categories.data[i].link}" class="cat-2">${categories.data[i].name}<span>${categories.data[i].num_news}</span></a></li>`)
                 }
-            })
+            }).fail(function (xhr, textStatus, errorThrown) {
+                alert(xhr.responseText);
+            });
         }
     }
 
     if (location.pathname.includes("/news")) {
         const news_post = $('#news-content');
         if (news_post) {
-            $.ajax("/api/getNewsById/" + news_post.attr('params')).done(news => {
+            $.ajax("/api/getNewsById/" + news_post.attr('params'), {
+                type: 'GET',
+                dataType: 'json',
+            }).done(news => {
                 console.log(news)
                 news_post.append(news.data.content);
                 window.scrollTo(0, 0);
             }).fail(function (xhr, textStatus, errorThrown) {
                 alert(xhr.responseText);
+            });
+        }
+
+        const post_widget_same_category = $('#post-widget-same-category');
+        if (post_widget_same_category) {
+            $.ajax("/api/getLatestNewsByIdNews/" + post_widget_same_category.attr('idCategory'), {
+                type: 'GET',
+                dataType: 'json',
+            }).done((_news) => {
+                for (let i = 0, l = _news.data.length; i < l; i++) {
+                    post_widget_same_category.append(`<div class="post post-widget">
+                    <a class="post-img" href="${_news.data[i].link}"><img src="/img/news_avatar/${_news.data[i].avatar}" alt=""></a>
+                    <div class="post-body">
+                        <h3 class="post-title"><a href="${_news.data[i].link}">${_news.data[i].title}</a></h3>
+                    </div>
+                    </div>`)
+                }
+            }).fail(function (xhr, textStatus, errorThrown) {
+                alert(errorThrown);
             });
         }
 

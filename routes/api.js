@@ -9,4 +9,8 @@ router.get('/getCategoriesAndNumNews', apiController.getCategoriesAndNumNews);
 
 router.get('/getNewsById/:id/:name', apiController.getNewsById);
 
+router.get('/getLatestNewsByCategory/:id', apiController.getLatestNewsByCategory);
+
+router.get('/getLatestNewsByIdNews/:id', apiController.getLatestNewsByIdNews);
+
 module.exports = router;

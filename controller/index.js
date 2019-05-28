@@ -45,9 +45,8 @@ exports.category_page = async (req, res) => {
     try {
         const num_each_page = 4;
         if (req.query.isSubCategory === 'true') {
-            const category = await db.sub_categories.findByPk(req.params.id);
-            console.log(category)
-            if (category && helper.slugify(category.name) === req.params.name) {
+            const sub_category = await db.sub_categories.findByPk(req.params.id);
+            if (sub_category && helper.slugify(sub_category.name) === req.params.name) {
                 const query = {
                     where: {
                         fk_sub_category: req.params.id
@@ -59,7 +58,7 @@ exports.category_page = async (req, res) => {
                     offset: 0
                 }
                 console.log('asasdasdsd')
-                category.dataValues.link = '/category/' + category.id + '/' + helper.slugify(category.name);
+                sub_category.dataValues.link = '/category/' + sub_category.id + '/' + helper.slugify(sub_category.name) + '?isSubCategory=true';
                 const news = await db.news.findAll(query);
                 await helper.fixNews(news);
                 const hightlight_news = news.splice(0, 3);
@@ -68,10 +67,10 @@ exports.category_page = async (req, res) => {
                 const new2 = hightlight_news[1];
                 const new3 = hightlight_news[2];
                 return res.render('category', {
-                    title: category.name,
+                    title: sub_category.name,
                     nav: await getNav(),
                     isUser: true,
-                    category: category.dataValues,
+                    category: sub_category.dataValues,
                     new1: new1,
                     new2: new2,
                     new3: new3,
@@ -112,7 +111,7 @@ exports.category_page = async (req, res) => {
                     limit: 3 + num_each_page, //thêm 3 bài ở đầu nữa
                     offset: 0
                 }
-                category.dataValues.link = '/category/' + category.id + '/' + helper.slugify(category.name);
+                category.dataValues.link = '/category/' + category.id + '/' + helper.slugify(category.name) + '?isSubCategory=true';
                 const news = await db.news.findAll(query);
                 await helper.fixNews(news);
                 const hightlight_news = news.splice(0, 3);
@@ -147,10 +146,12 @@ exports.category_page = async (req, res) => {
 
 exports.news_page = async (req, res) => {
     try {
+        const category = await db.category
         return res.render('news', {
             title: '',
             nav: await getNav(),
             params: req.params.id + '/' + req.params.name,
+            idNews: req.params.id
         })
     } catch (error) {
         return res.redirect('/error/?mess=' + error.toString())

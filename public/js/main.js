@@ -15,6 +15,11 @@
         };
     }
 
+    const toStringDate = (date) => {
+        // return arr_days_of_week[date.getDay()] + ', ' + date.getDate() + ' Thg ' + (date.getMonth() + 1) + ' ' + date.getFullYear();
+        return date.getDate() + ' Thg ' + (date.getMonth() + 1) + ' ' + date.getFullYear();
+    }
+
 
     // Fixed Nav
     var lastScrollTop = 0;
@@ -146,9 +151,16 @@
                 type: 'GET',
                 dataType: 'json',
             }).done(news => {
-                console.log(news)
-                news_post.append(news.data.content);
                 window.scrollTo(0, 0);
+                news_post.append(news.data.content);
+                const news_avatar = $('#news-avatar');
+                const news_title = $('#news-title');
+                const news_publicAt = $('#news-publicAt');
+                const news_view = $('#news-view');
+                news_avatar.append(`<img src="/img/news_avatar/${news.data.avatar}" >`);
+                news_title.append(`<h3>${news.data.title}<\h3>`)
+                news_publicAt.append(`<p><i class="fa fa-clock-o"></i> ${toStringDate(new Date(news.data.publicAt))}</p>`)
+                news_view.append(`<p><i class="fa fa-eye"></i> ${news.data.view}</p>`)
             }).fail(function (xhr, textStatus, errorThrown) {
                 alert(xhr.responseText);
             });

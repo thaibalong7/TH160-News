@@ -106,7 +106,7 @@
     if (location.pathname.includes("/category/") || location.pathname.includes("/news/")) {
         const post_widget = $("#post-widget");
         if (post_widget) {
-            $.ajax("/api/getLatestNews", {
+            $.ajax("/api/news/getLatestNews", {
                 type: 'GET',
                 dataType: 'json',
             }).done((_news) => {
@@ -125,7 +125,7 @@
 
         const ul_category_widget = $("#ul-category-widget");
         if (ul_category_widget) {
-            $.ajax("/api/getCategoriesAndNumNews", {
+            $.ajax("/api/categories/getCategoriesAndNumNews", {
                 type: 'GET',
                 dataType: 'json',
             }).done((categories) => {
@@ -142,7 +142,7 @@
     if (location.pathname.includes("/news")) {
         const news_post = $('#news-content');
         if (news_post) {
-            $.ajax("/api/getNewsById/" + news_post.attr('params'), {
+            $.ajax("/api/news/getNewsById/" + news_post.attr('params'), {
                 type: 'GET',
                 dataType: 'json',
             }).done(news => {
@@ -156,7 +156,7 @@
 
         const post_widget_same_category = $('#post-widget-same-category');
         if (post_widget_same_category) {
-            $.ajax("/api/getLatestNewsByIdNews/" + post_widget_same_category.attr('idCategory'), {
+            $.ajax("/api/news/getLatestNewsByIdNews/" + post_widget_same_category.attr('idNews'), {
                 type: 'GET',
                 dataType: 'json',
             }).done((_news) => {

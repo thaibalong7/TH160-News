@@ -9,48 +9,54 @@
                     <h2>{{category.name}}</h2>
                     </br>
                     <!-- post -->
+                    {{#if new1}}
                     <div class="col-md-12">
                         <div class="post post-thumb">
                             <a class="post-img" href={{new1.link}}><img src={{new1.avatar}} alt=""></a>
                             <div class="post-body">
                                 <div class="post-meta">
                                     <a class="post-category cat-4" href={{category.link}}>{{category.name}}</a>
-                                    <span class="post-date">{{new1.createdAt}}</span>
+                                    <span class="post-date">{{new1.publicAt}}</span>
                                 </div>
                                 <h3 class="post-title"><a href={{new1.link}}>{{new1.title}}</a></h3>
                             </div>
                         </div>
                     </div>
+                    {{/if}}
                     <!-- /post -->
 
                     <!-- post -->
+                    {{#if new2}}
                     <div class="col-md-6">
                         <div class="post">
                             <a class="post-img" href={{new2.link}}><img src={{new2.avatar}} alt=""></a>
                             <div class="post-body">
                                 <div class="post-meta">
                                     <a class="post-category cat-4" href={{category.link}}>{{category.name}}</a>
-                                    <span class="post-date">{{new2.createdAt}}</span>
+                                    <span class="post-date">{{new2.publicAt}}</span>
                                 </div>
                                 <h3 class="post-title"><a href={{new2.link}}>{{new2.title}}</a></h3>
                             </div>
                         </div>
                     </div>
+                    {{/if}}
                     <!-- /post -->
 
                     <!-- post -->
+                    {{#if new3}}
                     <div class="col-md-6">
                         <div class="post">
                             <a class="post-img" href={{new3.link}}><img src={{new3.avatar}} alt=""></a>
                             <div class="post-body">
                                 <div class="post-meta">
                                     <a class="post-category cat-4" href={{category.link}}>{{category.name}}</a>
-                                    <span class="post-date">{{new3.createdAt}}</span>
+                                    <span class="post-date">{{new3.publicAt}}</span>
                                 </div>
                                 <h3 class="post-title"><a href={{new3.link}}>{{new3.title}}</a></h3>
                             </div>
                         </div>
                     </div>
+                    {{/if}}
                     <!-- /post -->
 
                     <div class="clearfix visible-md visible-lg"></div>
@@ -73,7 +79,7 @@
                             <div class="post-body">
                                 <div class="post-meta">
                                     <a class="post-category cat-4" href={{category.link}}>{{category.name}}</a>
-                                    <span class="post-date">{{this.createdAt}}</span>
+                                    <span class="post-date">{{this.publicAt}}</span>
                                 </div>
                                 <h3 class="post-title"><a href={{this.link}}>{{this.title}}</a></h3>
                                 <p class="post-abstract">{{this.abstract}}</p>
@@ -83,11 +89,13 @@
                     {{/each}}
                     <!-- /post -->
 
+                    {{#if isNextPage}}
                     <div class="col-md-12">
                         <div class="section-row">
                             <button class="primary-button center-block">Xem Thêm</button>
                         </div>
                     </div>
+                    {{/if}}
                 </div>
             </div>
 
@@ -119,7 +127,7 @@
                     </div>
                     <div class="category-widget">
                         <ul id="ul-category-widget">
-                           
+
                         </ul>
                     </div>
                 </div>

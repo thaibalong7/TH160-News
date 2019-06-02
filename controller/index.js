@@ -54,10 +54,10 @@ exports.category_page = async (req, res) => {
                     attributes: {
                         exclude: ['content']
                     },
+                    order: [['publicAt', 'DESC']],
                     limit: 3 + num_each_page, //thêm 3 bài ở đầu nữa
                     offset: 0
                 }
-                console.log('asasdasdsd')
                 sub_category.dataValues.link = '/category/' + sub_category.id + '/' + helper.slugify(sub_category.name) + '?isSubCategory=true';
                 const news = await db.news.findAll(query);
                 await helper.fixNews(news);
@@ -75,6 +75,7 @@ exports.category_page = async (req, res) => {
                     new2: new2,
                     new3: new3,
                     news: news,
+                    isNextPage: news.length < num_each_page ? false : true
                 })
             }
             else {
@@ -108,8 +109,9 @@ exports.category_page = async (req, res) => {
                     attributes: {
                         exclude: ['content']
                     },
+                    order: [['publicAt', 'DESC']],
                     limit: 3 + num_each_page, //thêm 3 bài ở đầu nữa
-                    offset: 0
+                    offset: 0,
                 }
                 category.dataValues.link = '/category/' + category.id + '/' + helper.slugify(category.name) + '?isSubCategory=true';
                 const news = await db.news.findAll(query);
@@ -128,6 +130,7 @@ exports.category_page = async (req, res) => {
                     new2: new2,
                     new3: new3,
                     news: news,
+                    isNextPage: news.length < num_each_page ? false : true
                 })
             }
             else {

@@ -46,7 +46,7 @@ const formatNumber = (num) => {
 const fixNews = async (news) => {
     for (let i = 0, l = news.length; i < l; i++) {
         news[i].dataValues.link = '/news/' + news[i].id + '/' + slugify(news[i].title);
-        news[i].dataValues.createdAt = toStringDate(new Date(news[i].dataValues.createdAt));
+        news[i].dataValues.publicAt = toStringDate(new Date(news[i].dataValues.createdAt));
         news[i].dataValues.avatar = '/img/news_avatar/' + news[i].avatar;
         news[i] = news[i].dataValues;
     }

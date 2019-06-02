@@ -21,8 +21,17 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.TEXT,
             allowNull: false
         },
-        status:{
+        status: {
             type: Sequelize.ENUM('draft', 'approved', 'rejected', 'published')
+        },
+        publicAt: {
+            type: Sequelize.TIME,
+            allowNull: true
+        },
+        view: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            defaultValue: 0
         }
     },
         {

@@ -1,22 +1,5 @@
-const db = require('../models');
-const helper = require('../helper');
-
-exports.getAllCatagories = async (req, res) => {
-    try {
-        const query = {
-            include: [{
-                model: db.sub_categories
-            }]
-        }
-        db.categories.findAll(query).then(_data => {
-            return res.status(200).json({
-                data: _data
-            })
-        })
-    } catch (error) {
-        return res.status(400).json({ msg: error.toString() })
-    }
-}
+const db = require('../../models');
+const helper = require('../../helper');
 
 exports.getLatestNews = async (req, res) => {
     try {
@@ -114,7 +97,7 @@ exports.getLatestNewsByIdNews = async (req, res) => {
                 }
             },
             attributes: ['id', 'title', 'avatar'],
-            limit: 3, //lấy 3 bài thôi
+            limit: 5, //lấy 3 bài thôi
             offset: 0,
             order: [['createdAt', 'DESC']]
         }
@@ -124,39 +107,6 @@ exports.getLatestNewsByIdNews = async (req, res) => {
                 _data[i] = _data[i].dataValues;
                 _data[i].link = '/news/' + _data[i].id + '/' + helper.slugify(_data[i].title);
                 result.push(_data[i]);
-            }
-            return res.status(200).json({
-                data: result
-            })
-        })
-    } catch (error) {
-        return res.status(400).json({ msg: error.toString() })
-    }
-}
-
-exports.getCategoriesAndNumNews = async (req, res) => {
-    try {
-        const query = {
-            include: [{
-                model: db.sub_categories,
-                include: [{
-                    model: db.news,
-                    attributes: ['id']
-                }]
-            }]
-        }
-        db.categories.findAll(query).then(async _categories => {
-            const result = [];
-            for (let i = 0, l = _categories.length; i < l; i++) {
-                let num_news = 0;
-                for (let j = 0; j < _categories[i].sub_categories.length; j++) {
-                    num_news += _categories[i].sub_categories[j].news.length;
-                }
-                result.push({
-                    name: _categories[i].name,
-                    link: '/category/' + _categories[i].id + '/' + helper.slugify(_categories[i].name),
-                    num_news: num_news
-                })
             }
             return res.status(200).json({
                 data: result

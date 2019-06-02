@@ -6,6 +6,8 @@ router.get('/getLatestNews', newsController.getLatestNews);
 
 router.get('/getNewsById/:id/:name', newsController.getNewsById);
 
+router.get('/increaseView/:id/:name', newsController.increaseView);
+
 router.get('/getLatestNewsByCategory/:id', newsController.getLatestNewsByCategory);
 
 router.get('/getLatestNewsByIdNews/:id', newsController.getLatestNewsByIdNews);

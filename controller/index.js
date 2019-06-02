@@ -151,7 +151,7 @@ exports.news_page = async (req, res) => {
     try {
         const category = await db.category
         return res.render('news', {
-            title: '',
+            title: 'Tin Tức',
             nav: await getNav(),
             params: req.params.id + '/' + req.params.name,
             idNews: req.params.id

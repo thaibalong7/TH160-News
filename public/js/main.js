@@ -153,6 +153,7 @@
             }).done(news => {
                 window.scrollTo(0, 0);
                 news_post.append(news.data.content);
+                document.title = news.data.title;
                 const news_avatar = $('#news-avatar');
                 const news_title = $('#news-title');
                 const news_publicAt = $('#news-publicAt');
@@ -161,6 +162,10 @@
                 news_title.append(`<h3>${news.data.title}<\h3>`)
                 news_publicAt.append(`<p><i class="fa fa-clock-o"></i> ${toStringDate(new Date(news.data.publicAt))}</p>`)
                 news_view.append(`<p><i class="fa fa-eye"></i> ${news.data.view}</p>`)
+                $.ajax("/api/news/increaseView/" + news_post.attr('params'), { //tăng view cho bài viết
+                    type: 'GET',
+                    dataType: 'json',
+                })
             }).fail(function (xhr, textStatus, errorThrown) {
                 alert(xhr.responseText);
             });

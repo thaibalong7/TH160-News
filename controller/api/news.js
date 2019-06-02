@@ -136,3 +136,24 @@ exports.getNewsById = async (req, res) => {
         return res.status(400).json({ msg: error.toString() })
     }
 }
+
+exports.increaseView = async (req, res) => {
+    try {
+        db.news.findByPk(req.params.id).then(async (_news) => {
+            if (_news) {
+                if (helper.slugify(_news.title) === req.params.name) {
+                    _news.view = _news.view + 1;
+                    await _news.save();
+                    return res.status(200).json({ msg: 'Increase success' })
+                }
+                else return res.status(400).json({ msg: 'Wrong path' })
+            }
+            else {
+                return res.status(400).json({ msg: 'Wrong id news' })
+            }
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}

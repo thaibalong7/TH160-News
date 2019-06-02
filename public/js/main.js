@@ -108,7 +108,7 @@
 
     setStickyPos();
 
-    if (location.pathname.includes("/category/") || location.pathname.includes("/news/")) {
+    if (location.pathname.includes("/category/") || location.pathname.includes("/news/") || location.pathname.includes("/tag/")) {
         const post_widget = $("#post-widget");
         if (post_widget) {
             $.ajax("/api/news/getLatestNews", {
@@ -165,7 +165,7 @@
                 $.ajax("/api/news/increaseView/" + news_post.attr('params'), { //tăng view cho bài viết
                     type: 'GET',
                     dataType: 'json',
-                })
+                });
             }).fail(function (xhr, textStatus, errorThrown) {
                 alert(xhr.responseText);
             });
@@ -188,9 +188,21 @@
             }).fail(function (xhr, textStatus, errorThrown) {
                 alert(errorThrown);
             });
+            const ul_tags_news = $('#ul-tags-news');
+            if (ul_tags_news) {
+                $.ajax("/api/news/getTagsByNews/" + post_widget_same_category.attr('idNews'), {
+                    type: 'GET',
+                    dataType: 'json',
+                }).done((_tags_new) => {
+                    for (let i = 0, l = _tags_new.data.length; i < l; i++) {
+                        ul_tags_news.append(`<li><a href="${_tags_new.data[i].tag.link}">${_tags_new.data[i].tag.name}</a></li>`)
+                    }
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    alert(errorThrown);
+                });
+            }
+
         }
-
-
     }
 
 })(jQuery);

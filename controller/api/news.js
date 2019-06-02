@@ -5,9 +5,12 @@ exports.getLatestNews = async (req, res) => {
     try {
         const query = {
             attributes: ['id', 'title', 'avatar'],
-            limit: 3,
+            limit: 5,
             offset: 0,
-            order: [['createdAt', 'DESC']]
+            order: [['createdAt', 'DESC']],
+            where:{
+                status: 'published'
+            }
         }
         db.news.findAll(query).then(_data => {
             const result = [];
@@ -29,7 +32,8 @@ exports.getLatestNewsByCategory = async (req, res) => {
     try {
         const _sub_categories = await db.sub_categories.findAll({
             where: {
-                fk_category: req.params.id
+                fk_category: req.params.id,
+                status: 'published'
             }
         });
         const list_id_sub_category = [];
@@ -41,7 +45,8 @@ exports.getLatestNewsByCategory = async (req, res) => {
             where: {
                 fk_sub_category: {
                     [db.Sequelize.Op.or]: list_id_sub_category
-                }
+                },
+                status: 'published'
             },
             attributes: ['id', 'title', 'avatar'],
             limit: 3, //lấy 3 bài thôi
@@ -69,7 +74,8 @@ exports.getLatestNewsByIdNews = async (req, res) => {
         const _news = await db.news.findOne({
             attributes: ['id', 'fk_sub_category'],
             where: {
-                id: req.params.id
+                id: req.params.id,
+                status: 'published'
             },
             include: [{
                 model: db.sub_categories,
@@ -94,7 +100,8 @@ exports.getLatestNewsByIdNews = async (req, res) => {
             where: {
                 fk_sub_category: {
                     [db.Sequelize.Op.or]: list_id_sub_category
-                }
+                },
+                status: 'published'
             },
             attributes: ['id', 'title', 'avatar'],
             limit: 5, //lấy 3 bài thôi
@@ -120,7 +127,7 @@ exports.getLatestNewsByIdNews = async (req, res) => {
 exports.getNewsById = async (req, res) => {
     try {
         db.news.findByPk(req.params.id).then((_news) => {
-            if (_news) {
+            if (_news && _news.status === 'published') {
                 if (helper.slugify(_news.title) === req.params.name)
                     return res.status(200).json({
                         data: _news
@@ -151,6 +158,57 @@ exports.increaseView = async (req, res) => {
             else {
                 return res.status(400).json({ msg: 'Wrong id news' })
             }
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}
+
+exports.getNewsByTag = async (req, res) => { //phân trang
+    try {
+        const query = {
+            attributes: {
+                exclude: ['content']
+            },
+            include: [{
+                model: db.tags_new,
+                where: {
+                    fk_tag: req.params.id
+                }
+            }],
+            where: {
+                status: 'published'
+            }
+        };
+        const _news = await db.news.findAll(query);
+        return res.status(200).json({
+            data: _news
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}
+
+exports.getTagsByNews = async (req, res) => { //get danh sách các tags của news đó
+    try {
+        const limit_tags = 8; //gới hạn số lượng tag được hiện ra
+        const query = {
+            where: {
+                fk_new: req.params.id
+            },
+            include: [{
+                model: db.tags
+            }],
+            limit: limit_tags,
+            offset: 0
+        };
+        db.tags_new.findAll(query).then(async _tags_news => {
+            await helper.addLinkTagToListTagNew(_tags_news);
+            return res.status(200).json({
+                data: _tags_news
+            })
         })
     } catch (error) {
         console.log(error)

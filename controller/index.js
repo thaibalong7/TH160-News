@@ -37,7 +37,8 @@ exports.home_page = async (req, res) => {
             isUser: true
         })
     } catch (error) {
-        return res.redirect('/error/?mess=' + error.toString())
+        console.log(error)
+        return res.redirect('/')
     }
 }
 
@@ -49,7 +50,8 @@ exports.category_page = async (req, res) => {
             if (sub_category && helper.slugify(sub_category.name) === req.params.name) {
                 const query = {
                     where: {
-                        fk_sub_category: req.params.id
+                        fk_sub_category: req.params.id,
+                        status: 'published'
                     },
                     attributes: {
                         exclude: ['content']
@@ -94,7 +96,7 @@ exports.category_page = async (req, res) => {
             if (category && helper.slugify(category.name) === req.params.name) {
                 const _sub_categories = await db.sub_categories.findAll({
                     where: {
-                        fk_category: category.id
+                        fk_category: category.id,
                     }
                 });
                 const list_id_sub_category = [];
@@ -107,7 +109,8 @@ exports.category_page = async (req, res) => {
                     where: {
                         fk_sub_category: {
                             [db.Sequelize.Op.or]: list_id_sub_category
-                        }
+                        },
+                        status: 'published'
                     },
                     attributes: {
                         exclude: ['content']
@@ -149,7 +152,7 @@ exports.category_page = async (req, res) => {
         }
     } catch (error) {
         console.log(error)
-        return res.redirect('/error/?mess=' + error.toString())
+        return res.redirect('/')
     }
 }
 
@@ -162,6 +165,51 @@ exports.news_page = async (req, res) => {
             idNews: req.params.id
         })
     } catch (error) {
-        return res.redirect('/error/?mess=' + error.toString())
+        console.log(error)
+        return res.redirect('/')
+    }
+}
+
+exports.tag_page = async (req, res) => {
+    try {
+        const num_each_page = 7;
+        const check_tag = await db.tags.findByPk(req.params.id);
+        if (check_tag && helper.slugify(check_tag.name) === req.params.name) {
+            const query = {
+                attributes: {
+                    exclude: ['content']
+                },
+                where: {
+                    status: 'published'
+                },
+                order: [['publicAt', 'DESC']],
+                limit: num_each_page,
+                offset: 0,
+                include: [{
+                    model: db.sub_categories
+                },
+                {
+                    model: db.tags_new,
+                    where: {
+                        fk_tag: check_tag.id
+                    }
+                }]
+            };
+            const news = await db.news.findAll(query);
+            await helper.fixNews(news);
+            return res.render('tag', {
+                title: check_tag.name,
+                tab: check_tag.dataValues,
+                nav: await getNav(),
+                news: news,
+                isNextPage: news.length < num_each_page ? false : true
+            })
+        }
+        else {
+            return res.redirect('/');
+        }
+    } catch (error) {
+        console.log(error)
+        return res.redirect('/');
     }
 }

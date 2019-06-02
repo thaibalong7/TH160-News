@@ -12,4 +12,9 @@ router.get('/getLatestNewsByCategory/:id', newsController.getLatestNewsByCategor
 
 router.get('/getLatestNewsByIdNews/:id', newsController.getLatestNewsByIdNews);
 
+router.get('/getTagsByNews/:id', newsController.getTagsByNews);
+
+router.get('/getNewsByTag/:id', newsController.getNewsByTag);
+
+
 module.exports = router;

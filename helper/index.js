@@ -54,10 +54,18 @@ const fixNews = async (news) => {
     }
 }
 
+const addLinkTagToListTagNew = async (tags_new) => {
+    for (let i = 0, l = tags_new.length; i < l; i++) {
+        tags_new[i].dataValues.tag = tags_new[i].dataValues.tag.dataValues;
+        tags_new[i].dataValues.tag.link = '/tag/' + tags_new[i].dataValues.tag.id + '/' + slugify(tags_new[i].dataValues.tag.name)
+    }
+}
+
 module.exports = {
     slugify,
     toStringDatetime,
     toStringDate,
     formatNumber,
-    fixNews
+    fixNews,
+    addLinkTagToListTagNew
 }

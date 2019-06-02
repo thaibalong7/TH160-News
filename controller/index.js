@@ -56,7 +56,10 @@ exports.category_page = async (req, res) => {
                     },
                     order: [['publicAt', 'DESC']],
                     limit: 3 + num_each_page, //thêm 3 bài ở đầu nữa
-                    offset: 0
+                    offset: 0,
+                    include: [{
+                        model: db.sub_categories
+                    }]
                 }
                 sub_category.dataValues.link = '/category/' + sub_category.id + '/' + helper.slugify(sub_category.name) + '?isSubCategory=true';
                 const news = await db.news.findAll(query);
@@ -112,6 +115,9 @@ exports.category_page = async (req, res) => {
                     order: [['publicAt', 'DESC']],
                     limit: 3 + num_each_page, //thêm 3 bài ở đầu nữa
                     offset: 0,
+                    include: [{
+                        model: db.sub_categories
+                    }]
                 }
                 category.dataValues.link = '/category/' + category.id + '/' + helper.slugify(category.name) + '?isSubCategory=true';
                 const news = await db.news.findAll(query);
@@ -149,7 +155,6 @@ exports.category_page = async (req, res) => {
 
 exports.news_page = async (req, res) => {
     try {
-        const category = await db.category
         return res.render('news', {
             title: 'Tin Tức',
             nav: await getNav(),

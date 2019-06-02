@@ -48,6 +48,8 @@ const fixNews = async (news) => {
         news[i].dataValues.link = '/news/' + news[i].id + '/' + slugify(news[i].title);
         news[i].dataValues.publicAt = toStringDate(new Date(news[i].dataValues.createdAt));
         news[i].dataValues.avatar = '/img/news_avatar/' + news[i].avatar;
+        news[i].dataValues.sub_category = news[i].dataValues.sub_category.dataValues;
+        news[i].dataValues.sub_category.link = '/category/' + news[i].dataValues.sub_category.id + '/' + slugify(news[i].dataValues.sub_category.name) + '?isSubCategory=true'
         news[i] = news[i].dataValues;
     }
 }

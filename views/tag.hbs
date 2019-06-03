@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="row">
-                    <h2>{{tab.name}}</h2>
+                    <h2>{{tag.name}}</h2>
                     </br>
                     <div class="clearfix visible-md visible-lg"></div>
 
@@ -21,30 +21,39 @@
                     <!-- ad -->
 
                     <!-- post -->
-                    {{#each news}}
-                    <div class="col-md-12">
-                        <div class="post post-row">
-                            <a class="post-img" href={{this.link}}><img src={{this.avatar}} alt=""></a>
-                            <div class="post-body">
-                                <div class="post-meta">
-                                    <a class="post-category cat-4" href={{this.sub_category.link}}>{{this.sub_category.name}}</a>
-                                    <span class="post-date">{{this.publicAt}}</span>
+                    <div id="post-list-tag">
+                        {{#each news}}
+                        <div class="col-md-12">
+                            <div class="post post-row">
+                                <a class="post-img" href={{this.link}}><img src={{this.avatar}} alt=""></a>
+                                <div class="post-body">
+                                    <div class="post-meta">
+                                        <a class="post-category cat-4" href={{this.sub_category.link}}>{{this.sub_category.name}}</a>
+                                        <span class="post-date">{{this.publicAt}}</span>
+                                    </div>
+                                    <h3 class="post-title"><a href={{this.link}}>{{this.title}}</a></h3>
+                                    <p class="post-abstract">{{this.abstract}}</p>
                                 </div>
-                                <h3 class="post-title"><a href={{this.link}}>{{this.title}}</a></h3>
-                                <p class="post-abstract">{{this.abstract}}</p>
                             </div>
                         </div>
+                        {{/each}}
                     </div>
-                    {{/each}}
                     <!-- /post -->
 
                     {{#if isNextPage}}
-                    <div class="col-md-12">
+                    <div id="load-more-tag-container" class="col-md-12">
                         <div class="section-row">
-                            <button class="primary-button center-block">Xem Thêm</button>
+                            <button class="primary-button center-block" id="load-more-tag" next_page={{next_page}}
+                                per_page={{per_page}} idTag={{tag.id}}>Xem Thêm</button>
                         </div>
                     </div>
                     {{/if}}
+
+                    {{!-- loading --}}
+                    <div id="loading-container" class="col-md-12 loading" hidden>
+                        <img class="center-block" src="/img/loading.gif" alt=""></img>
+                    </div>
+                    {{!-- /loading --}}
                 </div>
             </div>
 

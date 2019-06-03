@@ -203,10 +203,12 @@ exports.tag_page = async (req, res) => {
             await helper.fixNews(news);
             return res.render('tag', {
                 title: check_tag.name,
-                tab: check_tag.dataValues,
+                tag: check_tag.dataValues,
                 nav: await getNav(),
                 news: news,
-                isNextPage: news.length < num_each_page ? false : true
+                isNextPage: news.length < num_each_page ? false : true,
+                next_page: 2,
+                per_page: num_each_page,
             })
         }
         else {

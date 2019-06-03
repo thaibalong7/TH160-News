@@ -167,24 +167,56 @@ exports.increaseView = async (req, res) => {
 
 exports.getNewsByTag = async (req, res) => { //phân trang
     try {
-        const query = {
-            attributes: {
-                exclude: ['content']
-            },
-            include: [{
-                model: db.tags_new,
+        const page_default = 1;
+        const per_page_default = 10;
+        var page, per_page;
+        if (typeof req.query.page === 'undefined') page = page_default;
+        else page = req.query.page
+        if (typeof req.query.per_page === 'undefined') per_page = per_page_default;
+        else per_page = req.query.per_page
+        if (isNaN(page) || isNaN(per_page) || parseInt(per_page) <= 0 || parseInt(page) <= 0) {
+            return res.status(400).json({ msg: 'Params is invalid' })
+        }
+        else {
+            page = parseInt(page);
+            per_page = parseInt(per_page);
+            const query = {
+                attributes: {
+                    exclude: ['content']
+                },
                 where: {
-                    fk_tag: req.params.id
-                }
-            }],
-            where: {
-                status: 'published'
-            }
-        };
-        const _news = await db.news.findAll(query);
-        return res.status(200).json({
-            data: _news
-        })
+                    status: 'published'
+                },
+                order: [['publicAt', 'DESC']],
+                limit: per_page,
+                offset: (page - 1) * per_page,
+                include: [{
+                    model: db.sub_categories
+                },
+                {
+                    model: db.tags_new,
+                    where: {
+                        fk_tag: req.params.id
+                    }
+                }]
+            };
+            const news = await db.news.findAndCountAll(query);
+            var next_page = page + 1;
+            //Kiểm tra còn dữ liệu không
+            if ((parseInt(news.rows.length) + (next_page - 2) * per_page) === parseInt(news.count))
+                next_page = -1;
+            //Nếu số lượng record nhỏ hơn per_page  ==> không còn dữ liệu nữa => trả về -1 
+            if ((parseInt(news.rows.length) < per_page))
+                next_page = -1;
+            if (parseInt(news.rows.length) === 0)
+                next_page = -1;
+            await helper.fixNews(news.rows);
+            return res.status(200).json({
+                itemCount: news.count, //số lượng record được trả về
+                data: news.rows,
+                next_page: next_page //trang kế tiếp, nếu là -1 thì hết data rồi
+            })
+        }
     } catch (error) {
         console.log(error)
         return res.status(400).json({ msg: error.toString() })

@@ -143,12 +143,12 @@
             });
         }
 
-        const load_more_button = $("#load-more-category");
-        load_more_button.click(function () {
+        const load_more_button_category = $("#load-more-category");
+        load_more_button_category.click(function () {
             $("#load-more-category-container").hide();
             $("#loading-container").show();
-            if (load_more_button.attr('isSubCategory') === 'true') { //trang đang hiển thị news của sub_category
-                $.ajax("/api/news/getNewsBySubCategory/" + load_more_button.attr('idCategory') + "?per_page=7&page=" + load_more_button.attr('next_page'),
+            if (load_more_button_category.attr('isSubCategory') === 'true') { //trang đang hiển thị news của sub_category
+                $.ajax("/api/news/getNewsBySubCategory/" + load_more_button_category.attr('idCategory') + "?per_page=7&page=" + load_more_button_category.attr('next_page'),
                     {
                         type: 'GET',
                         dataType: 'json',
@@ -156,7 +156,7 @@
                         if (parseInt(news.next_page) > 0) //còn trang tiếp
                         {
                             $("#load-more-category-container").show();
-                            load_more_button.attr('next_page', news.next_page)
+                            load_more_button_category.attr('next_page', news.next_page)
                             $("#loading-container").hide();
                         }
                         else { //hết data rồi
@@ -183,7 +183,7 @@
                     });
             }
             else { //trang đang hiển thị news của category
-                $.ajax("/api/news/getNewsByCategory/" + load_more_button.attr('idCategory') + "?per_page=7&page=" + load_more_button.attr('next_page'),
+                $.ajax("/api/news/getNewsByCategory/" + load_more_button_category.attr('idCategory') + "?per_page=7&page=" + load_more_button_category.attr('next_page'),
                     {
                         type: 'GET',
                         dataType: 'json',
@@ -191,7 +191,7 @@
                         if (parseInt(news.next_page) > 0) //còn trang tiếp
                         {
                             $("#load-more-category-container").show();
-                            load_more_button.attr('next_page', news.next_page)
+                            load_more_button_category.attr('next_page', news.next_page)
                             $("#loading-container").hide();
                         }
                         else { //hết data rồi
@@ -218,6 +218,48 @@
                     });
             }
         });
+
+
+        //pagination tag_page
+        const load_more_button_tag = $("#load-more-tag");
+        load_more_button_tag.click(function () {
+            $("#load-more-tag-container").hide();
+            $("#loading-container").show();
+            $.ajax("/api/news/getNewsByTag/" + load_more_button_tag.attr("idTag") + "?per_page=" + load_more_button_tag.attr("per_page") + "&page=" + load_more_button_tag.attr("next_page"),
+                {
+                    type: 'GET',
+                    dataType: 'json',
+                }).done(function (news) {
+                    if (parseInt(news.next_page) > 0) //còn trang tiếp
+                    {
+                        $("#load-more-tag-container").show();
+                        load_more_button_category.attr('next_page', news.next_page)
+                        $("#loading-container").hide();
+                    }
+                    else { //hết data rồi
+                        $("#loading-container").hide();
+                    }
+                    const post_list_tag = $("#post-list-tag");
+                    for (let i = 0, l = news.data.length; i < l; i++) {
+                        post_list_tag.append(`<div class="col-md-12">
+                        <div class="post post-row">
+                            <a class="post-img" href=${news.data[i].link}><img src=${news.data[i].avatar} alt=""></a>
+                            <div class="post-body">
+                                <div class="post-meta">
+                                    <a class="post-category cat-4" href=${news.data[i].sub_category.link}>${news.data[i].sub_category.name}</a>
+                                    <span class="post-date">${news.data[i].publicAt}</span>
+                                </div>
+                                <h3 class="post-title"><a href=${news.data[i].link}>${news.data[i].title}</a></h3>
+                                <p class="post-abstract">${news.data[i].abstract}</p>
+                            </div>
+                        </div>
+                    </div>`)
+                    }
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    alert(xhr.responseText);
+                });
+        })
+
 
     }
 

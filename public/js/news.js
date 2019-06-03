@@ -52,7 +52,15 @@
                         type: 'GET',
                         dataType: 'json',
                     }).done(function (comments) {
-                        post_comment.attr("next_page", comments.next_page)
+                        if (comments.next_page > 0) //còn data
+                        {
+                            $("#view-more-cmt-container").show();
+                            $("#loading-comment-container").hide();
+                            post_comment.attr("next_page", comments.next_page)
+                        }
+                        else {
+                            $("#loading-comment-container").hide();
+                        }
                         for (let i = 0, l = comments.data.length; i < l; i++) {
                             post_comment.append(` <div class="media">
                             <div class="media-left">

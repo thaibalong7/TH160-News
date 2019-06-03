@@ -9,6 +9,8 @@ Final project of web application development subject.
 ## Technology
  - [NodeJS](https://nodejs.org/en/): frameword [ExpressJS](https://expressjs.com)
  - View engine: [Handlebars.js](https://www.npmjs.com/package/express-handlebars)
+ - Database: PostgreSQL (using heroku)
+ - ORM: [Sequelize](http://docs.sequelizejs.com)
   
  ## Member
  | Student ID | Name | Email |

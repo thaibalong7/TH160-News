@@ -111,13 +111,13 @@
     if (location.pathname.includes("/category/") || location.pathname.includes("/news/") || location.pathname.includes("/tag/")) {
         const post_widget = $("#post-widget");
         if (post_widget) {
-            $.ajax("/api/news/getLatestNews", {
+            $.ajax("/api/news/getLatestNews?num_news=5", {
                 type: 'GET',
                 dataType: 'json',
             }).done((_news) => {
                 for (let i = 0, l = _news.data.length; i < l; i++) {
                     post_widget.append(`<div class="post post-widget">
-                    <a class="post-img" href="${_news.data[i].link}"><img src="/img/news_avatar/${_news.data[i].avatar}" alt=""></a>
+                    <a class="post-img" href="${_news.data[i].link}"><img src="${_news.data[i].avatar}" alt=""></a>
                     <div class="post-body">
                         <h3 class="post-title"><a href="${_news.data[i].link}">${_news.data[i].title}</a></h3>
                     </div>

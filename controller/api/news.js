@@ -3,24 +3,28 @@ const helper = require('../../helper');
 
 exports.getLatestNews = async (req, res) => {
     try {
+        const default_num_news = 10;
+        var num_news;
+        if (typeof req.query.num_news === 'undefined') num_news = default_num_news;
+        else num_news = parseInt(req.query.num_news);
         const query = {
-            attributes: ['id', 'title', 'avatar'],
-            limit: 5,
+            attributes: {
+                exclude: ['content']
+            },
+            limit: num_news,
             offset: 0,
             order: [['createdAt', 'DESC']],
             where: {
                 status: 'published'
-            }
+            },
+            include: [{
+                model: db.sub_categories
+            }]
         }
-        db.news.findAll(query).then(_data => {
-            const result = [];
-            for (let i = 0, l = _data.length; i < l; i++) {
-                _data[i] = _data[i].dataValues;
-                _data[i].link = '/news/' + _data[i].id + '/' + helper.slugify(_data[i].title);
-                result.push(_data[i]);
-            }
+        db.news.findAll(query).then(async _news => {
+            await helper.fixNews(_news);
             return res.status(200).json({
-                data: result
+                data: _news
             })
         })
     } catch (error) {

@@ -32,6 +32,73 @@ exports.getLatestNews = async (req, res) => {
     }
 }
 
+exports.getNewsMostViews = async (req, res) => {
+    try {
+        const default_num_news = 10;
+        var num_news;
+        if (typeof req.query.num_news === 'undefined') num_news = default_num_news;
+        else num_news = parseInt(req.query.num_news);
+        const query = {
+            attributes: {
+                exclude: ['content']
+            },
+            limit: num_news,
+            offset: 0,
+            order: [['view', 'DESC']],
+            where: {
+                status: 'published'
+            },
+            include: [{
+                model: db.sub_categories
+            }]
+        }
+        db.news.findAll(query).then(async _news => {
+            await helper.fixNews(_news);
+            return res.status(200).json({
+                data: _news
+            })
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}
+
+exports.getFeaturedNews = async (req, res) => {
+    try {
+        const default_num_news = 3;
+        var num_news;
+        if (typeof req.query.num_news === 'undefined') num_news = default_num_news;
+        else num_news = parseInt(req.query.num_news);
+        const query = {
+            attributes: {
+                exclude: ['content']
+            },
+            limit: num_news,
+            offset: 0,
+            order: [['view', 'DESC']],
+            where: {
+                publicAt: {
+                    [db.Sequelize.Op.gte]: new Date(helper.formatDate(-7) + ' 00:00:00 GMT+07:00')
+                },
+                status: 'published'
+            },
+            include: [{
+                model: db.sub_categories
+            }]
+        }
+        db.news.findAll(query).then(async _news => {
+            await helper.fixNews(_news);
+            return res.status(200).json({
+                data: _news
+            })
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}
+
 exports.getLatestNewsByCategory = async (req, res) => {
     try {
         const _sub_categories = await db.sub_categories.findAll({
@@ -69,6 +136,7 @@ exports.getLatestNewsByCategory = async (req, res) => {
             })
         })
     } catch (error) {
+        console.log(error)
         return res.status(400).json({ msg: error.toString() })
     }
 }
@@ -124,6 +192,7 @@ exports.getLatestNewsByIdNews = async (req, res) => {
             })
         })
     } catch (error) {
+        console.log(error)
         return res.status(400).json({ msg: error.toString() })
     }
 }

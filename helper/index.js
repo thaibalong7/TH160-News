@@ -68,6 +68,19 @@ const addLinkTagToListTagNew = async (tags_new) => {
     }
 }
 
+function formatDate(days) {
+    const d = new Date();
+    d.setDate(d.getDate() + days)
+    var month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
 module.exports = {
     slugify,
     toStringDatetime,
@@ -75,5 +88,6 @@ module.exports = {
     formatNumber,
     fixNews,
     addLinkTagToListTagNew,
-    fixListComments
+    fixListComments,
+    formatDate
 }

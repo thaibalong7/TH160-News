@@ -37,44 +37,16 @@
                         <h2>Bình Luận</h2>
                     </div>
 
-                    <div class="post-comments">
+                    <div id="post-comments" class="post-comments" per_page={{num_cmt_each_page}} next_page=1>
                         <!-- comment -->
-                        <div class="media">
-                            <div class="media-left">
-                                <img class="media-object" src="/img/avatar.png" alt="">
-                            </div>
-                            <div class="media-body">
-                                <div class="media-heading">
-                                    <h4>John Doe</h4>
-                                    <span class="time">March 27, 2018 at 8:00 am</span>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                    incididunt ut labore et
-                                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                    laboris nisi ut aliquip ex ea
-                                    commodo consequat.</p>
-                            </div>
-                        </div>
-                        <!-- /comment -->
 
-                        <!-- comment -->
-                        <div class="media">
-                            <div class="media-left">
-                                <img class="media-object" src="/img/avatar.png" alt="">
-                            </div>
-                            <div class="media-body">
-                                <div class="media-heading">
-                                    <h4>John Doe</h4>
-                                    <span class="time">March 27, 2018 at 8:00 am</span>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                    incididunt ut labore et
-                                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                    laboris nisi ut aliquip ex ea
-                                    commodo consequat.</p>
-                            </div>
-                        </div>
                         <!-- /comment -->
+                    </div>
+                    <div id="view-more-cmt-container" class="pull-right">
+                        <button id="btn-view-more-cmt" class="btn-view-more-cmt">Xem thêm</button>
+                    </div>
+                    <div id="loading-comment-container" class="loading-comment pull-right" hidden>
+                        <img src="/img/loading_comment.gif" alt=""></img>
                     </div>
                 </div>
                 <!-- /comments -->
@@ -89,12 +61,12 @@
                                     <input class="input" type="text" name="name">
                                 </div>
                             </div>
-                            <div class="col-md-5">
+                            {{!-- <div class="col-md-5">
                                 <div class="form-group">
                                     <span>Email *</span>
                                     <input class="input" type="email" name="email">
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <textarea class="input" name="message" placeholder="Nội dung bình luận"></textarea>

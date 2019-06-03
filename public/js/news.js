@@ -21,9 +21,10 @@
         return date.getDate() + ' Thg ' + (date.getMonth() + 1) + ' ' + date.getFullYear();
     }
 
-    
+
     if (location.pathname.includes("/news")) {
         const news_post = $('#news-content');
+        const post_comment = $("#post-comments");
         if (news_post) {
             $.ajax("/api/news/getNewsById/" + news_post.attr('params'), {
                 type: 'GET',
@@ -44,6 +45,72 @@
                     type: 'GET',
                     dataType: 'json',
                 });
+
+                //get comments
+                $.ajax("/api/news/getCommentByNews/" + news.data.id + "?per_page=" + post_comment.attr("per_page") + "&page=" + post_comment.attr("next_page"),
+                    {
+                        type: 'GET',
+                        dataType: 'json',
+                    }).done(function (comments) {
+                        post_comment.attr("next_page", comments.next_page)
+                        for (let i = 0, l = comments.data.length; i < l; i++) {
+                            post_comment.append(` <div class="media">
+                            <div class="media-left">
+                                <img class="media-object" src="/img/avatar.png" alt="">
+                            </div>
+                            <div class="media-body">
+                                <div class="media-heading">
+                                    <h4>${comments.data[i].name}</h4>
+                                    <span class="time">${comments.data[i].createdAt}</span>
+                                </div>
+                                <p>${comments.data[i].content}</p>
+                            </div>
+                        </div>`)
+                        }
+                    }).fail(function (xhr, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    });
+
+
+                //load more cmt
+                $("#btn-view-more-cmt").click(function () {
+                    $("#view-more-cmt-container").hide();
+                    $("#loading-comment-container").show();
+
+                    $.ajax("/api/news/getCommentByNews/" + news.data.id + "?per_page=" + post_comment.attr("per_page") + "&page=" + post_comment.attr("next_page"),
+                        {
+                            type: 'GET',
+                            dataType: 'json',
+                        }).done(function (comments) {
+                            if (parseInt(comments.next_page) > 0) {
+                                $("#view-more-cmt-container").show();
+                                post_comment.attr("next_page", comments.next_page)
+                                $("#loading-comment-container").hide();
+                            }
+                            else {
+                                $("#loading-comment-container").hide();
+                            }
+                            for (let i = 0, l = comments.data.length; i < l; i++) {
+                                post_comment.append(` <div class="media">
+                            <div class="media-left">
+                                <img class="media-object" src="/img/avatar.png" alt="">
+                            </div>
+                            <div class="media-body">
+                                <div class="media-heading">
+                                    <h4>${comments.data[i].name}</h4>
+                                    <span class="time">${comments.data[i].createdAt}</span>
+                                </div>
+                                <p>${comments.data[i].content}</p>
+                            </div>
+                        </div>`)
+                            }
+
+                        }).fail(function (xhr, textStatus, errorThrown) {
+                            alert(errorThrown);
+                        });
+
+                })
+
             }).fail(function (xhr, textStatus, errorThrown) {
                 alert(xhr.responseText);
             });
@@ -81,6 +148,7 @@
             }
 
         }
+
     }
 
 

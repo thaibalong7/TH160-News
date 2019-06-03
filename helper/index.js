@@ -54,6 +54,13 @@ const fixNews = async (news) => {
     }
 }
 
+const fixListComments = async (comments) =>{
+    for (let i = 0, l = comments.length; i < l; i++) {
+        comments[i] = comments[i].dataValues;
+        comments[i].createdAt = toStringDatetime(comments[i].createdAt);
+    }
+}
+
 const addLinkTagToListTagNew = async (tags_new) => {
     for (let i = 0, l = tags_new.length; i < l; i++) {
         tags_new[i].dataValues.tag = tags_new[i].dataValues.tag.dataValues;
@@ -67,5 +74,6 @@ module.exports = {
     toStringDate,
     formatNumber,
     fixNews,
-    addLinkTagToListTagNew
+    addLinkTagToListTagNew,
+    fixListComments
 }

@@ -365,3 +365,51 @@ exports.getNewsByCategory = async (req, res) => {
         return res.status(400).json({ msg: error.toString() })
     }
 }
+
+
+exports.getCommentByNews = async (req, res) => {
+    try {
+        const page_default = 1;
+        const per_page_default = 10;
+        var page, per_page;
+        if (typeof req.query.page === 'undefined') page = page_default;
+        else page = req.query.page
+        if (typeof req.query.per_page === 'undefined') per_page = per_page_default;
+        else per_page = req.query.per_page
+        if (isNaN(page) || isNaN(per_page) || parseInt(per_page) <= 0 || parseInt(page) <= 0) {
+            return res.status(400).json({ msg: 'Params is invalid' })
+        }
+        else {
+            page = parseInt(page);
+            per_page = parseInt(per_page);
+            query = {
+                where: {
+                    fk_new: req.params.id
+                },
+                order: [['createdAt', 'DESC']],
+                limit: per_page,
+                offset: (page - 1) * per_page,
+            }
+            const comments = await db.comments.findAndCountAll(query);
+            var next_page = page + 1;
+            //Kiểm tra còn dữ liệu không
+            if ((parseInt(comments.rows.length) + (next_page - 2) * per_page) === parseInt(comments.count))
+                next_page = -1;
+            //Nếu số lượng record nhỏ hơn per_page  ==> không còn dữ liệu nữa => trả về -1 
+            if ((parseInt(comments.rows.length) < per_page))
+                next_page = -1;
+            if (parseInt(comments.rows.length) === 0)
+                next_page = -1;
+            await helper.fixListComments(comments.rows);
+            return res.status(200).json({
+                itemCount: comments.count, //số lượng record được trả về
+                data: comments.rows,
+                next_page: next_page //trang kế tiếp, nếu là -1 thì hết data rồi
+            })
+
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}

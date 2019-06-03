@@ -166,7 +166,8 @@ exports.news_page = async (req, res) => {
             title: 'Tin Tức',
             nav: await getNav(),
             params: req.params.id + '/' + req.params.name,
-            idNews: req.params.id
+            idNews: req.params.id,
+            num_cmt_each_page: 3,
         })
     } catch (error) {
         console.log(error)

@@ -44,7 +44,7 @@ exports.home_page = async (req, res) => {
 
 exports.category_page = async (req, res) => {
     try {
-        const num_each_page = 4;
+        const num_each_page = 3;
         if (req.query.isSubCategory === 'true') {
             const sub_category = await db.sub_categories.findByPk(req.params.id);
             if (sub_category && helper.slugify(sub_category.name) === req.params.name) {
@@ -80,7 +80,9 @@ exports.category_page = async (req, res) => {
                     new2: new2,
                     new3: new3,
                     news: news,
-                    isNextPage: news.length < num_each_page ? false : true
+                    isNextPage: news.length < num_each_page ? false : true,
+                    next_page: 2,
+                    isSubCategory: true
                 })
             }
             else {
@@ -139,7 +141,9 @@ exports.category_page = async (req, res) => {
                     new2: new2,
                     new3: new3,
                     news: news,
-                    isNextPage: news.length < num_each_page ? false : true
+                    isNextPage: news.length < num_each_page ? false : true,
+                    next_page: 2,
+                    isSubCategory: false,
                 })
             }
             else {

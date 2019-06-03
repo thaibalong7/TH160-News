@@ -16,5 +16,9 @@ router.get('/getTagsByNews/:id', newsController.getTagsByNews);
 
 router.get('/getNewsByTag/:id', newsController.getNewsByTag);
 
+router.get('/getNewsBySubCategory/:id', newsController.getNewsBySubCategory);
+
+router.get('/getNewsByCategory/:id', newsController.getNewsByCategory);
+
 
 module.exports = router;

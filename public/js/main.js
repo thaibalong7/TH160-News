@@ -142,67 +142,83 @@
                 alert(xhr.responseText);
             });
         }
-    }
 
-    if (location.pathname.includes("/news")) {
-        const news_post = $('#news-content');
-        if (news_post) {
-            $.ajax("/api/news/getNewsById/" + news_post.attr('params'), {
-                type: 'GET',
-                dataType: 'json',
-            }).done(news => {
-                window.scrollTo(0, 0);
-                news_post.append(news.data.content);
-                document.title = news.data.title;
-                const news_avatar = $('#news-avatar');
-                const news_title = $('#news-title');
-                const news_publicAt = $('#news-publicAt');
-                const news_view = $('#news-view');
-                news_avatar.append(`<img src="/img/news_avatar/${news.data.avatar}" >`);
-                news_title.append(`<h3>${news.data.title}<\h3>`)
-                news_publicAt.append(`<p><i class="fa fa-clock-o"></i> ${toStringDate(new Date(news.data.publicAt))}</p>`)
-                news_view.append(`<p><i class="fa fa-eye"></i> ${news.data.view}</p>`)
-                $.ajax("/api/news/increaseView/" + news_post.attr('params'), { //tăng view cho bài viết
-                    type: 'GET',
-                    dataType: 'json',
-                });
-            }).fail(function (xhr, textStatus, errorThrown) {
-                alert(xhr.responseText);
-            });
-        }
-
-        const post_widget_same_category = $('#post-widget-same-category');
-        if (post_widget_same_category) {
-            $.ajax("/api/news/getLatestNewsByIdNews/" + post_widget_same_category.attr('idNews'), {
-                type: 'GET',
-                dataType: 'json',
-            }).done((_news) => {
-                for (let i = 0, l = _news.data.length; i < l; i++) {
-                    post_widget_same_category.append(`<div class="post post-widget">
-                    <a class="post-img" href="${_news.data[i].link}"><img src="/img/news_avatar/${_news.data[i].avatar}" alt=""></a>
-                    <div class="post-body">
-                        <h3 class="post-title"><a href="${_news.data[i].link}">${_news.data[i].title}</a></h3>
-                    </div>
-                    </div>`)
-                }
-            }).fail(function (xhr, textStatus, errorThrown) {
-                alert(errorThrown);
-            });
-            const ul_tags_news = $('#ul-tags-news');
-            if (ul_tags_news) {
-                $.ajax("/api/news/getTagsByNews/" + post_widget_same_category.attr('idNews'), {
-                    type: 'GET',
-                    dataType: 'json',
-                }).done((_tags_new) => {
-                    for (let i = 0, l = _tags_new.data.length; i < l; i++) {
-                        ul_tags_news.append(`<li><a href="${_tags_new.data[i].tag.link}">${_tags_new.data[i].tag.name}</a></li>`)
-                    }
-                }).fail(function (xhr, textStatus, errorThrown) {
-                    alert(errorThrown);
-                });
+        const load_more_button = $("#load-more-category");
+        load_more_button.click(function () {
+            $("#load-more-category-container").hide();
+            $("#loading-container").show();
+            if (load_more_button.attr('isSubCategory') === 'true') { //trang đang hiển thị news của sub_category
+                $.ajax("/api/news/getNewsBySubCategory/" + load_more_button.attr('idCategory') + "?per_page=7&page=" + load_more_button.attr('next_page'),
+                    {
+                        type: 'GET',
+                        dataType: 'json',
+                    }).done(function (news) {
+                        if (parseInt(news.next_page) > 0) //còn trang tiếp
+                        {
+                            $("#load-more-category-container").show();
+                            load_more_button.attr('next_page', news.next_page)
+                            $("#loading-container").hide();
+                        }
+                        else { //hết data rồi
+                            $("#loading-container").hide();
+                        }
+                        const post_list_category = $("#post-list-category")
+                        for (let i = 0, l = news.data.length; i < l; i++) {
+                            post_list_category.append(`<div class="col-md-12">
+                            <div class="post post-row">
+                                <a class="post-img" href=${news.data[i].link}><img src=${news.data[i].avatar} alt=""></a>
+                                <div class="post-body">
+                                    <div class="post-meta">
+                                        <a class="post-category cat-4" href=${news.data[i].sub_category.link}>${news.data[i].sub_category.name}</a>
+                                        <span class="post-date">${news.data[i].publicAt}</span>
+                                    </div>
+                                    <h3 class="post-title"><a href=${news.data[i].link}>${news.data[i].title}</a></h3>
+                                    <p class="post-abstract">${news.data[i].abstract}</p>
+                                </div>
+                            </div>
+                        </div>`)
+                        }
+                    }).fail(function (xhr, textStatus, errorThrown) {
+                        alert(xhr.responseText);
+                    });
             }
+            else { //trang đang hiển thị news của category
+                $.ajax("/api/news/getNewsByCategory/" + load_more_button.attr('idCategory') + "?per_page=7&page=" + load_more_button.attr('next_page'),
+                    {
+                        type: 'GET',
+                        dataType: 'json',
+                    }).done(function (news) {
+                        if (parseInt(news.next_page) > 0) //còn trang tiếp
+                        {
+                            $("#load-more-category-container").show();
+                            load_more_button.attr('next_page', news.next_page)
+                            $("#loading-container").hide();
+                        }
+                        else { //hết data rồi
+                            $("#loading-container").hide();
+                        }
+                        const post_list_category = $("#post-list-category")
+                        for (let i = 0, l = news.data.length; i < l; i++) {
+                            post_list_category.append(`<div class="col-md-12">
+                            <div class="post post-row">
+                                <a class="post-img" href=${news.data[i].link}><img src=${news.data[i].avatar} alt=""></a>
+                                <div class="post-body">
+                                    <div class="post-meta">
+                                        <a class="post-category cat-4" href=${news.data[i].sub_category.link}>${news.data[i].sub_category.name}</a>
+                                        <span class="post-date">${news.data[i].publicAt}</span>
+                                    </div>
+                                    <h3 class="post-title"><a href=${news.data[i].link}>${news.data[i].title}</a></h3>
+                                    <p class="post-abstract">${news.data[i].abstract}</p>
+                                </div>
+                            </div>
+                        </div>`)
+                        }
+                    }).fail(function (xhr, textStatus, errorThrown) {
+                        alert(xhr.responseText);
+                    });
+            }
+        });
 
-        }
     }
 
 })(jQuery);

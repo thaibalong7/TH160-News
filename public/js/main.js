@@ -143,6 +143,7 @@
             });
         }
 
+
         const load_more_button_category = $("#load-more-category");
         load_more_button_category.click(function () {
             $("#load-more-category-container").hide();
@@ -164,19 +165,26 @@
                         }
                         const post_list_category = $("#post-list-category")
                         for (let i = 0, l = news.data.length; i < l; i++) {
-                            post_list_category.append(`<div class="col-md-12">
-                            <div class="post post-row">
-                                <a class="post-img" href=${news.data[i].link}><img src=${news.data[i].avatar} alt=""></a>
-                                <div class="post-body">
-                                    <div class="post-meta">
-                                        <a class="post-category cat-4" href=${news.data[i].sub_category.link}>${news.data[i].sub_category.name}</a>
-                                        <span class="post-date">${news.data[i].publicAt}</span>
+                            post_list_category.append(`
+                                <div class="col-md-12">
+                                    <div class="post post-row">
+                                        <a class="post-img" href=${news.data[i].link}>
+                                            <img src=${news.data[i].avatar} alt="">
+                                        </a>
+                                        <div class="post-body">
+                                            <div class="post-meta">
+                                                <a class="post-category cat-4" href=${news.data[i].sub_category.link}>${news.data[i].sub_category.name}</a>
+                                                <span class="post-date">${news.data[i].publicAt}</span>
+                                            </div>
+
+                                            <h3 class="post-title"><a href=${news.data[i].link}>${news.data[i].title}</a></h3>
+                                            
+                                            <p class="post-abstract">${news.data[i].abstract}</p>
+
+                                        </div>
                                     </div>
-                                    <h3 class="post-title"><a href=${news.data[i].link}>${news.data[i].title}</a></h3>
-                                    <p class="post-abstract">${news.data[i].abstract}</p>
-                                </div>
-                            </div>
-                        </div>`)
+                                </div>`
+                            )
                         }
                     }).fail(function (xhr, textStatus, errorThrown) {
                         alert(xhr.responseText);
@@ -259,8 +267,136 @@
                     alert(xhr.responseText);
                 });
         })
+    }
 
+    const home_topFuturedNews = $("#home-topFuturedNews");
+    if (home_topFuturedNews) {
+        $.ajax("/api/news/getFeaturedNews", {
+            type: 'GET',
+            dataType: 'json',
+        }).done((news) => {
+            for (let i = 0, l = news.data.length; i < l; i++) {
+                home_topFuturedNews.append(`
+                <div class="col-md-4">
+                    <div class="post">
+                        <a class="post-img" href="${news.data[i].link}"><img src="${news.data[i].avatar}" alt=""></a>
+                        <div class="post-body">
+                            <div class="post-meta">
+                                <a class="post-category cat-2" href="${news.data[i].sub_category.link}">${news.data[i].sub_category.name}</a>
+                                <span class="post-date">${news.data[i].publicAt}</span>
+                            </div>
+                            <h3 class="post-title"><a href="${news.data[i].link}">${news.data[i].title}</a></h3>
+                        </div>
+                    </div>
+                </div>`)
+            }
+        }).fail(function (xhr, textStatus, errorThrown) {
+            alert(xhr.responseText);
+        });
+    }
 
+    const home_topMostViewNo1 = $("#home-topMostViewNo1");
+    if (home_topMostViewNo1) {
+        $.ajax("/api/news/getNewsMostViews", {
+            type: 'GET',
+            dataType: 'json',
+        }).done((news) => {
+            for (let i = 0, l = news.data.length; i < l-7; i++) {
+                home_topMostViewNo1.append(`
+                <div class="col-md-4">
+                    <div class="post">
+                        <a class="post-img" href="${news.data[i].link}"><img src="${news.data[i].avatar}" alt=""></a>
+                        <div class="post-body">
+                            <div class="post-meta">
+                                <a class="post-category cat-2" href="${news.data[i].sub_category.link}">${news.data[i].sub_category.name}</a>
+                                <span class="post-date">${news.data[i].publicAt}</span>
+                            </div>
+                            <h3 class="post-title"><a href="${news.data[i].link}">${news.data[i].title}</a></h3>
+                        </div>
+                    </div>
+                </div>`)
+            }
+        }).fail(function (xhr, textStatus, errorThrown) {
+            alert(xhr.responseText);
+        });
+    }
+
+    const home_topMostViewNo2 = $("#home-topMostViewNo2");
+    if (home_topMostViewNo2) {
+        $.ajax("/api/news/getNewsMostViews", {
+            type: 'GET',
+            dataType: 'json',
+        }).done((news) => {
+            for (let i = 3, l = news.data.length; i < 5; i++) {
+                home_topMostViewNo2.append(`
+                <div class="col-md-12">
+                    <div class="post">
+                        <a class="post-img" href="${news.data[i].link}"><img src="${news.data[i].avatar}" alt=""></a>
+                        <div class="post-body">
+                            <div class="post-meta">
+                                <a class="post-category cat-2" href="${news.data[i].sub_category.link}">${news.data[i].sub_category.name}</a>
+                                <span class="post-date">${news.data[i].publicAt}</span>
+                            </div>
+                            <h3 class="post-title"><a href="${news.data[i].link}">${news.data[i].title}</a></h3>
+                        </div>
+                    </div>
+                </div>`)
+            }
+        }).fail(function (xhr, textStatus, errorThrown) {
+            alert(xhr.responseText);
+        });
+    }
+
+    const home_topMostViewNo3 = $("#home-topMostViewNo3");
+    if (home_topMostViewNo3) {
+        $.ajax("/api/news/getNewsMostViews", {
+            type: 'GET',
+            dataType: 'json',
+        }).done((news) => {
+            for (let i = 5, l = news.data.length; i < 7; i++) {
+                home_topMostViewNo3.append(`
+                <div class="col-md-12">
+                    <div class="post">
+                        <a class="post-img" href="${news.data[i].link}"><img src="${news.data[i].avatar}" alt=""></a>
+                        <div class="post-body">
+                            <div class="post-meta">
+                                <a class="post-category cat-2" href="${news.data[i].sub_category.link}">${news.data[i].sub_category.name}</a>
+                                <span class="post-date">${news.data[i].publicAt}</span>
+                            </div>
+                            <h3 class="post-title"><a href="${news.data[i].link}">${news.data[i].title}</a></h3>
+                        </div>
+                    </div>
+                </div>`)
+            }
+        }).fail(function (xhr, textStatus, errorThrown) {
+            alert(xhr.responseText);
+        });
+    }
+
+    const home_topMostViewNo4 = $("#home-topMostViewNo4");
+    if (home_topMostViewNo4) {
+        $.ajax("/api/news/getNewsMostViews", {
+            type: 'GET',
+            dataType: 'json',
+        }).done((news) => {
+            for (let i = 7, l = news.data.length; i < l; i++) {
+                home_topMostViewNo4.append(`
+                <div class="col-md-4">
+                    <div class="post">
+                        <a class="post-img" href="${news.data[i].link}"><img src="${news.data[i].avatar}" alt=""></a>
+                        <div class="post-body">
+                            <div class="post-meta">
+                                <a class="post-category cat-2" href="${news.data[i].sub_category.link}">${news.data[i].sub_category.name}</a>
+                                <span class="post-date">${news.data[i].publicAt}</span>
+                            </div>
+                            <h3 class="post-title"><a href="${news.data[i].link}">${news.data[i].title}</a></h3>
+                        </div>
+                    </div>
+                </div>`)
+            }
+        }).fail(function (xhr, textStatus, errorThrown) {
+            alert(xhr.responseText);
+        });
     }
 
 })(jQuery);

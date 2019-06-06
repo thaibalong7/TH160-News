@@ -1,0 +1,32 @@
+
+<div>
+    
+    <div class="list-cata">
+        <h1>Danh sách bài viết {{status}}</h1>
+        <table class="table-writer">
+            {{#if edit}}
+                    {{#each news}}
+                            <tr>
+                                <td> <img  src="./img/{{img}}" alt="your image" /></td>
+                                <td>Title: <a href="#">{{name}}</td>
+                                <td>Author:  <a href="#">{{author}}</a></td>
+                                <td>Type:   <a href="#">{{type}}</a></td>
+                                <td>Category:  <a href="#">{{category}}</a></td>
+                                <td><button><a href = "/edit">Edit</a></button></td>
+                                </tr>
+                    {{/each}}
+            {{else}}
+                    {{#each news}}
+                            <tr>
+                                <td> <img  src="./img/{{img}}" alt="your image" /></td>
+                                <td>Title: <a href="#">{{name}}</a></td>
+                                <td>Author:  <a href="#">{{author}}</a></td>
+                                <td>Type:   <a href="">{{type}}</a></td>
+                                <td>Category:  <a href="#">{{category}}</a></td>
+                                <td>Do not edit</td>
+                                </tr>
+                    {{/each}}
+            {{/if}}    
+         </table>
+    </div>
+</div>

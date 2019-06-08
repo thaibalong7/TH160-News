@@ -2,20 +2,64 @@
         
         <div class="editor-div">
             <h1>Soạn bài viết</h1>
+
             <h2>Ảnh đại diện bài viết: </h2>
             <img id="blah" src="./img/default.png" alt="your image" />
             <label class="custom-file-upload">
-            <input type="file" onchange="readURL(this);"/>
+                 <input type="file" onchange="readURL(this);"/>
             Chọn ảnh
             </label>
+
+             <h2>Tiêu đề bài viết: </h2>
+            <input type="text" placeholder="Tiêu đề"/>
+            
+            <h2>Tóm tắt: </h2>
+            <div id="editor1"></div>
+
             <h2>Nội dung: </h2>
             <div id="editor"></div>
+
+            <table>
+                <tr>
+                    <td><h2>Chọn chuyên mục:</h2></td>
+                    <td>
+                        <select onchange="val()" id="select_id">
+                            <option value="none">Chuyên mục</option>
+                            {{#each category}}
+                                <option value={{value}}>{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td><h2>Chọn chuyên mục phụ: </h2></td>
+                    <td>
+                        <select id = "select_id_2" onchange="val2()">
+                        </select>
+                    </td>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <td><h2>Tag:</h2></td>
+                    <td><select id="select_id_3">
+                            {{#each tag}}
+                                <option value={{.}}>{{.}}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td><button id = "btn_add_tag" onclick="val3()">+</button></td>
+                </tr>
+            </table>
+            <div>
+                <h2>Danh sách tag đã thêm: </h2>
+                <div id = "list_tag">
+                </div>
+            </div>
+            </table>
             <div class="button-complete">
-                 <button>Hoàn thành</button>
+                 <button onclick="val4()">Hoàn thành</button>
             </div>
         </div>
-                
-           
        </tr>
    </table>
          
@@ -49,6 +93,13 @@
         },
         theme: 'snow'
         });
+
+        var quill = new Quill('#editor1', {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'snow'
+        });
 	</script>
     <script>
         function readURL(input) {
@@ -65,6 +116,86 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+    </script>
+    <script type="text/javascript">
+        function val() {
+            e = document.getElementById("select_id");
+            var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 1
+            var value = e.value; // giá trị được chọn ở chuyên mục cấp 1
+            var s = new String("");
+           
+            if(value === 'dg') 
+            {
+                var sub = new String("");
+                sub = sub + "{{#each dg}}<option value={{.}}>{{.}}</option>{{/each}}";
+                s = sub;
+            }
+            else if(value === 'tt') 
+            {
+                var sub = new String("");
+                sub = sub + "{{#each tt}}<option value={{.}}>{{.}}</option>{{/each}}";
+                s = sub;
+            }
+            else if (value === 'tv') 
+            {
+                var sub = new String("");
+                sub = sub + "{{#each tv}}<option value={{.}}>{{.}}</option>{{/each}}";
+                s = sub;
+            }
+            document.getElementById("select_id_2").innerHTML = s;  
+        }
+
+        function val2()
+        {
+            e = document.getElementById("select_id_2");
+            var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 2
+            var value = e.value; // giá trị được chọn ở chuyên mục cấp 1
+            console.log(strUser);
+        }
+        var list_tag = []
+        function val3()
+        {
+            e = document.getElementById("select_id_3");
+            var strUser = e.options[e.selectedIndex].text; 
+            var value = e.value; 
+            var s = new String("");
+            if(list_tag.length == 0)
+                list_tag.push(strUser);
+            else
+            {
+                let count = 1;
+                for(let i = 0;i<list_tag.length;i++)
+                {
+                    if(list_tag[i] === strUser)
+                        {
+                            count = -1;
+                            break;
+                        }
+                }
+                if(count === 1) list_tag.push(strUser);
+            }
+            for(let i=0;i<list_tag.length;i++)
+            {
+                s = s + "<label id = 'label" + i +"'>"  +list_tag[i]+"<button id ='"+ i +"' onClick = 'val4(this.id)'>X</button></label>"+'\n';
+            }
+            console.log(s);
+            document.getElementById("list_tag").innerHTML = s; 
+        }
+        function val4(clicked_id)
+        {
+            var s1 = clicked_id;
+            var ss = new String("label"+s1);
+            var sss = document.getElementById(ss).textContent;
+            var subsss = sss.substring(0,sss.length-1);
+            list_tag.pop(subsss);
+            var s = new String("");
+            for(let i=0;i<list_tag.length;i++)
+            {
+                s = s + "<label id = 'label" + i +"'>"  +list_tag[i]+"<button id ='"+ i +"' onClick = 'val4(this.id)'>X</button></label>"+'\n';
+            }
+            console.log(s);
+            document.getElementById("list_tag").innerHTML = s; 
+        }
     </script>
 
 </div>

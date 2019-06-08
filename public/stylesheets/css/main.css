@@ -239,6 +239,14 @@ iframe {
   display: block;
 }
 
+.login100-form .error {
+  color: #c80000;
+}
+
+.select-type option {
+  color: black
+}
+
 
 /*------------------------------------------------------------------
 [ Input ]*/

@@ -2,7 +2,7 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
 			<div class="wrap-login100">
-				<form class="login100-form validate-form">
+				<form class="login100-form validate-form" id="login-form">
 					<span class="login100-form-logo">
 						<i class="zmdi zmdi-landscape"></i>
 					</span>
@@ -11,72 +11,86 @@
 						Log in
 					</span>
 
+					<div class="wrap-input100 validate-input select-type" data-validate="Enter username">
+						<select id="select-type" class="input100" name="type" placeholder="Type">
+							<option value="user">User</option>
+							<option value="writer">Writer</option>
+							<option value="editor">Editor</option>
+							<option value="administrator">Administrator</option>
+						</select>
+						<span class="focus-input100" data-placeholder=""></span>
+					</div>
+
 					<div class="wrap-input100 validate-input" data-validate="Enter username">
-						<input class="input100" type="text" name="username" placeholder="Username">
+						<input class="input100" type="text" name="username" placeholder="Username" required>
 						<span class="focus-input100" data-placeholder=""></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
+						<input class="input100" type="password" name="pass" placeholder="Password" required>
 						<span class="focus-input100" data-placeholder=""></span>
 					</div>
 
-					<div class="contact100-form-checkbox">
+
+					{{!-- <div class="contact100-form-checkbox">
 						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
 						<label class="label-checkbox100" for="ckb1">
 							Remember me
 						</label>
-					</div>
+					</div> --}}
 
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Login
-						</button>
+						<input type="submit" class="login100-form-btn" value="Đăng nhập">
+						</input>
 					</div>
+
 
 					<div class="text-center p-t-90">
 						<a class="txt1" href="/forgot-password">
 							Forgot Password?
 						</a>
 					</div>
+
 				</form>
 			</div>
 		</div>
 	</div>
 	<div>
-		<!--===============================================================================================-->
-<!--===============================================================================================-->
-	<script src="stylesheets/vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-	<script src="stylesheets/vendor/bootstrap/js/popper.js"></script>
-<!--===============================================================================================-->
-	<script src="stylesheets/vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="stylesheets/vendor/daterangepicker/moment.min.js"></script>
-	<script src="stylesheets/vendor/daterangepicker/daterangepicker.js"></script>
-<!--===============================================================================================-->
-	<script src="stylesheets/vendor/countdowntime/countdowntime.js"></script>
-<!--===============================================================================================-->
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="stylesheets/images/icons/favicon.ico">
 
-	<link rel="stylesheet" type="text/css" href="stylesheets/fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylesheets/vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="stylesheets/vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylesheets/vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylesheets/vendor/select2/select2.min.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="stylesheets/vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylesheets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="stylesheets/css/main.css">
-<!--===============================================================================================-->
+		<script src="js/log-in.js"></script>
+		<!--===============================================================================================-->
+		<!--===============================================================================================-->
+		<script src="stylesheets/vendor/animsition/js/animsition.min.js"></script>
+		<!--===============================================================================================-->
+		<script src="stylesheets/vendor/bootstrap/js/popper.js"></script>
+		<!--===============================================================================================-->
+		<script src="stylesheets/vendor/select2/select2.min.js"></script>
+		<!--===============================================================================================-->
+		<script src="stylesheets/vendor/daterangepicker/moment.min.js"></script>
+		<script src="stylesheets/vendor/daterangepicker/daterangepicker.js"></script>
+		<!--===============================================================================================-->
+		<script src="stylesheets/vendor/countdowntime/countdowntime.js"></script>
+		<!--===============================================================================================-->
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--===============================================================================================-->
+		<link rel="icon" type="image/png" href="stylesheets/images/icons/favicon.ico">
+
+		<link rel="stylesheet" type="text/css" href="stylesheets/fonts/iconic/css/material-design-iconic-font.min.css">
+		<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="stylesheets/vendor/animate/animate.css">
+		<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="stylesheets/vendor/css-hamburgers/hamburgers.min.css">
+		<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="stylesheets/vendor/animsition/css/animsition.min.css">
+		<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="stylesheets/vendor/select2/select2.min.css">
+		<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="stylesheets/vendor/daterangepicker/daterangepicker.css">
+		<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="stylesheets/css/util.css">
+		<link rel="stylesheet" type="text/css" href="stylesheets/css/main.css">
+		<!--===============================================================================================-->
 	</div>
 	<div id="dropDownSelect1"></div>
 </div>

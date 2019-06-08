@@ -81,6 +81,27 @@ function formatDate(days) {
     return [year, month, day].join('-');
 }
 
+// Random number from 0 to length
+const randomNumber = (length) => {
+    return Math.floor(Math.random() * length)
+}
+
+const generateIDUser = async (length) => {
+    const possible =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let text = "";
+
+    for (let i = 0; i < length; i++) {
+        text += possible.charAt(randomNumber(possible.length));
+    }
+    return text;
+}
+
+const validateEmail = async (email) => {
+    var Regex = /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@[*[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+]*/
+    return Regex.test(email);
+}
+
 module.exports = {
     slugify,
     toStringDatetime,
@@ -89,5 +110,7 @@ module.exports = {
     fixNews,
     addLinkTagToListTagNew,
     fixListComments,
-    formatDate
+    formatDate,
+    generateIDUser,
+    validateEmail
 }

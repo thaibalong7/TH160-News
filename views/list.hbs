@@ -1,57 +1,57 @@
-<div class = "list_cata">
-    <div >
-        <div > 
-            <div >
+<div class="list_cata">
+    <div>
+        <div>
+            <div>
                 <div class="col-md-12">
                     <div class="row">
                         <div>
                             <div class="list-cata">
                                 <h1>Danh sách bài viết {{status}}</h1>
-                                    {{#if edit}}
-                                            <div id="post-list-category">
-                                                {{#each news}}
-                                                <div class="col-md-12">
-                                                    <div class="post post-row">
-                                                        <a class="post-img" ><img src="./img/{{img}}"></a>
-                                                        <div class="post-body">
-                                                            <div class="post-meta">
-                                                                <a class="post-category" >{{type}}</a>
-                                                                <a class="post-category cat-4" >{{category}}</a>
-                                                                <span class="post-date">{{publicAt}}</span>
-                                                                <a class="post-category cat-2">Chỉnh sửa</a>
-                                                            </div>
-                                                            <h3 class="post-title"><a >{{name}}</a></h3>
-                                                            <p class="post-abstract">{{abstract}}</p>
-                                                        </div>
-                                                    </div>
+                                {{#if edit}}
+                                <div id="post-list-category">
+                                    {{#each news}}
+                                    <div class="col-md-12">
+                                        <div class="post post-row">
+                                            <a class="post-img"><img src="./img/{{img}}"></a>
+                                            <div class="post-body">
+                                                <div class="post-meta">
+                                                    <a class="post-category">{{type}}</a>
+                                                    <a class="post-category cat-4">{{category}}</a>
+                                                    <span class="post-date">{{publicAt}}</span>
+                                                    <a class="post-category cat-2">Chỉnh sửa</a>
                                                 </div>
-                                                {{/each}}
+                                                <h3 class="post-title"><a>{{name}}</a></h3>
+                                                <p class="post-abstract">{{abstract}}</p>
                                             </div>
-                                    {{else}}
-                                            <div id="post-list-category">
-                                                {{#each news}}
-                                                <div class="col-md-12">
-                                                    <div class="post post-row">
-                                                        <a class="post-img" ><img src="./img/{{img}}"></a>
-                                                        <div class="post-body">
-                                                            <div class="post-meta">
-                                                                <a class="post-category" >{{type}}</a>
-                                                                <a class="post-category cat-4" >{{category}}</a>
-                                                                <span class="post-date">{{publicAt}}</span>
-                                                                
-                                                            </div>
-                                                            <h3 class="post-title"><a >{{name}}</a></h3>
-                                                            <p class="post-abstract">{{abstract}}</p>
-                                                        </div>
-                                                    </div>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                                {{else}}
+                                <div id="post-list-category">
+                                    {{#each news}}
+                                    <div class="col-md-12">
+                                        <div class="post post-row">
+                                            <a class="post-img"><img src="./img/{{img}}"></a>
+                                            <div class="post-body">
+                                                <div class="post-meta">
+                                                    <a class="post-category">{{type}}</a>
+                                                    <a class="post-category cat-4">{{category}}</a>
+                                                    <span class="post-date">{{publicAt}}</span>
+
                                                 </div>
-                                                {{/each}}
+                                                <h3 class="post-title"><a>{{name}}</a></h3>
+                                                <p class="post-abstract">{{abstract}}</p>
                                             </div>
-                                    {{/if}}    
-                                
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                </div>
+                                {{/if}}
+
                             </div>
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </div>
         </div>

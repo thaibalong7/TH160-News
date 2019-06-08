@@ -187,7 +187,10 @@
             var ss = new String("label"+s1);
             var sss = document.getElementById(ss).textContent;
             var subsss = sss.substring(0,sss.length-1);
-            list_tag.pop(subsss);
+            var index = list_tag.indexOf(subsss);
+            if (index > -1) {
+                list_tag.splice(index, 1);
+            }
             var s = new String("");
             for(let i=0;i<list_tag.length;i++)
             {

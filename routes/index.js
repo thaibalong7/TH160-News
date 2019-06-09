@@ -36,16 +36,16 @@ router.get('/log-in', function (req, res, next) {
 })
 
 router.get('/change-password', function (req, res, next) {
-	res.render('changepassword', { title: 'Express' });
+	res.render('changepassword', { title: 'Đổi mật khẩu' });
 })
 
 router.get('/forgot-password', function (req, res, next) {
-	res.render('forgotpassword', { title: 'Express' });
+	res.render('forgotpassword', { title: 'Quên mật khẩu' });
 })
 
 router.get('/writeredit', function (req, res, next) {
 	res.render('WriterEdit', { 
-		title: 'Express',
+		title: 'Soạn bài viết',
 		category: [{name:'Đánh giá',value :"dg"},{name: 'Tin tức', value:"tt" }, {name:"Tư vấn", value: "tv"}],
 		dg: ['Di động','Laptop','Máy tính bảng','Máy ảnh số','Tivi'],
 		tt: ['An ninh mạng', 'Thị trường', 'kinh doanh', 'Sản phẩm mới', 'Xe'],
@@ -56,18 +56,13 @@ router.get('/writeredit', function (req, res, next) {
 
 router.get('/edit', function (req, res, next) {
 	res.render('WriterEdit', { 
-		title: 'Express'
+		title: 'Chỉnh sửa'
 	});
-})
-
-router.get('/list', function (req, res, next) {
-	res.render('list', { title: 'Express'
-});
 })
 
 router.get('/listdxb', function (req, res, next) {
 	res.render('list', {
-		title: 'Express',
+		title: 'Đã xuất bản',
 		news: [{name: 'ĐÁNH GIÁ SAMSUNG GALAXY A70: DÀNH CHO NHỮNG "CƯ DÂN MẠNG THỰC THỤ"', img: 'samsung.png', 
 		author: 'Lê Hữu Lý', type: "Đánh giá",publicAt: "1/2/2019",category: "Di Động", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
 		{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
@@ -83,7 +78,7 @@ router.get('/listdxb', function (req, res, next) {
 
 router.get('/listcxb', function (req, res, next) {
 	res.render('list', {
-		title: 'Express',
+		title: 'Chưa xuất bản',
 		news: [{name: 'MICROSOFT CẢNH BÁO VẪN CÒN 1 TRIỆU MÁY TÍNH CHƯA “VÁ” CÁC LỖ HỔNG BẢO MẬT WINDOWS NGHIÊM TRỌNG', img: 'samsung.png', 
 		author: 'Lê Hữu Lý', type: "Đánh giá",publicAt: "1/2/2019", category: "Laptop", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
 		{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
@@ -99,7 +94,7 @@ router.get('/listcxb', function (req, res, next) {
 
 router.get('/listbtc', function (req, res, next) {
 	res.render('list', { 
-		title: 'Express',
+		title: 'Bị từ chối',
 		news: [{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
 		author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
 		{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
@@ -116,7 +111,7 @@ router.get('/listbtc', function (req, res, next) {
 })
 
 router.get('/listcdd', function (req, res, next) {
-	res.render('list', { 
+	res.render('Chưa được duyệt', { 
 		title: 'Express',
 		news: [
 		{name: 'BỎ 10.000 USD MUA CAMERA CÓ ĐỘ PHÂN GIẢI 100 MEGAPIXEL, CÓ ĐÁNG KHÔNG?', img: 'samsung.png', 
@@ -134,13 +129,13 @@ router.get('/listcdd', function (req, res, next) {
 })
 
 router.get('/updateinfo',function(req,res,next){
-	res.render('UpdateInfo',{title: 'Express'});
+	res.render('UpdateInfo',{title: 'Cập nhật thông tin'});
 })
 
 
 router.get('/editor-danhgia',function(req,res,next){
 	res.render('editor',{
-		title: 'Express',
+		title: 'Editor đánh giá',
 		category: [{name:'Đánh giá',value :"dg"}],
 		chuyenmuc: ['Di động','Laptop','Máy tính bảng','Máy ảnh số','Tivi'],
 		tag: ['SAMSUNG','LG','PANASONIC','MICROSOFT','BẢO MẬT', 'Lee Le','HUAWEI', 'OPPO', 'XIAOMI'],
@@ -158,7 +153,7 @@ router.get('/editor-danhgia',function(req,res,next){
 
 router.get('/editor-tuvan',function(req,res,next){
 	res.render('editor',{
-		title: 'Express',
+		title: 'Editor tư vấn',
 		category: [{name:'Tư vấn',value :"tv"}],
 		chuyenmuc: ['Ảnh số','Đồ gia dụng','Bảo mật', 'Di động', 'Máy tính'],
 		tag: ['SAMSUNG','LG','PANASONIC','MICROSOFT','BẢO MẬT', 'Lee Le','HUAWEI', 'OPPO', 'XIAOMI'],
@@ -177,7 +172,7 @@ router.get('/editor-tuvan',function(req,res,next){
 
 router.get('/editor-tintuc',function(req,res,next){
 	res.render('editor',{
-		title: 'Express',
+		title: 'Editor tin tức',
 		category: [{name:'Tin tức',value :"tt"}],
 		chuyenmuc: ['An ninh mạng', 'Thị trường', 'kinh doanh', 'Sản phẩm mới', 'Xe'],
 		tag: ['SAMSUNG','LG','PANASONIC','MICROSOFT','BẢO MẬT', 'Lee Le','HUAWEI', 'OPPO', 'XIAOMI'],

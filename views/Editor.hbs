@@ -19,8 +19,8 @@
                                                     <a class="post-category" href="#">{{type}}</a>
                                                     <a class="post-category cat-4" href="#">{{category}}</a>
                                                     <span class="post-date">{{publicAt}}</span>
-                                                    <a class="post-category cat-3" href="#">Duyệt</a>
-                                                     <a class="post-category cat-2" href="#">Từ chối</a>
+                                                    <button type="button" class="post-category cat-3" data-toggle="modal" data-target="#myModal-tuchoi">Từ chối</button>
+                                                    <button type="button" class="post-category cat-2" data-toggle="modal" data-target="#myModal-duyet">Duyệt</button>
                                                 </div>
                                                 <h3 class="post-title"><a>{{name}}</a></h3>
                                                 <p class="post-abstract">{{abstract}}</p>
@@ -35,5 +35,153 @@
                 </div>
             </div>
         </div>
+
+         
+
+        <div class="modal fade" id="myModal-tuchoi" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title">Lý do từ chối vài biết: </h2>
+                    </div>
+                    <div class="modal-body">
+                    <div id="editor"></div>
+                    </div>
+                    <div class="modal-footer">   
+                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn-modal-send">Gửi</button>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+		<script>
+		var toolbarOptions = [
+            ['bold', 'italic', 'underline', 'strike'],        
+            ['blockquote', 'code-block'],
+
+            [{ 'header': 1 }, { 'header': 2 }],               
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'script': 'sub'}, { 'script': 'super' }],      
+            [{ 'indent': '-1'}, { 'indent': '+1' }],          
+            [{ 'direction': 'rtl' }],                         
+
+            [{ 'size': ['small', false, 'large', 'huge'] }],  
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+            [{ 'color': [] }, { 'background': [] }],          
+            [{ 'font': [] }],
+            [{ 'align': [] }],
+            ['clean']                                         
+];
+
+        var quill = new Quill('#editor', {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'snow'
+        });
+	</script>
+     <div class="modal fade" id="myModal-duyet" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title">Bạn đồng ý duyệt bài viết này?  </h2>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Bạn có muốn điều chỉnh lại chuyên mục và các nhãn của bài viết này?</h3>
+                        <table>
+                            <tr>
+                                <td><h4>Chọn chuyên mục</h4></td>
+                                <td> <select id="select_id">
+                                    <option value="none">Chuyên mục</option>
+                                    {{#each chuyenmuc}}
+                                        <option value={{.}}>{{.}}</option>
+                                    {{/each}}
+                        </select></td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td><h4>Tag:</h4></td>
+                                <td><select id="select_id_3">
+                                        {{#each tag}}
+                                            <option value={{.}}>{{.}}</option>
+                                        {{/each}}
+                                    </select>
+                                </td>
+                                <td><button id = "btn_add_tag" onclick="val3()">+</button></td>
+                            </tr>
+                        </table>
+                         <div>
+                            <h4>Danh sách tag đã thêm: </h4>
+                            <div id = "list_tag">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">   
+                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn-modal-send">Duyệt</button>
+                </div>
+            </div>
+        </div>
+        <script>
+        var list_tag = []
+        function val3()
+        {
+            e = document.getElementById("select_id_3");
+            var strUser = e.options[e.selectedIndex].text; 
+            var value = e.value; 
+            var s = new String("");
+            if(list_tag.length == 0)
+                list_tag.push(strUser);
+            else
+            {
+                let count = 1;
+                for(let i = 0;i<list_tag.length;i++)
+                {
+                    if(list_tag[i] === strUser)
+                        {
+                            count = -1;
+                            break;
+                        }
+                }
+                if(count === 1) list_tag.push(strUser);
+            }
+            for(let i=0;i<list_tag.length;i++)
+            {
+                s = s + "<label id = 'label" + i +"'>"  +list_tag[i]+"<button id ='"+ i +"' onClick = 'val4(this.id)'>X</button></label>"+'\n';
+            }
+            console.log(s);
+            document.getElementById("list_tag").innerHTML = s; 
+        }
+        function val4(clicked_id)
+        {
+            var s1 = clicked_id;
+            var ss = new String("label"+s1);
+            var sss = document.getElementById(ss).textContent;
+            var subsss = sss.substring(0,sss.length-1);
+            var index = list_tag.indexOf(subsss);
+            if (index > -1) {
+                list_tag.splice(index, 1);
+            }
+            var s = new String("");
+            for(let i=0;i<list_tag.length;i++)
+            {
+                s = s + "<label id = 'label" + i +"'>"  +list_tag[i]+"<button id ='"+ i +"' onClick = 'val4(this.id)'>X</button></label>"+'\n';
+            }
+            console.log(s);
+            document.getElementById("list_tag").innerHTML = s; 
+        }
+        </script>
 </div>

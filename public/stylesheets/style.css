@@ -1466,6 +1466,11 @@ input[type="file"] {
     height: 200px;
 }
 
+.list-cata button{
+    outline: none;
+    border: none;
+}
+
 .table-writer
 {
     border: 1px solid black;
@@ -1498,3 +1503,58 @@ input[type="file"] {
     margin-top: 10px;
 }
 
+.modal-footer
+{
+    text-align: center;
+}
+
+.btn-modal-cancel{
+    background-color: #ce6161;
+    outline: none;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    width: 25%;
+    height: 5%;
+}
+
+.btn-modal-send{
+    background-color: #0aa778;
+    outline: none;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    width: 25%;
+    height: 5%;
+}
+
+
+.modal-body select
+{
+    margin-left: 10px;
+    height: 40px;
+    width: 188px;
+    outline: none;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.modal-body div label{
+    border: 1px solid rgb(145, 144, 144);
+    border-radius: 25px;
+    padding: 8px;
+    margin-left: 5px;
+}
+.modal-body div label button{
+    border-radius: 25px;
+    border: none;
+    background-color: white ;
+    outline: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.modal-body table label button:hover
+{
+    color: #586ceb;
+}

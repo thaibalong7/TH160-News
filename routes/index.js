@@ -142,7 +142,7 @@ router.get('/editor-danhgia',function(req,res,next){
 	res.render('editor',{
 		title: 'Express',
 		category: [{name:'Đánh giá',value :"dg"}],
-		dg: ['Di động','Laptop','Máy tính bảng','Máy ảnh số','Tivi'],
+		chuyenmuc: ['Di động','Laptop','Máy tính bảng','Máy ảnh số','Tivi'],
 		tag: ['SAMSUNG','LG','PANASONIC','MICROSOFT','BẢO MẬT', 'Lee Le','HUAWEI', 'OPPO', 'XIAOMI'],
 		news: [
 			{name: 'BỎ 10.000 USD MUA CAMERA CÓ ĐỘ PHÂN GIẢI 100 MEGAPIXEL, CÓ ĐÁNG KHÔNG?', img: 'samsung.png', 
@@ -160,7 +160,7 @@ router.get('/editor-tuvan',function(req,res,next){
 	res.render('editor',{
 		title: 'Express',
 		category: [{name:'Tư vấn',value :"tv"}],
-		tv: ['Ảnh số','Đồ gia dụng','Bảo mật', 'Di động', 'Máy tính'],
+		chuyenmuc: ['Ảnh số','Đồ gia dụng','Bảo mật', 'Di động', 'Máy tính'],
 		tag: ['SAMSUNG','LG','PANASONIC','MICROSOFT','BẢO MẬT', 'Lee Le','HUAWEI', 'OPPO', 'XIAOMI'],
 		news: [
 			{name: 'BỎ 10.000 USD MUA CAMERA CÓ ĐỘ PHÂN GIẢI 100 MEGAPIXEL, CÓ ĐÁNG KHÔNG?', img: 'samsung.png', 
@@ -179,7 +179,7 @@ router.get('/editor-tintuc',function(req,res,next){
 	res.render('editor',{
 		title: 'Express',
 		category: [{name:'Tin tức',value :"tt"}],
-		tt: ['An ninh mạng', 'Thị trường', 'kinh doanh', 'Sản phẩm mới', 'Xe'],
+		chuyenmuc: ['An ninh mạng', 'Thị trường', 'kinh doanh', 'Sản phẩm mới', 'Xe'],
 		tag: ['SAMSUNG','LG','PANASONIC','MICROSOFT','BẢO MẬT', 'Lee Le','HUAWEI', 'OPPO', 'XIAOMI'],
 		news: [
 			{name: 'BỎ 10.000 USD MUA CAMERA CÓ ĐỘ PHÂN GIẢI 100 MEGAPIXEL, CÓ ĐÁNG KHÔNG?', img: 'samsung.png', 

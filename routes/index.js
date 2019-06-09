@@ -76,7 +76,8 @@ router.get('/listdxb', function (req, res, next) {
 		author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
 		{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
 		author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."}],
-		status: "đã xuất bản"
+		status: "đã xuất bản",
+		tag: ['SAMSUNG','LG','PANASONIC','MICROSOFT','BẢO MẬT', 'Lee Le','HUAWEI', 'OPPO', 'XIAOMI']
 	});
 })
 
@@ -91,7 +92,8 @@ router.get('/listcxb', function (req, res, next) {
 		author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
 		{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
 		author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."}],
-		status: "đã được duyệt và chờ xuất bản"
+		status: "đã được duyệt và chờ xuất bản",
+		tag: ['SAMSUNG','LG','PANASONIC','MICROSOFT','BẢO MẬT', 'Lee Le','HUAWEI', 'OPPO', 'XIAOMI']
 	});
 })
 
@@ -108,7 +110,8 @@ router.get('/listbtc', function (req, res, next) {
 		author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."}
 	],
 		edit: 'true',
-		status: "bị từ chối"
+		status: "bị từ chối",
+		tag: ['SAMSUNG','LG','PANASONIC','MICROSOFT','BẢO MẬT', 'Lee Le','HUAWEI', 'OPPO', 'XIAOMI']
 	});
 })
 
@@ -116,7 +119,7 @@ router.get('/listcdd', function (req, res, next) {
 	res.render('list', { 
 		title: 'Express',
 		news: [
-			{name: 'BỎ 10.000 USD MUA CAMERA CÓ ĐỘ PHÂN GIẢI 100 MEGAPIXEL, CÓ ĐÁNG KHÔNG?', img: 'samsung.png', 
+		{name: 'BỎ 10.000 USD MUA CAMERA CÓ ĐỘ PHÂN GIẢI 100 MEGAPIXEL, CÓ ĐÁNG KHÔNG?', img: 'samsung.png', 
 		author: 'Lê Hữu Lý', type: "Đánh giá",publicAt: "1/2/2019", category: "Ảnh Số", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
 		{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
 		author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
@@ -125,7 +128,68 @@ router.get('/listcdd', function (req, res, next) {
 		{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
 		author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."}],
 		edit: 'true',
-		status: "chưa được duyệt"
+		status: "chưa được duyệt",
+		tag: ['SAMSUNG','LG','PANASONIC','MICROSOFT','BẢO MẬT', 'Lee Le','HUAWEI', 'OPPO', 'XIAOMI']
+	});
+})
+
+router.get('/updateinfo',function(req,res,next){
+	res.render('UpdateInfo',{title: 'Express'});
+})
+
+
+router.get('/editor-danhgia',function(req,res,next){
+	res.render('editor',{
+		title: 'Express',
+		category: [{name:'Đánh giá',value :"dg"}],
+		dg: ['Di động','Laptop','Máy tính bảng','Máy ảnh số','Tivi'],
+		tag: ['SAMSUNG','LG','PANASONIC','MICROSOFT','BẢO MẬT', 'Lee Le','HUAWEI', 'OPPO', 'XIAOMI'],
+		news: [
+			{name: 'BỎ 10.000 USD MUA CAMERA CÓ ĐỘ PHÂN GIẢI 100 MEGAPIXEL, CÓ ĐÁNG KHÔNG?', img: 'samsung.png', 
+			author: 'Lê Hữu Lý', type: "Đánh giá",publicAt: "1/2/2019", category: "Ảnh Số", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
+			{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
+			author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
+			{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
+			author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
+			{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
+			author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."}]
+	});
+})
+
+router.get('/editor-tuvan',function(req,res,next){
+	res.render('editor',{
+		title: 'Express',
+		category: [{name:'Tư vấn',value :"tv"}],
+		tv: ['Ảnh số','Đồ gia dụng','Bảo mật', 'Di động', 'Máy tính'],
+		tag: ['SAMSUNG','LG','PANASONIC','MICROSOFT','BẢO MẬT', 'Lee Le','HUAWEI', 'OPPO', 'XIAOMI'],
+		news: [
+			{name: 'BỎ 10.000 USD MUA CAMERA CÓ ĐỘ PHÂN GIẢI 100 MEGAPIXEL, CÓ ĐÁNG KHÔNG?', img: 'samsung.png', 
+			author: 'Lê Hữu Lý', type: "Đánh giá",publicAt: "1/2/2019", category: "Ảnh Số", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
+			{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
+			author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
+			{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
+			author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
+			{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
+			author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."}]
+	});
+})
+
+
+router.get('/editor-tintuc',function(req,res,next){
+	res.render('editor',{
+		title: 'Express',
+		category: [{name:'Tin tức',value :"tt"}],
+		tt: ['An ninh mạng', 'Thị trường', 'kinh doanh', 'Sản phẩm mới', 'Xe'],
+		tag: ['SAMSUNG','LG','PANASONIC','MICROSOFT','BẢO MẬT', 'Lee Le','HUAWEI', 'OPPO', 'XIAOMI'],
+		news: [
+			{name: 'BỎ 10.000 USD MUA CAMERA CÓ ĐỘ PHÂN GIẢI 100 MEGAPIXEL, CÓ ĐÁNG KHÔNG?', img: 'samsung.png', 
+			author: 'Lê Hữu Lý', type: "Đánh giá",publicAt: "1/2/2019", category: "Ảnh Số", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
+			{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
+			author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
+			{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
+			author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
+			{name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png', 
+			author: 'Lê Hữu Lý', type: "Đánh giá" ,publicAt: "1/2/2019",category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."}]
 	});
 })
 

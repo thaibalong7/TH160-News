@@ -10,7 +10,6 @@
         for (var i = 0; i < dataArray.length; i++) {
             data[dataArray[i].name] = dataArray[i].value;
         }
-        console.log(data)
 
         if (data.type === 'user') {
             //call api

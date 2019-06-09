@@ -108,6 +108,54 @@
 
     setStickyPos();
 
+    function show_dropdown_logged() {
+        $("#check-login").append(`
+        <button class="drop-login"><img src="/img/avatar.png" alt="Avatar" style="width:50px;">${localStorage.getItem('user:name')}</button>
+        <div class="dropdown-content">
+            <a href="/profile">Profile</a>
+            <a href="/change-password">Đổi mật khẩu</a>
+            <p id="log-out" href="#">Đăng xuất</p>
+        </div>`)
+        $("#log-out").on('click', function (e) {
+            e.preventDefault();
+            localStorage.setItem('isUserLogin', false);
+            localStorage.removeItem('user:name');
+            localStorage.removeItem('user:email');
+            localStorage.removeItem('user:birthdate');
+            document.cookie = "token=thisistoken; expires = Thu, 01 Jan 1970 00:00:00 GMT" //delete cookie
+            location.reload();
+        })
+    }
+
+    function show_dropdown_not_logged() {
+        $("#check-login").append(`
+        <a id="go-log-in" class="drop-login" href="/log-in">Đăng nhập</a>
+        `)
+    }
+
+    function check_login_user() {
+        if (localStorage.getItem('isUserLogin') == 'true') {
+            $.ajax("/api/users/me", {
+                type: 'GET',
+                dataType: 'json'
+            }).done(res => {
+                localStorage.setItem('isUserLogin', true);
+                localStorage.setItem('user:name', res.profile.name);
+                localStorage.setItem('user:email', res.profile.email);
+                localStorage.setItem('user:birthdate', res.profile.birthdate);
+                show_dropdown_logged(); //đã đăng nhập
+            }).fail(function (xhr, status, error) {
+                show_dropdown_not_logged(); //chưa đăng nhập
+            })
+        }
+        else {
+            show_dropdown_not_logged(); //chưa đăng nhập
+        }
+    }
+
+    check_login_user();
+
+
     if (location.pathname.includes("/category/") || location.pathname.includes("/news/") || location.pathname.includes("/tag/")) {
         const post_widget = $("#post-widget");
         if (post_widget) {

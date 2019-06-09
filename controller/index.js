@@ -1,5 +1,6 @@
 const db = require('../models');
 const helper = require('../helper');
+const localStorage = require('localStorage');
 
 async function getNav() {
     const nav = [];

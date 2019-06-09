@@ -33,7 +33,7 @@ exports.register = async (req, res) => {
                 const new_user = {
                     id: id_user,
                     email: req.body.email,
-                    name: req.body.email,
+                    name: req.body.name,
                     birthdate: new Date(req.body.birthdate),
                     password: bcrypt.hashSync(req.body.password, null, null).toString()
                 }

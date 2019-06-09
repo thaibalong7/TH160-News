@@ -35,12 +35,15 @@
 
 	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-	<link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+	<link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet"
+	 type="text/css" />
 	<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
 
 	<style>
+		article, aside, figure, footer, header, hgroup, 
 	article, aside, figure, footer, header, hgroup, 
+		article, aside, figure, footer, header, hgroup, 
 	menu, nav, section { display: block; }
 	</style>
 </head>
@@ -84,13 +87,13 @@
 					<!-- search & aside toggle -->
 					<div class="nav-btns">
 						<button class="search-btn"><i class="fa fa-search"></i></button>
-						<div class="dropdown">
-							<button class="drop-login"><img src="/img/avatar.png" alt="Avatar" style="width:50px;">Name</button>
+						<div class="dropdown" id="check-login">
+							{{!-- <button class="drop-login"><img src="/img/avatar.png" alt="Avatar" style="width:50px;">Name</button>
 							<div class="dropdown-content">
 								<a href="/log-in">Log in</a>
 								<a href="/change-password">Change password</a>
-								<a href="/forgot-password">Forgot password</a>
-							</div>
+								<p id="log-out" href="#">Đăng xuất</p>
+							</div> --}}
 						</div>
 
 						<div class="search-form">

@@ -1,96 +1,36 @@
-<div>
-	<div class="limiter">
-		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
-			<div class="wrap-login100">
-				<form class="login100-form validate-form">
-					<span class="login100-form-logo">
-						<i class="zmdi zmdi-landscape"></i>
-					</span>
-
-					<span class="login100-form-title p-b-34 p-t-27">
-						Cập nhật thông tin
-					</span>
-
-                    <div class="wrap-input100 validate-input">
-                        <label>Họ và tên: </label>
-						<input id = "iphvt" class="input100" type="text"  placeholder="Họ và tên">
-					</div>
-
-					<div class="wrap-input100 validate-input">
-                        <label>Email: </label>
-						<input id = "ipeml" class="input100" type="text" placeholder="Email">
-					</div>
-
-                    {{#if isWriter}}
-                        <div class="wrap-input100 validate-input">
-                        <label>Bút danh: </label>
-						<input id = "ipbdh" class="input100" type="text" placeholder="Bút danh">
-					    </div>
-                    {{/if}}
-
-                    <div class="wrap-input100 validate-input">
-                        <label>Ngày tháng năm sinh:</label>
-						<input id = "ipntn" class="input100" type="date" placeholder="Email">
-					</div>
-
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" onclick="val()">
-							Submit
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div>
-		<!--===============================================================================================-->
-<!--===============================================================================================-->
-	<script src="stylesheets/vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-	<script src="stylesheets/vendor/bootstrap/js/popper.js"></script>
-<!--===============================================================================================-->
-	<script src="stylesheets/vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="stylesheets/vendor/daterangepicker/moment.min.js"></script>
-	<script src="stylesheets/vendor/daterangepicker/daterangepicker.js"></script>
-<!--===============================================================================================-->
-	<script src="stylesheets/vendor/countdowntime/countdowntime.js"></script>
-<!--===============================================================================================-->
-	<script src="stylesheets/js/main.js"></script>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="stylesheets/images/icons/favicon.ico">
-
-	<link rel="stylesheet" type="text/css" href="stylesheets/fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylesheets/vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="stylesheets/vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylesheets/vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylesheets/vendor/select2/select2.min.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="stylesheets/vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="stylesheets/css/util.css">
-	<link rel="stylesheet" type="text/css" href="stylesheets/css/main.css">
-<!--===============================================================================================-->
-	</div>
-	<div id="dropDownSelect1"></div>
-    <script>
-        var info = {
-            'name':"",
-            'email':"",
-            'writer':"",
-            'birthday':""
-        };
-        function val(){
-            var shvt = document.getElementById('iphvt').textContent;
-            var seml = document.getElementById('ipeml').textContent;
-            var sbdh = document.getElementById("ipntn").textContent;
-        }
-
-    </script>
+<div id = "brinfo">
+<form id = "form-profile">
+	<table>
+		<tr>
+			<tr>
+				<td style=" text-align: center;"><h2>Thông tin cá nhân</h2></td>
+			</tr>
+			<tr>
+				<td><label>Họ và tên: </label><div><input tyle="text" placeholder="Họ và tên"></div> </td>
+			</tr>
+			<tr>
+				<td>
+					<label>Email: </label><div> <input tyle="email" placeholder="Email cá nhân"></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>Bút danh: </label> <div><input tyle="" placeholder="Bút danh"></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label>Ngày tháng năm sinh: </label> <div><input type="date" name="bdaytime"></div>
+				</td>
+				
+			</tr>
+			<tr>
+				<td style=" text-align: center;">
+					<button class="box">Chỉnh sửa</button>
+					<button>Lưu</button>
+				</td>
+			</tr>
+		</tr>
+	</table>
+</form>
 </div>

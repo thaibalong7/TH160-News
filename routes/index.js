@@ -111,8 +111,8 @@ router.get('/listbtc', function (req, res, next) {
 })
 
 router.get('/listcdd', function (req, res, next) {
-	res.render('Chưa được duyệt', { 
-		title: 'Express',
+	res.render('list', { 
+		title: 'Chưa được duyệt',
 		news: [
 		{name: 'BỎ 10.000 USD MUA CAMERA CÓ ĐỘ PHÂN GIẢI 100 MEGAPIXEL, CÓ ĐÁNG KHÔNG?', img: 'samsung.png', 
 		author: 'Lê Hữu Lý', type: "Đánh giá",publicAt: "1/2/2019", category: "Ảnh Số", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},
@@ -128,8 +128,12 @@ router.get('/listcdd', function (req, res, next) {
 	});
 })
 
-router.get('/updateinfo',function(req,res,next){
-	res.render('UpdateInfo',{title: 'Cập nhật thông tin'});
+router.get('/profile',function(req,res,next){
+	res.render('UpdateInfo',{
+		title: 'Cập nhật thông tin',
+		lehuuly: [{name:"Lê Hữu Lý",email:"lehuuly1512313@gmail.com",birthday:"1/2/2019"}],
+		thaibalong: [{name:"Thái Bá Long", email: "thaibalong7@gmail.com", birthday:"1/2/2019"}]
+	});
 })
 
 

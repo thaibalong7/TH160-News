@@ -19,8 +19,9 @@
                                                     <a class="post-category" href="#">{{type}}</a>
                                                     <a class="post-category cat-4" href="#">{{category}}</a>
                                                     <span class="post-date">{{publicAt}}</span>
-                                                    <button type="button" class="post-category cat-3" data-toggle="modal" data-target="#myModal-tuchoi">Từ chối</button>
-                                                    <button type="button" class="post-category cat-2" data-toggle="modal" data-target="#myModal-duyet">Duyệt</button>
+                                                    
+                                                    <button type="button" class="post-category cat-2" data-toggle="modal" data-target="#myModal-duyet" style="float:right">Duyệt</button>
+                                                    <button type="button" class="post-category cat-3" data-toggle="modal" data-target="#myModal-tuchoi" style="float:right">Từ chối</button>
                                                 </div>
                                                 <h3 class="post-title"><a>{{name}}</a></h3>
                                                 <p class="post-abstract">{{abstract}}</p>
@@ -47,7 +48,7 @@
                     <h2 class="modal-title">Lý do từ chối vài biết: </h2>
                     </div>
                     <div class="modal-body">
-                    <div id="editor"></div>
+                    <textarea placeholder="Viết lý do từ chối vào đây"></textarea>
                     </div>
                     <div class="modal-footer">   
                         <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>

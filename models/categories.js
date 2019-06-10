@@ -3,6 +3,7 @@ module.exports = (sequelize, Sequelize) => {
     var categories = sequelize.define('categories', {
         id: {
             primaryKey: true,
+            autoIncrement: true,
             type: Sequelize.INTEGER
         },
         name: {

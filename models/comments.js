@@ -2,6 +2,7 @@
 module.exports = (sequelize, Sequelize) => {
     var comments = sequelize.define('comments', {
         id: {
+            autoIncrement: true,
             primaryKey: true,
             type: Sequelize.INTEGER
         },

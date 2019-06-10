@@ -29,5 +29,7 @@ router.get('/getNewsByCategory/:id', newsController.getNewsByCategory);
 
 router.get('/getCommentByNews/:id', newsController.getCommentByNews);
 
+router.post('/comment', newsController.comment);
+
 
 module.exports = router;

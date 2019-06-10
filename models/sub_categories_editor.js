@@ -3,6 +3,7 @@ module.exports = (sequelize, Sequelize) => {
     var sub_categories_editor = sequelize.define('sub_categories_editor', {
         id: {
             primaryKey: true,
+            autoIncrement: true,
             type: Sequelize.INTEGER
         }
     },

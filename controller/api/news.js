@@ -486,3 +486,22 @@ exports.getCommentByNews = async (req, res) => {
         return res.status(400).json({ msg: error.toString() })
     }
 }
+
+exports.comment = async (req, res) => {
+    try {
+        const new_comment = {
+            name: req.body.name,
+            content: req.body.content,
+            fk_new: req.body.idNews
+        }
+        db.comments.create(new_comment).then((_comment) => {
+            _comment.dataValues.createdAt = helper.toStringDatetime(_comment.createdAt);
+            return res.status(200).json({
+                data: _comment.dataValues
+            })
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}

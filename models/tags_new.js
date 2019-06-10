@@ -3,6 +3,7 @@ module.exports = (sequelize, Sequelize) => {
     var tags_new = sequelize.define('tags_new', {
         id: {
             primaryKey: true,
+            autoIncrement: true,
             type: Sequelize.INTEGER
         }
     },

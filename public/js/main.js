@@ -133,6 +133,112 @@
         `)
     }
 
+    function post_comment(name, content) {
+        console.log($("#comment-form-container").attr('idNews'))
+        $.ajax("/api/news/comment", {
+            type: 'post',
+            data: {
+                name: name,
+                content: content,
+                idNews: $("#comment-form-container").attr('idNews')
+            }
+        }).done((coments) => {
+            document.getElementById("comment-form").reset(); //reset lại form
+            $("#post-comments").append(` <div class="media">
+                            <div class="media-left">
+                                <img class="media-object" src="/img/avatar.png" alt="">
+                            </div>
+                            <div class="media-body">
+                                <div class="media-heading">
+                                    <h4>${coments.data.name}</h4>
+                                    <span class="time">${coments.data.createdAt}</span>
+                                </div>
+                                <p>${coments.data.content}</p>
+                            </div>
+                        </div>`)
+            $("#submit-comment").show(); //show button submit
+            $("#loading-submit-comment-container").hide();
+        }).fail(function (xhr, status, error) {
+            var err = JSON.parse(xhr.responseText);
+            alert(err.msg);
+            $("#submit-comment").show(); //show button submit
+            $("#loading-submit-comment-container").hide();
+        })
+    }
+
+    function show_comment_form_logged() {
+        if (location.pathname.includes("/news/")) {
+            $("#comment-form-container").append(`<form id="comment-form" class="post-reply">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <textarea class="input" name="message" placeholder="Nội dung bình luận" required></textarea>
+                </div>
+                <input id="submit-comment" type="submit" class="primary-button" value="Gởi bình luận"></input>
+                <div id="loading-submit-comment-container" class="loading-comment pull-left" hidden>
+                    <img src="/img/loading_comment.gif" alt=""></img>
+                </div>
+            </div>
+        </div>
+    </form>`)
+        }
+
+        $("#comment-form").submit(function (e) {
+            e.preventDefault();
+            //đã đăng nhập
+            $("#submit-comment").hide(); //khóa button submit
+            $("#loading-submit-comment-container").show();
+            const dataArray = $(this).serializeArray();
+            const data = {};
+            for (var i = 0; i < dataArray.length; i++) {
+                data[dataArray[i].name] = dataArray[i].value;
+            }
+            console.log(data)
+            console.log($("#comment-form-container").attr('idNews'));
+            post_comment(localStorage.getItem('user:name'), data['message']);
+        })
+    }
+
+    function show_comment_form_not_logged() {
+        if (location.pathname.includes("/news/")) {
+            $("#comment-form-container").append(`
+        <form id="comment-form" class="post-reply">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="form-group">
+                        <span>Tên *</span>
+                        <input class="input" type="text" name="name" required>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <textarea class="input" name="message" placeholder="Nội dung bình luận" required></textarea>
+                    </div>
+                    <input id="submit-comment" type="submit" class="primary-button" value="Gởi bình luận"></input>
+                    <div id="loading-submit-comment-container" class="loading-comment pull-left" hidden>
+                        <img src="/img/loading_comment.gif" alt=""></img>
+                    </div>
+                </div>
+            </div>
+        </form>`)
+
+            $("#comment-form").submit(function (e) {
+                e.preventDefault();
+                //chưa đăng nhập
+                $("#submit-comment").hide(); //khóa button submit
+                $("#loading-submit-comment-container").show();
+                const dataArray = $(this).serializeArray();
+                const data = {};
+                for (var i = 0; i < dataArray.length; i++) {
+                    data[dataArray[i].name] = dataArray[i].value;
+                }
+                console.log(data)
+                console.log($("#comment-form-container").attr('idNews'));
+                post_comment(data['name'], data['message']);
+            })
+        }
+    }
+
     function check_login_user() {
         if (localStorage.getItem('isUserLogin') == 'true') {
             $.ajax("/api/users/me", {
@@ -144,12 +250,15 @@
                 localStorage.setItem('user:email', res.profile.email);
                 localStorage.setItem('user:birthdate', res.profile.birthdate);
                 show_dropdown_logged(); //đã đăng nhập
+                show_comment_form_logged();
             }).fail(function (xhr, status, error) {
                 show_dropdown_not_logged(); //chưa đăng nhập
+                show_comment_form_not_logged();
             })
         }
         else {
             show_dropdown_not_logged(); //chưa đăng nhập
+            show_comment_form_not_logged();
         }
     }
 

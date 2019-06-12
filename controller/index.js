@@ -2,39 +2,11 @@ const db = require('../models');
 const helper = require('../helper');
 const localStorage = require('localStorage');
 
-async function getNav() {
-    const nav = [];
-    const query = {
-        include: [{
-            model: db.sub_categories
-        }]
-    }
-    const _categories = await db.categories.findAll(query);
-
-    for (let i = 0, l = _categories.length; i < l; i++) {
-        const sub = [];
-        if (_categories[i].sub_categories.length === 0)
-            continue;
-
-        for (let j = 0, l = _categories[i].sub_categories.length; j < l; j++) {
-            _categories[i].sub_categories[j].dataValues.link = '/category/' + _categories[i].sub_categories[j].id + '/' + helper.slugify(_categories[i].sub_categories[j].dataValues.name) + '?isSubCategory=true';
-            sub.push(_categories[i].sub_categories[j].dataValues);
-        }
-        nav.push({
-            id: _categories[i].id,
-            name: _categories[i].name,
-            sub: sub,
-            link: '/category/' + _categories[i].id + '/' + helper.slugify(_categories[i].name) + '?isSubCategory=false'
-        })
-    }
-    return nav;
-}
-
 exports.home_page = async (req, res) => {
     try {
         res.render('index', {
             title: 'News',
-            nav: await getNav(),
+            nav: await helper.getNav(db),
             isUser: true
         })
     } catch (error) {
@@ -74,7 +46,7 @@ exports.category_page = async (req, res) => {
                 const new3 = hightlight_news[2];
                 return res.render('category', {
                     title: sub_category.name,
-                    nav: await getNav(),
+                    nav: await helper.getNav(db),
                     isUser: true,
                     category: sub_category.dataValues,
                     new1: new1,
@@ -135,7 +107,7 @@ exports.category_page = async (req, res) => {
                 const new3 = hightlight_news[2];
                 return res.render('category', {
                     title: category.name,
-                    nav: await getNav(),
+                    nav: await helper.getNav(db),
                     isUser: true,
                     category: category.dataValues,
                     new1: new1,
@@ -165,7 +137,7 @@ exports.news_page = async (req, res) => {
     try {
         return res.render('news', {
             title: 'Tin Tức',
-            nav: await getNav(),
+            nav: await helper.getNav(db),
             params: req.params.id + '/' + req.params.name,
             idNews: req.params.id,
             num_cmt_each_page: 3,
@@ -206,7 +178,7 @@ exports.tag_page = async (req, res) => {
             return res.render('tag', {
                 title: check_tag.name,
                 tag: check_tag.dataValues,
-                nav: await getNav(),
+                nav: await helper.getNav(db),
                 news: news,
                 isNextPage: news.length < num_each_page ? false : true,
                 next_page: 2,

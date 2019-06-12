@@ -54,12 +54,13 @@ var models = require("./models");
 
 //Sync Database
 models.sequelize.sync().then(function () {
-    console.log('Nice! Database looks fine')
+	console.log('Nice! Database looks fine')
 }).catch(function (err) {
-    console.log(err, "Something went wrong with the Database Update!")
+	console.log(err, "Something went wrong with the Database Update!")
 });
 
 app.use("/", indexRouter);
+app.use("/writers", require('./routes/writers'));
 app.use('/api', require('./routes/api'));
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

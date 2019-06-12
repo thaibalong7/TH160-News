@@ -54,7 +54,7 @@ const fixNews = async (news) => {
     }
 }
 
-const fixListComments = async (comments) =>{
+const fixListComments = async (comments) => {
     for (let i = 0, l = comments.length; i < l; i++) {
         comments[i] = comments[i].dataValues;
         comments[i].createdAt = toStringDatetime(comments[i].createdAt);
@@ -102,6 +102,63 @@ const validateEmail = async (email) => {
     return Regex.test(email);
 }
 
+const getNav = async (db) => {
+    const nav = [];
+    const query = {
+        include: [{
+            model: db.sub_categories
+        }]
+    }
+    const _categories = await db.categories.findAll(query);
+
+    for (let i = 0, l = _categories.length; i < l; i++) {
+        const sub = [];
+        if (_categories[i].sub_categories.length === 0)
+            continue;
+
+        for (let j = 0, l = _categories[i].sub_categories.length; j < l; j++) {
+            _categories[i].sub_categories[j].dataValues.link = '/category/' + _categories[i].sub_categories[j].id + '/' + slugify(_categories[i].sub_categories[j].dataValues.name) + '?isSubCategory=true';
+            sub.push(_categories[i].sub_categories[j].dataValues);
+        }
+        nav.push({
+            id: _categories[i].id,
+            name: _categories[i].name,
+            sub: sub,
+            link: '/category/' + _categories[i].id + '/' + slugify(_categories[i].name) + '?isSubCategory=false'
+        })
+    }
+    return nav;
+}
+
+const getNavWriter = async () => {
+    const nav = [];
+    nav.push({
+        name: "Đăng bài",
+        link: "/writers/new-post"
+    });
+    nav.push({
+        name: 'Bài viết',
+        link: '/writers/',
+        sub: [{
+            name: 'Bị từ chối',
+            link: '/writers/list-rejected'
+        },
+        {
+            name: 'Chờ duyệt',
+            link: '/writers/list-draft'
+        },
+        {
+            name: 'Chờ xuất bản',
+            link: '/writers/list-approved'
+        },
+        {
+            name: 'Đã xuất bản',
+            link: '/writers/list-public'
+        },]
+    });
+    return nav;
+}
+
 module.exports = {
     slugify,
     toStringDatetime,
@@ -112,5 +169,7 @@ module.exports = {
     fixListComments,
     formatDate,
     generateIDUser,
-    validateEmail
+    validateEmail,
+    getNav,
+    getNavWriter
 }

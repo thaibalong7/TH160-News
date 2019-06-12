@@ -1,88 +1,93 @@
-<div class="list_cata">
-    <div>
-        <div>
-            <div>
-                <div class="col-md-12">
-                    <div class="row">
-                        <div>
-                            <h1>{{post_type}}</h1>
+<div class="section">
+    <div class="container">
 
-                            {{#if isAll}}
-                            <div id="writer-list-all" class="writer-list-post list-cata">
-                                {{!-- {{#each news}}
-                                <div class="col-md-12">
-                                    <div class="post post-row">
-                                        <a class="post-img"><img src="./img/{{img}}"></a>
-                                        <div class="post-body">
-                                            <div class="post-meta">
-                                                {{#if this.published}}
-                                                <span class="post-category status-public">Đã xuất bản</span>
-                                                {{/if}}
-                                                {{#if this.draft}}
-                                                <span class="post-category status-draft">Chờ duyệt</span>
-                                                {{/if}}
-                                                {{#if this.approved}}
-                                                <span class="post-category status-approved">Chờ xuất bản</span>
-                                                {{/if}}
-                                                {{#if this.rejected}}
-                                                <span class="post-category status-rejected">Bị từ chối</span>
-                                                {{/if}}
-                                                <span class="post-date">{{publicAt}}</span>
+        <div class="col-md-12">
+            <div class="row">
 
-                                                <a class="post-category cat-2" style="float:right" href="/edit">Chỉnh
-                                                    sửa</a>
-                                            </div>
-                                            <h3 class="post-title"><a>{{name}}</a></h3>
-                                            <p class="post-abstract">{{abstract}}</p>
-                                        </div>
+                <div class="list-cata" post_type={{post_type_dev}}>
+                    <h1>{{post_type}}</h1>
+
+                    {{#if isAll}}
+                    <div id="writer-list-all" class="writer-list-post list-cata">
+                        {{#each news}}
+                        <div class="col-md-12">
+                            <div class="post post-row">
+                                <a class="post-img"><img src="./img/{{img}}"></a>
+                                <div class="post-body">
+                                    <div class="post-meta">
+                                        {{#if this.published}}
+                                        <span class="post-category status-public">Đã xuất bản</span>
+                                        {{/if}}
+                                        {{#if this.draft}}
+                                        <span class="post-category status-draft">Chờ duyệt</span>
+                                        <a class="post-category cat-2" style="float:right" href="/edit">Chỉnh
+                                            sửa</a>
+                                        {{/if}}
+                                        {{#if this.approved}}
+                                        <span class="post-category status-approved">Chờ xuất bản</span>
+                                        {{/if}}
+                                        {{#if this.rejected}}
+                                        <span class="post-category status-rejected">Bị từ chối</span>
+                                        <a class="post-category cat-2" style="float:right" href="/edit">Chỉnh
+                                            sửa</a>
+                                        {{/if}}
+                                        <span class="post-date">{{createdAt}}</span>
+
                                     </div>
+                                    <h3 class="post-title"><a>{{name}}</a></h3>
+                                    <p class="post-abstract">{{abstract}}</p>
+                                    {{#if this.rejected}}
+                                    <hr>
+                                    <h4>Lý do từ chối: {{rejected_reason}}</h4>
+                                    {{/if}}
                                 </div>
-                                {{/each}} --}}
-                            </div>
-                            {{/if}}
-
-                            {{!-- Bài viết chờ duyệt --}}
-                            {{#if isDraft}}
-                            <div id="writer-list-draft" class="writer-list-post list-cata">
-
-                            </div>
-                            {{/if}}
-
-                            {{!-- Bài viết chờ xuất bản --}}
-                            {{#if isApproved}}
-                            <div id="writer-list-draft" class="writer-list-post list-cata">
-
-                            </div>
-                            {{/if}}
-
-                            {{!-- Bài viết đã được xuất bản --}}
-                            {{#if isPublished}}
-                            <div id="writer-list-draft" class="writer-list-post list-cata">
-
-                            </div>
-                            {{/if}}
-
-                            {{!-- Bài viết bị từ chối --}}
-                            {{#if isRejected}}
-                            <div id="writer-list-draft" class="writer-list-post list-cata">
-
-                            </div>
-                            {{/if}}
-
-                            <div id="load-more-writer-list-container" class="col-md-12" hidden>
-                                <div class="section-row">
-                                    <button class="primary-button center-block" id="load-more-list">Xem Thêm</button>
-                                </div>
-                            </div>
-                            {{!-- loading --}}
-                            <div id="loading-writer-container" class="col-md-12 loading">
-                                <img class="center-block" src="/img/loading.gif" alt=""></img>
                             </div>
                         </div>
+                        {{/each}}
+                    </div>
+                    {{/if}}
+
+                    {{!-- Bài viết chờ duyệt --}}
+                    {{#if isDraft}}
+                    <div id="writer-list-draft" class="writer-list-post list-cata">
+
+                    </div>
+                    {{/if}}
+
+                    {{!-- Bài viết chờ xuất bản --}}
+                    {{#if isApproved}}
+                    <div id="writer-list-draft" class="writer-list-post list-cata">
+
+                    </div>
+                    {{/if}}
+
+                    {{!-- Bài viết đã được xuất bản --}}
+                    {{#if isPublished}}
+                    <div id="writer-list-draft" class="writer-list-post list-cata">
+
+                    </div>
+                    {{/if}}
+
+                    {{!-- Bài viết bị từ chối --}}
+                    {{#if isRejected}}
+                    <div id="writer-list-draft" class="writer-list-post list-cata">
+
+                    </div>
+                    {{/if}}
+
+                    <div id="load-more-writer-list-container" class="col-md-12" next_page=1 hidden>
+                        <div class="section-row">
+                            <button class="primary-button center-block" id="load-more-list">Xem Thêm</button>
+                        </div>
+                    </div>
+                    {{!-- loading --}}
+                    <div id="loading-writer-container" class="col-md-12 loading">
+                        <img class="center-block" src="/img/loading.gif" alt=""></img>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 <div>
@@ -90,12 +95,53 @@
         (function ($) {
             "use strict"
             $(document).ready(function () {
-                const per_page = 5;
+                const per_page_default = 5;
+                function writer_renderListPost(_news, list_element) {
+                    if (_news.length) {
+                        for (let i = 0, l = _news.length; i < l; i++) {
+                            const check_show_edit_button = (_news[i].status === 'rejected' || _news[i].status === 'draft') ?
+                                ` <a class="post-category cat-2" style="float:right" href="${_news[i].link_edit}">Chỉnh
+                                                    sửa</a>` : ``;
+                            const check_show_reason = (_news[i].status === 'rejected') ?
+                                `<hr>
+                                            <h4>Lý do từ chối: {{rejected_reason}}</h4>` : ``
+                            list_element.append(`
+                        <div class="col-md-12">
+                                    <div class="post post-row">
+                                        <a class="post-img"><img src="${_news[i].avatar}"></a>
+                                        <div class="post-body">
+                                            <div class="post-meta">                                
+                                                <span class="post-category status-${_news[i].status}">${_news[i].status_vi}</span>`
+                                + check_show_edit_button + `
+                                                <span class="post-date">${_news[i].createdAt}</span>
 
-                console.log('hello writer all')
+                                            </div>
+                                            <h3 class="post-title"><a>${_news[i].title}</a></h3>
+                                            <p class="post-abstract">${_news[i].abstract}</p>`
+                                + check_show_reason + `</div>
+                                    </div>
+                                </div>`)
+                        }
+                    }
+                    else {
+                        list_element.append(`<div class="center-block">Nothing to show</div>`)
+                    }
+                }
 
-                function writer_renderListPost() {
-
+                function fetchListPost(type_status, list_post, page = 1, per_page = per_page_default) {
+                    const api_url = '/api/writers/getListNewsByWriter?query=' + type_status + '&page=' + page + '&per_page=' + per_page;
+                    $.ajax(api_url, {
+                        type: 'get',
+                        dataType: 'json',
+                    }).done(_news => {
+                        writer_renderListPost(_news.data, list_post);
+                        if (_news.next_page > 0) {
+                            $("#load-more-writer-list-container").show();
+                        }
+                        $("#loading-writer-container").hide();
+                    }).fail(function (xhr, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    });
                 }
 
                 const list_all = $("#writer-list-all");
@@ -105,19 +151,19 @@
                 const list_published = $("#writer-list-published");
 
                 if (list_all.length) {
-                    console.log('list_all');
+                    fetchListPost('all', list_all);
                 }
                 if (list_draft.length) {
-                    console.log('list_draft');
+                    fetchListPost('draft', list_draft);
                 }
                 if (list_approved.length) {
-                    console.log('list_approved');
+                    fetchListPost('approved', list_approved);
                 }
                 if (list_rejected.length) {
-                    console.log('list_rejected');
+                    fetchListPost('rejected', list_rejected);
                 }
                 if (list_published.length) {
-                    console.log('list_published');
+                    fetchListPost('published', list_published);
                 }
 
 

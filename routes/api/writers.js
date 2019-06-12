@@ -9,4 +9,6 @@ router.post('/register', writersController.register);
 
 router.get('/me', middlewareAuthWriter, writersController.me);
 
+router.get('/getListNewsByWriter', middlewareAuthWriter, writersController.getListNewsByWriter);
+
 module.exports = router;

@@ -46,11 +46,31 @@ const formatNumber = (num) => {
 const fixNews = async (news) => {
     for (let i = 0, l = news.length; i < l; i++) {
         news[i].dataValues.link = '/news/' + news[i].id + '/' + slugify(news[i].title);
-        news[i].dataValues.publicAt = toStringDate(new Date(news[i].dataValues.createdAt));
+        news[i].dataValues.publicAt = toStringDate(new Date(news[i].dataValues.publicAt));
         news[i].dataValues.avatar = '/img/news_avatar/' + news[i].avatar;
         news[i].dataValues.sub_category = news[i].dataValues.sub_category.dataValues;
         news[i].dataValues.sub_category.link = '/category/' + news[i].dataValues.sub_category.id + '/' + slugify(news[i].dataValues.sub_category.name) + '?isSubCategory=true'
         news[i] = news[i].dataValues;
+    }
+}
+
+const fixWriterNews = async (news) => {
+    for (let i = 0, l = news.length; i < l; i++) {
+        news[i].dataValues.avatar = '/img/news_avatar/' + news[i].avatar;
+        news[i].dataValues.createdAt = toStringDate(new Date(news[i].dataValues.createdAt));
+        if (news[i].status === 'rejected') {
+            news[i].dataValues.link_edit = '/writers/edit/' + news[i].id + '/' + slugify(news[i].title);
+            news[i].dataValues.status_vi = 'Bị từ chối'
+        }
+        if (news[i].status === 'draft') {
+            news[i].dataValues.status_vi = 'Chờ duyệt'
+        }
+        if (news[i].status === 'approved') {
+            news[i].dataValues.status_vi = 'Chờ xuất bản'
+        }
+        if (news[i].status === 'published') {
+            news[i].dataValues.status_vi = 'Đã xuất bản'
+        }
     }
 }
 
@@ -165,6 +185,7 @@ module.exports = {
     toStringDate,
     formatNumber,
     fixNews,
+    fixWriterNews,
     addLinkTagToListTagNew,
     fixListComments,
     formatDate,

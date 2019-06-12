@@ -62,6 +62,7 @@ router.get('/edit', function (req, res, next) {
 
 router.get('/listdxb', function (req, res, next) {
 	res.render('list', {
+		isAll: true,
 		title: 'Đã xuất bản',
 		news: [{name: 'ĐÁNH GIÁ SAMSUNG GALAXY A70: DÀNH CHO NHỮNG "CƯ DÂN MẠNG THỰC THỤ"', img: 'samsung.png', 
 		author: 'Lê Hữu Lý', type: "Đánh giá",publicAt: "1/2/2019",draft: "draft", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."},

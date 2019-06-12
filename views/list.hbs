@@ -5,52 +5,79 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div>
-                            <div class="list-cata">
-                                <h1>Danh sách bài viết {{status}}</h1>
-                                
-                                {{#if edit}}
-                                
-                                <div id="post-list-category">
-                                    {{#each news}}
-                                    <div class="col-md-12">
-                                        <div class="post post-row">
-                                            <a class="post-img"><img src="./img/{{img}}"></a>
-                                            <div class="post-body">
-                                                <div class="post-meta">
-                                                    <a class="post-category">{{type}}</a>
-                                                    <a class="post-category cat-4">{{category}}</a>
-                                                    <span class="post-date">{{publicAt}}</span>
-                                                    <a class="post-category cat-2" style="float:right" href="/edit">Chỉnh sửa</a>
-                                                </div>
-                                                <h3 class="post-title"><a>{{name}}</a></h3>
-                                                <p class="post-abstract">{{abstract}}</p>
+                            <h1>{{post_type}}</h1>
+
+                            {{!-- Lấy hết các bài viết --}}
+                            {{#is isAll}}
+                            <div id="writer-list-all" class="writer-list-post list-cata">
+                                {{!-- {{#each news}}
+                                <div class="col-md-12">
+                                    <div class="post post-row">
+                                        <a class="post-img"><img src="./img/{{img}}"></a>
+                                        <div class="post-body">
+                                            <div class="post-meta">
+                                                {{#if this.published}}
+                                                <span class="post-category status-public">Đã xuất bản</span>
+                                                {{/if}}
+                                                {{#if this.draft}}
+                                                <span class="post-category status-draft">Chờ duyệt</span>
+                                                {{/if}}
+                                                {{#if this.approved}}
+                                                <span class="post-category status-approved">Chờ xuất bản</span>
+                                                {{/if}}
+                                                {{#if this.rejected}}
+                                                <span class="post-category status-rejected">Bị từ chối</span>
+                                                {{/if}}
+                                                <span class="post-date">{{publicAt}}</span>
+
+                                                <a class="post-category cat-2" style="float:right" href="/edit">Chỉnh
+                                                    sửa</a>
                                             </div>
+                                            <h3 class="post-title"><a>{{name}}</a></h3>
+                                            <p class="post-abstract">{{abstract}}</p>
                                         </div>
                                     </div>
-                                    {{/each}}
                                 </div>
-                                {{else}}
-                                <div id="post-list-category">
-                                    {{#each news}}
-                                    <div class="col-md-12">
-                                        <div class="post post-row">
-                                            <a class="post-img"><img src="./img/{{img}}"></a>
-                                            <div class="post-body">
-                                                <div class="post-meta">
-                                                    <a class="post-category">{{type}}</a>
-                                                    <a class="post-category cat-4">{{category}}</a>
-                                                    <span class="post-date">{{publicAt}}</span>
+                                {{/each}} --}}
+                            </div>
+                            {{/if}}
 
-                                                </div>
-                                                <h3 class="post-title"><a>{{name}}</a></h3>
-                                                <p class="post-abstract">{{abstract}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {{/each}}
+                            {{!-- Bài viết chờ duyệt --}}
+                            {{#if isDraft}}
+                            <div id="writer-list-draft" class="writer-list-post list-cata">
+
+                            </div>
+                            {{/if}}
+
+                            {{!-- Bài viết chờ xuất bản --}}
+                            {{#if isApproved}}
+                            <div id="writer-list-draft" class="writer-list-post list-cata">
+
+                            </div>
+                            {{/if}}
+
+                            {{!-- Bài viết đã được xuất bản --}}
+                            {{#if isPublished}}
+                            <div id="writer-list-draft" class="writer-list-post list-cata">
+
+                            </div>
+                            {{/if}}
+
+                            {{!-- Bài viết bị từ chối --}}
+                            {{#if isRejected}}
+                            <div id="writer-list-draft" class="writer-list-post list-cata">
+
+                            </div>
+                            {{/if}}
+
+                            <div id="load-more-writer-list-container" class="col-md-12">
+                                <div class="section-row">
+                                    <button class="primary-button center-block" id="load-more-list">Xem Thêm</button>
                                 </div>
-                                {{/if}}
-
+                            </div>
+                            {{!-- loading --}}
+                            <div id="loading-writer-container" class="col-md-12 loading">
+                                <img class="center-block" src="/img/loading.gif" alt=""></img>
                             </div>
                         </div>
                     </div>
@@ -58,4 +85,16 @@
             </div>
         </div>
     </div>
+</div>
+<div>
+    <script>
+        (function ($) {
+            "use strict"
+            const per_page = 5;
+
+            $.ajax("/api/writer/.....")
+
+
+        })(jQuery)
+    </script>
 </div>

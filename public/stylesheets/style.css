@@ -699,6 +699,36 @@ textarea.input {
     transition: 0.2s opacity;
 }
 
+.writer-list-post .status-draft {
+    background-color: #1a1dd3;
+}
+
+.writer-list-post .status-approved {
+    background-color: #0dafa7;
+}
+
+.writer-list-post .status-rejected {
+    background-color: #af0b0b;
+}
+
+.writer-list-post .status-public {
+    background-color: #1eaf0b;
+}
+
+.writer-list-post .post-title {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
+}
+
+.writer-list-post .post-abstract {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+}
+
 /*----------------------------*\
 	post thumb
 \*----------------------------*/

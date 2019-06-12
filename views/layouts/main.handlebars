@@ -81,6 +81,21 @@
 						</li>
 						{{/each}}
 						{{/if}}
+
+						{{#if isWriter}}
+						{{#each nav}}
+						<li class="cat-2">
+							<div class="dropdown">
+								<a class="dropbtnsport" href={{this.link}}><button class="drop dropbtnsport">{{this.name}}</button></a>
+								<div class="dropdown-content">
+									{{#each this.sub}}
+									<a href={{this.link}}>{{this.name}}</a>
+									{{/each}}
+								</div>
+							</div>
+						</li>
+						{{/each}}
+						{{/if}}
 					</ul>
 					<!-- /nav -->
 
@@ -260,7 +275,6 @@
 	<script src="/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="/js/main.js" type="text/javascript"></script>
 	<script src="/js/hbs-helper.js" type="text/javascript"></script>
-	<script src="/js/news.js" type="text/javascript"></script>
 	<script src="https://cdn.jsdelivr.net/handlebarsjs/4.0.5/handlebars.min.js"></script>
 
 	<!-- Global site tag (gtag.js) - Google Analytics -->

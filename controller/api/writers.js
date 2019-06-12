@@ -164,7 +164,9 @@ exports.getListNewsByWriter = async (req, res) => {
                 where: {
                     fk_writer: req.writerData.id,
                 },
-                order: [['createdAt', 'DESC']]
+                order: [['createdAt', 'DESC']],
+                limit: per_page,
+                offset: (page - 1) * per_page,
             };
             if (query_params === 'all') {
                 //do not do anything

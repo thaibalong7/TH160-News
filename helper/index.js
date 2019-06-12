@@ -63,6 +63,7 @@ const fixWriterNews = async (news) => {
             news[i].dataValues.status_vi = 'Bị từ chối'
         }
         if (news[i].status === 'draft') {
+            news[i].dataValues.link_edit = '/writers/edit/' + news[i].id + '/' + slugify(news[i].title);
             news[i].dataValues.status_vi = 'Chờ duyệt'
         }
         if (news[i].status === 'approved') {

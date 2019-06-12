@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <div class="row">
 
-                <div class="list-cata" post_type={{post_type_dev}}>
+                <div class="list-cata" id="list-cata-container" post_type={{post_type_dev}}>
                     <h1>{{post_type}}</h1>
 
                     {{#if isAll}}
@@ -16,7 +16,7 @@
                                 <div class="post-body">
                                     <div class="post-meta">
                                         {{#if this.published}}
-                                        <span class="post-category status-public">Đã xuất bản</span>
+                                        <span class="post-category status-published">Đã xuất bản</span>
                                         {{/if}}
                                         {{#if this.draft}}
                                         <span class="post-category status-draft">Chờ duyệt</span>
@@ -137,6 +137,7 @@
                         writer_renderListPost(_news.data, list_post);
                         if (_news.next_page > 0) {
                             $("#load-more-writer-list-container").show();
+                            $("#load-more-writer-list-container").attr("next_page", _news.next_page);
                         }
                         $("#loading-writer-container").hide();
                     }).fail(function (xhr, textStatus, errorThrown) {
@@ -166,6 +167,28 @@
                     fetchListPost('published', list_published);
                 }
 
+
+                $("#load-more-list").click(function () {
+                    $("#load-more-writer-list-container").hide();
+                    $("#loading-writer-container").show();
+                    const post_type = $("#list-cata-container").attr("post_type");
+                    const next_page = parseInt($("#load-more-writer-list-container").attr("next_page"))
+                    if (post_type === 'all') {
+                        fetchListPost('all', list_all, next_page);
+                    }
+                    if (post_type === 'draft') {
+                        fetchListPost('draft', list_draft, next_page);
+                    }
+                    if (post_type === 'approved') {
+                        fetchListPost('approved', list_approved, next_page);
+                    }
+                    if (post_type === 'rejected') {
+                        fetchListPost('rejected', list_rejected, next_page);
+                    }
+                    if (post_type === 'published') {
+                        fetchListPost('published', list_published, next_page);
+                    }
+                })
 
             })
         })(jQuery)

@@ -7,4 +7,6 @@ router.use('/categories', require('./categories'));
 
 router.use('/users', require('./users'));
 
+router.use('/writers', require('./writers'));
+
 module.exports = router;

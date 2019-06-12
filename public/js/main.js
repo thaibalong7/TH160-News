@@ -134,7 +134,6 @@
     }
 
     function post_comment(name, content) {
-        console.log($("#comment-form-container").attr('idNews'))
         $.ajax("/api/news/comment", {
             type: 'post',
             data: {
@@ -193,8 +192,6 @@
             for (var i = 0; i < dataArray.length; i++) {
                 data[dataArray[i].name] = dataArray[i].value;
             }
-            console.log(data)
-            console.log($("#comment-form-container").attr('idNews'));
             post_comment(localStorage.getItem('user:name'), data['message']);
         })
     }
@@ -232,8 +229,6 @@
                 for (var i = 0; i < dataArray.length; i++) {
                     data[dataArray[i].name] = dataArray[i].value;
                 }
-                console.log(data)
-                console.log($("#comment-form-container").attr('idNews'));
                 post_comment(data['name'], data['message']);
             })
         }
@@ -262,9 +257,11 @@
         }
     }
 
-    check_login_user();
-
-
+    if (!location.pathname.includes("/writers")) {
+        //không phải trang writers
+        check_login_user();
+    }
+    
     if (location.pathname.includes("/category/") || location.pathname.includes("/news/") || location.pathname.includes("/tag/")) {
         const post_widget = $("#post-widget");
         if (post_widget) {

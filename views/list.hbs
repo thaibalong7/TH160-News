@@ -7,8 +7,7 @@
                         <div>
                             <h1>{{post_type}}</h1>
 
-                            {{!-- Lấy hết các bài viết --}}
-                            {{#is isAll}}
+                            {{#if isAll}}
                             <div id="writer-list-all" class="writer-list-post list-cata">
                                 {{!-- {{#each news}}
                                 <div class="col-md-12">
@@ -70,7 +69,7 @@
                             </div>
                             {{/if}}
 
-                            <div id="load-more-writer-list-container" class="col-md-12">
+                            <div id="load-more-writer-list-container" class="col-md-12" hidden>
                                 <div class="section-row">
                                     <button class="primary-button center-block" id="load-more-list">Xem Thêm</button>
                                 </div>
@@ -90,11 +89,39 @@
     <script>
         (function ($) {
             "use strict"
-            const per_page = 5;
+            $(document).ready(function () {
+                const per_page = 5;
 
-            $.ajax("/api/writer/.....")
+                console.log('hello writer all')
+
+                function writer_renderListPost() {
+
+                }
+
+                const list_all = $("#writer-list-all");
+                const list_draft = $("#writer-list-draft");
+                const list_approved = $("#writer-list-approved");
+                const list_rejected = $("#writer-list-rejected");
+                const list_published = $("#writer-list-published");
+
+                if (list_all.length) {
+                    console.log('list_all');
+                }
+                if (list_draft.length) {
+                    console.log('list_draft');
+                }
+                if (list_approved.length) {
+                    console.log('list_approved');
+                }
+                if (list_rejected.length) {
+                    console.log('list_rejected');
+                }
+                if (list_published.length) {
+                    console.log('list_published');
+                }
 
 
+            })
         })(jQuery)
     </script>
 </div>

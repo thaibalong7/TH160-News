@@ -9,7 +9,8 @@ exports.renderListAll = async (req, res) => {
             title: 'Home',
             nav: await helper.getNavWriter(),
             isWriter: true,
-            isAll: true
+            isAll: true,
+            post_type: "Tất cả bài viết"
         })
     } catch (error) {
         console.log(error)
@@ -24,7 +25,8 @@ exports.renderListDraft = async (req, res) => {
             title: 'Home',
             nav: await helper.getNavWriter(),
             isWriter: true,
-            isDraft: true
+            isDraft: true,
+            post_type: "Chờ duyệt"
         })
     } catch (error) {
         console.log(error)
@@ -39,7 +41,8 @@ exports.renderListApproved = async (req, res) => {
             title: 'Home',
             nav: await helper.getNavWriter(),
             isWriter: true,
-            isApproved: true
+            isApproved: true,
+            post_type: "Chờ xuất bản"
         })
     } catch (error) {
         console.log(error)
@@ -54,7 +57,8 @@ exports.renderListRejected = async (req, res) => {
             title: 'Home',
             nav: await helper.getNavWriter(),
             isWriter: true,
-            isRejected: true
+            isRejected: true,
+            post_type: "Bị từ chối"
         })
     } catch (error) {
         console.log(error)
@@ -69,7 +73,8 @@ exports.renderListPublished = async (req, res) => {
             title: 'Home',
             nav: await helper.getNavWriter(),
             isWriter: true,
-            isPublished: true
+            isPublished: true,
+            post_type: "Đã xuất bản"
         })
     } catch (error) {
         console.log(error)

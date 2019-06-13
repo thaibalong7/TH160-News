@@ -1,0 +1,74 @@
+<!-- section -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <!-- Post content -->
+            <div class="col-md-10">
+                <div class="section-row sticky-container">
+                    <div class="main-post">
+                        <div class="news-avatar" id="news-avatar">
+                            <img src={{news.avatar}}>
+                        </div>
+                        <div class="news-title" id="news-title"></div>
+                        <div>
+                            <div class="col-sm-3" id="news-publicAt">
+                                <p><i class="fa fa-clock-o"></i>{{news.createdAt}}</p>
+                            </div>
+                            <div class="col-sm-3" id="news-view">
+                                <p><i class="fa fa-eye"></i>{{news.createdAt}}</p>
+                            </div>
+                            <div class="col-sm-6"></div>
+                        </div>
+                        <hr class="hr">
+                        <div id="news-content">
+                            {{news.content}}
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ad -->
+                <div class="section-row text-center">
+                    <a href="#" style="display: inline-block;margin: auto;">
+                        <img class="img-responsive" src="/img/ad-2.jpg" alt="">
+                    </a>
+                </div>
+                <!-- ad -->
+            </div>
+
+            <!-- /Post content -->
+            <!-- aside -->
+            <div class="col-md-2">
+                <!-- ad -->
+                <div class="aside-widget text-center">
+                    <a href="#" style="display: inline-block;margin: auto;">
+                        <img class="img-responsive" src="/img/ad-1.jpg" alt="">
+                    </a>
+                </div>
+                <!-- /ad -->
+
+                <!-- tags -->
+                <div class="aside-widget">
+                    <div class="tags-widget">
+                        <ul id="ul-tags-news">
+                            {{#each news.tags}}
+                            <li><a>{{this.name}}</a></li>
+                            {{}}
+                        </ul>
+                    </div>
+                </div>
+                <!-- /tags -->
+            </div>
+            <!-- /aside -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /section -->
+
+<div>
+    <script src="/js/news.js" type="text/javascript"></script>
+</div>

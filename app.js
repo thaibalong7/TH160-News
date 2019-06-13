@@ -10,8 +10,6 @@ var cookieParser = require('cookie-parser');
 var indexRouter = require('./routes/index');
 var session = require('express-session');
 //var MySQLStore = require('express-mysql-session')(session);
-var body_parser = require('body-parser');
-var path = require('path');
 
 var app = express();
 
@@ -35,15 +33,15 @@ app.listen(process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true })); // session secret
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(body_parser.json());
-app.use(body_parser.urlencoded({
-	extended: false
-}));
+app.use(body_parser.json({ limit: "50mb" }));
+app.use(body_parser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
+
 
 
 //Models

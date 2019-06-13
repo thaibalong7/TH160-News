@@ -159,7 +159,7 @@ exports.getListNewsByWriter = async (req, res) => {
             const query_params = req.query.query;
             const query = {
                 attributes: {
-                    exclude: ['content', 'view', 'updatedAt', 'fk_writer', 'publicAt']
+                    exclude: ['content', 'view', 'updatedAt', 'fk_writer']
                 },
                 where: {
                     fk_writer: req.writerData.id,
@@ -201,6 +201,62 @@ exports.getListNewsByWriter = async (req, res) => {
                 })
             })
 
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}
+
+exports.createNews = async (req, res) => {
+    try {
+        console.log(req.file);
+        console.log(req.body)
+        const new_news = {
+            title: req.body.title,
+            abstract: req.body.abstract,
+            fk_sub_category: parseInt(req.body.sub_category),
+            content: req.body.content,
+            status: 'draft',
+            fk_writer: req.writerData.id
+        };
+        const avatar = req.file;
+        if (avatar) {
+            let id_news = await helper.generateIDNews(8);
+            //kiểm tra id vừa tạo có bị trùng
+            let check_id_news = await db.news.findAll({ where: { id: id_news } })
+            while (!check_id_news) {
+                id_user = await helper.generateIDNews(8);
+                check_id_news = await db.news.findAll({ where: { id: id_news } })
+            }
+            new_news.id = id_news;
+            new_news.avatar = id_news + '.jpg';
+            //ghi file avatar thư mục 
+            fs.writeFile('public/img/news_avatar/' + id_news + '.jpg', avatar.buffer, async (err) => {
+                if (err) {
+                    return res.status(400).json({ msg: err.toString() })
+                }
+
+                //tạo news mới
+                await db.news.create(new_news).then(_news => {
+
+                    //thêm tags news
+                    for (let i = 0, l = req.body.list_tag.length; i < l; i++) {
+                        db.tags_new.create({
+                            fk_new: _news.id,
+                            fk_tag: req.body.list_tag[i]
+                        })
+                    };
+                    return res.status(200).json({
+                        msg: 'Tạo bài viết thành công, vui lòng đợi duyệt.',
+                        data: _news
+                    })
+                })
+            })
+
+        }
+        else {
+            return res.status(400).json({ msg: 'Không có avatar' })
         }
     } catch (error) {
         console.log(error)

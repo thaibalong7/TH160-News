@@ -86,3 +86,52 @@ exports.renderListPublished = async (req, res) => {
         return res.redirect('/');
     }
 }
+
+exports.renderCreateNews = async (req, res) => {
+    try {
+        const tag = await db.tags.findAll();
+
+        res.render('WriterEdit', {
+            nav: await helper.getNavWriter(),
+            isWriter: true,
+            title: 'Đăng bài',
+            tag: tag,
+        });
+
+    } catch (error) {
+        console.log(error)
+        return res.redirect('/');
+    }
+}
+
+exports.renderNews = async (req, res) => {
+    try {
+        const id_news = req.params.id;
+        const news = await db.news.findOne({
+            where: {
+                id: id_news
+            },
+            include: [{
+                model: db.tags_new
+            }]
+        })
+        if (news && helper.slugify(news.name) === req.params.name) {
+            news = news.dataValues;
+            news.createdAt = helper.toStringDate(new Date(news.createdAt));
+            news.avatar = '/img/news_avatar/' + news.avatar;
+            console.log(news)
+            return res.render('writer-news', {
+                nav: await helper.getNavWriter(),
+                isWriter: true,
+                title: news.name,
+                news: news
+            })
+        }
+        else {
+            return res.redirect('/writers');
+        }
+    } catch (error) {
+        console.log(error)
+        return res.redirect('/writers');
+    }
+}

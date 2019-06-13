@@ -56,21 +56,21 @@
 
                     {{!-- Bài viết chờ xuất bản --}}
                     {{#if isApproved}}
-                    <div id="writer-list-draft" class="writer-list-post list-cata">
+                    <div id="writer-list-approved" class="writer-list-post list-cata">
 
                     </div>
                     {{/if}}
 
                     {{!-- Bài viết đã được xuất bản --}}
                     {{#if isPublished}}
-                    <div id="writer-list-draft" class="writer-list-post list-cata">
+                    <div id="writer-list-published" class="writer-list-post list-cata">
 
                     </div>
                     {{/if}}
 
                     {{!-- Bài viết bị từ chối --}}
                     {{#if isRejected}}
-                    <div id="writer-list-draft" class="writer-list-post list-cata">
+                    <div id="writer-list-rejected" class="writer-list-post list-cata">
 
                     </div>
                     {{/if}}
@@ -95,7 +95,7 @@
         (function ($) {
             "use strict"
             $(document).ready(function () {
-                const per_page_default = 5;
+                const per_page_default = 6;
                 function writer_renderListPost(_news, list_element) {
                     if (_news.length) {
                         for (let i = 0, l = _news.length; i < l; i++) {
@@ -103,22 +103,24 @@
                                 ` <a class="post-category cat-2" style="float:right" href="${_news[i].link_edit}">Chỉnh
                                                     sửa</a>` : ``;
                             const check_show_reason = (_news[i].status === 'rejected') ?
-                                `<hr>
-                                            <h4>Lý do từ chối: {{rejected_reason}}</h4>` : ``
+                                `<hr><h4>Lý do từ chối: ${_news[i].rejected_reason}</h4>` : ``
+                            //const check_public_day = (_news[i].status === 'approved') ?
+                            //   `<hr><h4>Thời gian xuất bản: ${_news[i].publicAt}</h4>` : ``
                             list_element.append(`
-                        <div class="col-md-12">
+                                <div class="col-md-12">
                                     <div class="post post-row">
-                                        <a class="post-img"><img src="${_news[i].avatar}"></a>
+                                        <a class="post-img" href="${_news[i].link_news}"><img src="${_news[i].avatar}"></a>
                                         <div class="post-body">
                                             <div class="post-meta">                                
                                                 <span class="post-category status-${_news[i].status}">${_news[i].status_vi}</span>`
                                 + check_show_edit_button + `
                                                 <span class="post-date">${_news[i].createdAt}</span>
-
                                             </div>
-                                            <h3 class="post-title"><a>${_news[i].title}</a></h3>
+                                            <h3 class="post-title"><a href="${_news[i].link_news}">${_news[i].title}</a></h3>
                                             <p class="post-abstract">${_news[i].abstract}</p>`
-                                + check_show_reason + `</div>
+                                + check_show_reason +
+                                //+ check_public_day +
+                                `</div>
                                     </div>
                                 </div>`)
                         }
@@ -130,6 +132,7 @@
 
                 function fetchListPost(type_status, list_post, page = 1, per_page = per_page_default) {
                     const api_url = '/api/writers/getListNewsByWriter?query=' + type_status + '&page=' + page + '&per_page=' + per_page;
+                    console.log(api_url)
                     $.ajax(api_url, {
                         type: 'get',
                         dataType: 'json',

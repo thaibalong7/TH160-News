@@ -32,8 +32,11 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false,
             defaultValue: 0
-        }
-    },
+        },
+        rejected_reason: {
+            type: Sequelize.TEXT,
+        },
+    },  
         {
             charset: 'utf8',
             collate: 'utf8_unicode_ci',

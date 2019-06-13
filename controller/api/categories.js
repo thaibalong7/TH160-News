@@ -33,3 +33,28 @@ exports.getCategoriesAndNumNews = async (req, res) => {
         return res.status(400).json({ msg: error.toString() })
     }
 }
+
+exports.getAllCategories = async (req, res) =>{
+    try {
+        const list_category = await db.categories.findAll({
+            include: [{
+                model: db.sub_categories
+            }]
+        })
+        const list_sub_category = {};
+        for (let i = 0, l = list_category.length; i < l; i++) {
+            list_sub_category[list_category[i].name] = list_category[i].dataValues.sub_categories;
+            list_category[i] = list_category[i].dataValues;
+            list_category[i].sub_categories = undefined
+        }
+        return res.status(200).json({
+            data: {
+                list_category: list_category,
+                list_sub_category: list_sub_category
+            }
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}

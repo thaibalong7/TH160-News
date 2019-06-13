@@ -13,4 +13,6 @@ router.get('/list-public', middlewareAuthWriterRender, writersController.renderL
 
 router.get('/list-rejected', middlewareAuthWriterRender, writersController.renderListRejected);
 
+router.get('/new-post', middlewareAuthWriterRender, writersController.renderCreateNews);
+
 module.exports = router;

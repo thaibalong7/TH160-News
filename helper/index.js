@@ -58,6 +58,7 @@ const fixWriterNews = async (news) => {
     for (let i = 0, l = news.length; i < l; i++) {
         news[i].dataValues.avatar = '/img/news_avatar/' + news[i].avatar;
         news[i].dataValues.createdAt = toStringDate(new Date(news[i].dataValues.createdAt));
+        news[i].dataValues.link = '/writers/news/' + news[i].id + '/' + slugify(news[i].title);
         if (news[i].status === 'rejected') {
             news[i].dataValues.link_edit = '/writers/edit/' + news[i].id + '/' + slugify(news[i].title);
             news[i].dataValues.status_vi = 'Bị từ chối'
@@ -68,6 +69,7 @@ const fixWriterNews = async (news) => {
         }
         if (news[i].status === 'approved') {
             news[i].dataValues.status_vi = 'Chờ xuất bản'
+            news[i].dataValues.publicAt = toStringDatetime(new Date(news[i].dataValues.publicAt));
         }
         if (news[i].status === 'published') {
             news[i].dataValues.status_vi = 'Đã xuất bản'
@@ -110,6 +112,17 @@ const randomNumber = (length) => {
 const generateIDUser = async (length) => {
     const possible =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let text = "";
+
+    for (let i = 0; i < length; i++) {
+        text += possible.charAt(randomNumber(possible.length));
+    }
+    return text;
+}
+
+const generateIDNews = async (length) => {
+    const possible =
+        "abcdefghijklmnopqrstuvwxyz0123456789";
     let text = "";
 
     for (let i = 0; i < length; i++) {
@@ -191,6 +204,7 @@ module.exports = {
     fixListComments,
     formatDate,
     generateIDUser,
+    generateIDNews,
     validateEmail,
     getNav,
     getNavWriter

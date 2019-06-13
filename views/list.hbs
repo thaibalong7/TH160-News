@@ -98,6 +98,7 @@
                 const per_page_default = 6;
                 function writer_renderListPost(_news, list_element) {
                     if (_news.length) {
+                        console.log(_news);
                         for (let i = 0, l = _news.length; i < l; i++) {
                             const check_show_edit_button = (_news[i].status === 'rejected' || _news[i].status === 'draft') ?
                                 ` <a class="post-category cat-2" style="float:right" href="${_news[i].link_edit}">Chỉnh
@@ -109,14 +110,14 @@
                             list_element.append(`
                                 <div class="col-md-12">
                                     <div class="post post-row">
-                                        <a class="post-img" href="${_news[i].link_news}"><img src="${_news[i].avatar}"></a>
+                                        <a class="post-img" href="${_news[i].link}"><img src="${_news[i].avatar}"></a>
                                         <div class="post-body">
                                             <div class="post-meta">                                
                                                 <span class="post-category status-${_news[i].status}">${_news[i].status_vi}</span>`
                                 + check_show_edit_button + `
                                                 <span class="post-date">${_news[i].createdAt}</span>
                                             </div>
-                                            <h3 class="post-title"><a href="${_news[i].link_news}">${_news[i].title}</a></h3>
+                                            <h3 class="post-title"><a href="${_news[i].link}">${_news[i].title}</a></h3>
                                             <p class="post-abstract">${_news[i].abstract}</p>`
                                 + check_show_reason +
                                 //+ check_public_day +

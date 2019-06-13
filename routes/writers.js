@@ -15,4 +15,6 @@ router.get('/list-rejected', middlewareAuthWriterRender, writersController.rende
 
 router.get('/new-post', middlewareAuthWriterRender, writersController.renderCreateNews);
 
+router.get('/w_news/:id/:name', middlewareAuthWriterRender, writersController.renderNews);
+
 module.exports = router;

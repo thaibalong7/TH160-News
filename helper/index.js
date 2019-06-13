@@ -58,7 +58,7 @@ const fixWriterNews = async (news) => {
     for (let i = 0, l = news.length; i < l; i++) {
         news[i].dataValues.avatar = '/img/news_avatar/' + news[i].avatar;
         news[i].dataValues.createdAt = toStringDate(new Date(news[i].dataValues.createdAt));
-        news[i].dataValues.link = '/writers/news/' + news[i].id + '/' + slugify(news[i].title);
+        news[i].dataValues.link = '/writers/w_news/' + news[i].id + '/' + slugify(news[i].title);
         if (news[i].status === 'rejected') {
             news[i].dataValues.link_edit = '/writers/edit/' + news[i].id + '/' + slugify(news[i].title);
             news[i].dataValues.status_vi = 'Bị từ chối'

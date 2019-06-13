@@ -107,7 +107,7 @@ exports.renderCreateNews = async (req, res) => {
 exports.renderNews = async (req, res) => {
     try {
         const id_news = req.params.id;
-        const news = await db.news.findOne({
+        let news = await db.news.findOne({
             where: {
                 id: id_news
             },
@@ -115,11 +115,10 @@ exports.renderNews = async (req, res) => {
                 model: db.tags_new
             }]
         })
-        if (news && helper.slugify(news.name) === req.params.name) {
+        if (news && helper.slugify(news.title) === req.params.name) {
             news = news.dataValues;
             news.createdAt = helper.toStringDate(new Date(news.createdAt));
             news.avatar = '/img/news_avatar/' + news.avatar;
-            console.log(news)
             return res.render('writer-news', {
                 nav: await helper.getNavWriter(),
                 isWriter: true,

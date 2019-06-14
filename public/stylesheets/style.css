@@ -1399,6 +1399,11 @@ input[type="file"] {
     margin-top: 10px;
 }
 
+.editor-div .edit-avatar {
+    width: 60%;
+    height: auto;
+}
+
 .editor-div table h2 {
     margin-left: 10px;
 }

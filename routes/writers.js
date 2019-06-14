@@ -17,4 +17,6 @@ router.get('/new-post', middlewareAuthWriterRender, writersController.renderCrea
 
 router.get('/w_news/:id/:name', middlewareAuthWriterRender, writersController.renderNews);
 
+router.get('/edit/:id/:name', middlewareAuthWriterRender, writersController.renderEditNews);
+
 module.exports = router;

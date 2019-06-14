@@ -208,10 +208,42 @@ exports.getListNewsByWriter = async (req, res) => {
     }
 }
 
+exports.getNewsById = async (req, res) => {
+    try {
+        db.news.findOne({
+            where: {
+                id: req.params.id,
+                fk_writer: req.writerData.id
+            },
+            include: [{
+                model: db.sub_categories,
+            },
+            {
+                model: db.tags_new,
+                include: [{
+                    model: db.tags
+                }]
+            }]
+        }).then(async _news => {
+            _news.dataValues.avatar = '/img/news_avatar/' + _news.dataValues.avatar;
+            if (_news && helper.slugify(_news.title) === req.params.name) {
+                return res.status(200).json({
+                    msg: 'Get thành công',
+                    data: _news
+                })
+            }
+            else {
+                return res.status(400).json({ msg: "Lỗi ở đâu đó rồi" })
+            }
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}
+
 exports.createNews = async (req, res) => {
     try {
-        console.log(req.file);
-        console.log(req.body)
         const new_news = {
             title: req.body.title,
             abstract: req.body.abstract,
@@ -258,6 +290,106 @@ exports.createNews = async (req, res) => {
         else {
             return res.status(400).json({ msg: 'Không có avatar' })
         }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}
+
+exports.editNews = async (req, res) => {
+    try {
+        console.log('edit news')
+        console.log(req.body)
+        db.news.findOne({
+            where: {
+                id: req.params.id,
+                fk_writer: req.writerData.id
+            }
+        }).then(async _news => {
+            if (_news) {
+                if (typeof req.body.title !== 'undefined') {
+                    _news.title = req.body.title;
+                }
+                if (typeof req.body.content !== 'undefined') {
+                    _news.content = req.body.content;
+                }
+                if (typeof req.body.abstract !== 'undefined') {
+                    _news.abstract = req.body.abstract;
+                }
+                if (typeof req.body.sub_category !== 'undefined') {
+                    _news.fk_sub_category = parseInt(req.body.sub_category);
+                }
+
+                if (typeof req.body.list_tag !== 'undefined') {
+                    if (Array.isArray(req.body.list_tag)) {
+                        //xóa list tags cũ đi
+                        await db.tags_new.destroy({
+                            where: {
+                                fk_new: _news.id
+                            }
+                        });
+
+                        //sau khi xóa xong, thêm list tags mới vào
+                        //thêm tags news
+                        for (let i = 0, l = req.body.list_tag.length; i < l; i++) {
+                            await db.tags_new.create({
+                                fk_new: _news.id,
+                                fk_tag: req.body.list_tag[i]
+                            })
+                        };
+                    }
+                    else {
+                        await db.tags_new.destroy({
+                            where: {
+                                fk_new: _news.id
+                            }
+                        });
+                        await db.tags_new.create({
+                            fk_new: _news.id,
+                            fk_tag: req.body.list_tag
+                        })
+
+                    }
+
+                }
+
+                if (req.file) {
+                    //có cập nhập avt mới
+                    var date = new Date();
+                    var timestamp = date.getTime();
+                    //ghi file avatar thư mục 
+                    fs.writeFile('public/img/news_avatar/' + _news.id + '-' + timestamp + '.jpg', req.file.buffer, async (err) => {
+                        if (err) {
+                            console.error(err)
+                        } else {
+                            if (_news.avatar !== null) {
+                                //xóa file cũ đi
+                                fs.unlink('public/img/news_avatar/' + _news.avatar, (err) => {
+                                    if (err) {
+                                        console.error(err)
+                                    }
+
+                                    _news.avatar = _news.id + '-' + timestamp + '.jpg';
+                                    _news.save();
+
+                                });
+                            }
+                        }
+                    })
+                }
+
+                _news.status = "draft";
+                await _news.save();
+
+                return res.status(200).json({
+                    msg: 'Cập nhật thành công',
+                    data: _news
+                })
+            }
+            else {
+                return res.status(400).json({ msg: "Lỗi ở đâu đó rồi" })
+            }
+        })
     } catch (error) {
         console.log(error)
         return res.status(400).json({ msg: error.toString() })

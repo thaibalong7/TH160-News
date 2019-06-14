@@ -4,7 +4,7 @@
             <h1>Soạn bài viết</h1>
             <form id="create-news-form">
                 <h2>Ảnh đại diện bài viết: </h2>
-                <img id="blah" src="/img/default.png" alt="your image" />
+                <img id="blah" class="edit-avatar" src="/img/default.png" alt="your image" />
                 <label class="custom-file-upload">
                     <input type="file" name="avatar" id="avatar" onchange="readURL(this);" />
                     Chọn ảnh
@@ -133,8 +133,10 @@
         });
         function change_select_category() {
             e = document.getElementById("select_category");
+
             var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 1
             const select_sub_category = $("#select_sub_category");
+            select_sub_category.empty();
             for (let i = 0, l = list_sub_category[strUser].length; i < l; i++) {
                 select_sub_category.append(` <option value=${list_sub_category[strUser][i].id}>${list_sub_category[strUser][i].name}</option>`)
             };
@@ -170,24 +172,29 @@
                 });
             }
             for (let i = 0; i < list_tag.length; i++) {
-                s = s + "<label id = 'label" + i + "'>" + list_tag[i].name + "<button id ='" + i + "' onClick = 'delete_tag(this.id)'>X</button></label>" + '\n';
+                s = s + "<label id = '" + list_tag[i].id + "'>" + list_tag[i].name + "<button id ='" + list_tag[i].id + "' onClick = 'delete_tag(this.id)'>X</button></label>" + '\n';
             }
             document.getElementById("list_tag").innerHTML = s;
+            console.log(list_tag);
         }
         function delete_tag(clicked_id) {
-            var s1 = clicked_id;
-            var ss = new String("label" + s1);
-            var sss = document.getElementById(ss).textContent;
-            var subsss = sss.substring(0, sss.length - 1);
-            var index = list_tag.indexOf(subsss);
-            if (index > -1) {
+            let idlabel = clicked_id;
+            let index = 0;;
+            for (; index < list_tag.length; index++) {
+                if (parseInt(idlabel) === list_tag[index].id) {
+                    break;
+                }
+
+            }
+            if (index < list_tag.length) {
                 list_tag.splice(index, 1);
             }
             var s = new String("");
             for (let i = 0; i < list_tag.length; i++) {
-                s = s + "<label id = 'label" + i + "'>" + list_tag[i] + "<button id ='" + i + "' onClick = 'val4(this.id)'>X</button></label>" + '\n';
+                s = s + "<label id = '" + list_tag[i].id + "'>" + list_tag[i].name + "<button id ='" + list_tag[i].id + "' onClick = 'delete_tag(this.id)'>X</button></label>" + '\n';
             }
             document.getElementById("list_tag").innerHTML = s;
+            console.log(list_tag);
         }
 
 

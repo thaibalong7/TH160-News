@@ -15,4 +15,8 @@ router.get('/getListNewsByWriter', middlewareAuthWriter, writersController.getLi
 
 router.post('/createNews', middlewareAuthWriter, upload.single('avatar'), writersController.createNews);
 
+router.get('/getNewsById/:id/:name', middlewareAuthWriter, writersController.getNewsById);
+
+router.post('/edit_news/:id', middlewareAuthWriter, upload.single('avatar'), writersController.editNews);
+
 module.exports = router;

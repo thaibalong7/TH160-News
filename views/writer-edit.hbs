@@ -1,0 +1,284 @@
+<div class="section">
+    <div class="container">
+        <div class="editor-div">
+            <h1>Soạn bài viết</h1>
+            <form id="edit-news-form" idNews={{id}} titleNews={{titleNews}}>
+                <h2>Ảnh đại diện bài viết: </h2>
+                <img class="edit-avatar" id="edit-avatar" src="/img/loading.gif" alt="your image" />
+                <label class="custom-file-upload">
+                    <input type="file" name="avatar" id="avatar" onchange="readURL(this);" />
+                    Chọn ảnh
+                </label>
+                <h2>Tiêu đề bài viết: </h2>
+                <input type="text" placeholder="Tiêu đề" id="edit-title" required />
+
+                <h2>Tóm tắt: </h2>
+                <textarea placeholder="Viết nội dung tóm tắt vào đây" id="edit-abstract" class="abstract-text" required
+                    value="{{news.abstract}}"></textarea>
+
+                <h2>Nội dung: </h2>
+                <div id="edit-editor"></div>
+
+                <table>
+                    <tr>
+                        <td>
+                            <h2>Chuyên mục chính:</h2>
+                        </td>
+                        <td>
+                            <select onchange="edit_change_select_category()" id="edit_select_category">
+                                <option value="none">Chuyên mục</option>
+
+                            </select>
+                        </td>
+                        <td>
+                            <h2>Chuyên mục phụ: </h2>
+                        </td>
+                        <td>
+                            <select id="edit_select_sub_category" onchange="edit_change_select_sub_category()" required>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr>
+                        <td>
+                            <h2>Tag:</h2>
+                        </td>
+                        <td><select id="edit_select_tags">
+                                {{#each tag}}
+                                <option value={{this.id}}>{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </td>
+                        <td class="btn_add_tag">
+                            <p onclick="edit_add_tag_click()">+</p>
+                        </td>
+                    </tr>
+                </table>
+                <div>
+                    <h2>Danh sách tag đã thêm: </h2>
+                    <div id="edit_list_tag">
+                    </div>
+                </div>
+                <div class="button-complete" id="writer-edit-submit-btn-container" hidden>
+                    <input class="center-block" type="submit" value="Lưu"></button>
+                </div>
+                <div id="loading-writer-edit" class="col-md-12 loading">
+                    <img class="center-block" src="/img/loading.gif" alt=""></img>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script>
+        var toolbarOptions = [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['link', 'image'],
+            ['blockquote', 'code-block'],
+
+            [{ 'header': 1 }, { 'header': 2 }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'script': 'sub' }, { 'script': 'super' }],
+            [{ 'indent': '-1' }, { 'indent': '+1' }],
+            [{ 'direction': 'rtl' }],
+
+            [{ 'size': ['small', false, 'large', 'huge'] }],
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'font': [] }],
+            [{ 'align': [] }],
+            ['clean']
+        ];
+
+
+
+
+        var quill = new Quill('#edit-editor', {
+            modules: {
+                toolbar: toolbarOptions
+            },
+            theme: 'snow'
+        });
+        var Block = quill.import('blots/block');
+        class Div extends Block {
+        }
+        Div.tagName = "div";
+        Div.blotName = "div";
+        Div.allowedChildren = Block.allowedChildren;
+        Div.allowedChildren.push(Block)
+        quill.register(Div);
+
+
+    </script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#edit-avatar')
+                        .attr('src', e.target.result)
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        let list_sub_category;
+        const edit_news_form = $("#edit-news-form");
+        let list_tag = []; //list tag của bài viết
+        //lấy danh sách categories trước
+        $.ajax("/api/categories/getAllCategories", {
+            type: 'get',
+            dataType: 'json'
+        }).done(function (data) {
+            const select_category = $("#edit_select_category");
+            for (let i = 0, l = data.data.list_category.length; i < l; i++) {
+                select_category.append(` <option value=${data.data.list_category[i].id}>${data.data.list_category[i].name}</option>`)
+            };
+            list_sub_category = data.data.list_sub_category;
+            //sau đó mới lấy thông tin news
+            $.ajax("/api/writers/getNewsById/" + edit_news_form.attr("idNews") + "/" + edit_news_form.attr("titleNews"), {
+                type: 'get',
+                dataType: 'json'
+            }).done(function (data) {
+                console.log(data.data);
+                //add data vô các input
+                $('#edit-avatar')
+                    .attr('src', data.data.avatar)
+
+                $("#edit-title").val(data.data.title);
+                $("#edit-abstract").val(data.data.abstract);
+                quill.root.innerHTML = data.data.content;
+                $("#edit_select_category").val(data.data.sub_category.fk_category);
+                edit_change_select_category();
+                $("#edit_select_sub_category").val(data.data.sub_category.id);
+                for (let i = 0, l = data.data.tags_news.length; i < l; i++) {
+                    list_tag.push({
+                        name: data.data.tags_news[i].tag.name,
+                        id: data.data.tags_news[i].tag.id
+                    })
+                    $("#edit_list_tag").append(`<label id = "${data.data.tags_news[i].id}">${data.data.tags_news[i].tag.name}<button id ="${data.data.tags_news[i].id}" onClick = 'edit_delete_tag(this.id)'>X</button></label>`)
+                }
+                console.log(list_tag);
+                $("#writer-edit-submit-btn-container").show();
+                $("#loading-writer-edit").hide();
+            }).fail(function (xhr, textStatus, errorThrown) {
+                var err = JSON.parse(xhr.responseText);
+                alert(err.msg);
+            });
+        }).fail(function (xhr, textStatus, errorThrown) {
+            var err = JSON.parse(xhr.responseText);
+            alert(err.msg);
+        });
+        function edit_change_select_category() {
+            e = document.getElementById("edit_select_category");
+            var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 1
+            const select_sub_category = $("#edit_select_sub_category");
+            for (let i = 0, l = list_sub_category[strUser].length; i < l; i++) {
+                select_sub_category.append(` <option value=${list_sub_category[strUser][i].id}>${list_sub_category[strUser][i].name}</option>`)
+            };
+        }
+
+        function edit_change_select_sub_category() {
+            e = document.getElementById("edit_select_sub_category");
+            var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 2
+            var value = e.value; // giá trị được chọn ở chuyên mục cấp 1
+        }
+        function edit_add_tag_click() {
+            e = document.getElementById("edit_select_tags");
+            var strUser = e.options[e.selectedIndex].text;
+            var value = parseInt(e.value);
+            var s = new String("");
+            if (list_tag.length == 0)
+                list_tag.push({
+                    name: strUser,
+                    id: value
+                });
+            else {
+                let count = 1;
+                for (let i = 0; i < list_tag.length; i++) {
+                    if (list_tag[i].id === value) {
+                        count = -1;
+                        break;
+                    }
+                }
+                if (count === 1) list_tag.push({
+                    name: strUser,
+                    id: value
+                });
+            }
+            for (let i = 0; i < list_tag.length; i++) {
+                s = s + "<label id = '" + list_tag[i].id + "'>" + list_tag[i].name + "<button id ='" + list_tag[i].id + "' onClick = 'edit_delete_tag(this.id)'>X</button></label>" + '\n';
+            }
+            document.getElementById("edit_list_tag").innerHTML = s;
+            console.log(list_tag);
+        }
+        function edit_delete_tag(clicked_id) {
+            let idlabel = clicked_id;
+            let index = 0;;
+            for (; index < list_tag.length; index++) {
+                if (parseInt(idlabel) === list_tag[index].id) {
+                    break;
+                }
+
+            }
+            if (index < list_tag.length) {
+                list_tag.splice(index, 1);
+            }
+            var s = new String("");
+            for (let i = 0; i < list_tag.length; i++) {
+                s = s + "<label id = '" + list_tag[i].id + "'>" + list_tag[i].name + "<button id ='" + list_tag[i].id + "' onClick = 'edit_delete_tag(this.id)'>X</button></label>" + '\n';
+            }
+            document.getElementById("edit_list_tag").innerHTML = s;
+            console.log(list_tag);
+        }
+
+
+        const form_create = $("#edit-news-form");
+        form_create.submit(function (e) {
+            e.preventDefault();
+            console.log('submit')
+            let form = new FormData();
+            const input_avatar = $("#avatar");
+            $("#loading-writer-edit").show();
+            $("#writer-edit-submit-btn-container").hide();
+            if (input_avatar.prop('files')[0] !== undefined) {
+                form.append('avatar', input_avatar[0].files[0]);
+            }
+
+            if (quill.getLength() > 10) {
+                form.append('title', $("#edit-title").val());
+                form.append('abstract', $("#edit-abstract").val());
+                for (let i = 0, l = list_tag.length; i < l; i++) {
+                    form.append('list_tag', list_tag[i].id);
+                }
+                form.append('sub_category', $('#edit_select_sub_category').val())
+                form.append('content', quill.root.innerHTML);
+                $.ajax("/api/writers/edit_news/" + edit_news_form.attr("idNews"), {
+                    type: 'post',
+                    data: form,
+                    processData: false,
+                    contentType: false,
+                }).done(function (data) {
+                    console.log(data)
+                    $("#loading-writer-edit").hide();
+                    $("#writer-edit-submit-btn-container").show();
+                    location.href = "/writers/w_news/" + edit_news_form.attr("idNews") + "/" + edit_news_form.attr("titleNews");
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    var err = JSON.parse(xhr.responseText);
+                    alert(err.msg);
+                });
+            }
+            else {
+                alert("Vui lòng thêm đủ nội dung")
+            }
+
+        })
+
+    </script>
+</div>

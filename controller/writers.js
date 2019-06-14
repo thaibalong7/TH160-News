@@ -91,7 +91,7 @@ exports.renderCreateNews = async (req, res) => {
     try {
         const tag = await db.tags.findAll();
 
-        res.render('WriterEdit', {
+        res.render('writer-create-news', {
             nav: await helper.getNavWriter(),
             isWriter: true,
             title: 'Đăng bài',
@@ -129,6 +129,23 @@ exports.renderNews = async (req, res) => {
         else {
             return res.redirect('/writers');
         }
+    } catch (error) {
+        console.log(error)
+        return res.redirect('/writers');
+    }
+}
+
+exports.renderEditNews = async (req, res) => {
+    try {
+        const tag = await db.tags.findAll();
+        return res.render('writer-edit', {
+            id: req.params.id,
+            titleNews: req.params.name,
+            nav: await helper.getNavWriter(),
+            isWriter: true,
+            title: 'Edit Page',
+            tag: tag,
+        })
     } catch (error) {
         console.log(error)
         return res.redirect('/writers');

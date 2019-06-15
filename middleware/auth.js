@@ -65,8 +65,37 @@ var middlewareAuthWriter = (req, res, next) => {
     }
 }
 
+var middlewareAuthEditor = (req, res, next) => {
+    try {
+        const token = req.cookies.token;
+        const decode = jwt.verify(token, publicKEY, verifyOptions);
+        if (decode.editor === true) {
+            editors.findOne({
+                where: {
+                    id: decode.id,
+                    email: decode.email
+                }
+            }).then(_user => {
+                if (!_user) {
+                    res.status(401).json({ msg: 'Auth failed' });
+                }
+                else {
+                    req.editorData = _user;
+                    next();
+                }
+            })
+        }
+        else {
+            res.status(401).json({ msg: 'Auth failed' });
+        }
+    } catch (error) {
+        res.status(401).json({ msg: 'Auth failed' });
+    }
+}
+
 
 module.exports = {
     middlewareAuthUser,
-    middlewareAuthWriter
+    middlewareAuthWriter,
+    middlewareAuthEditor
 }

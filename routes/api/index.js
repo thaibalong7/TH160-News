@@ -9,4 +9,6 @@ router.use('/users', require('./users'));
 
 router.use('/writers', require('./writers'));
 
+router.use('/editor', require('./editor'));
+
 module.exports = router;

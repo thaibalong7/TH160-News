@@ -1,0 +1,161 @@
+<!-- section -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                    <h2>Tìm kiếm theo: {{search_key}}</h2>
+                    </br>
+                    <div class="clearfix visible-md visible-lg"></div>
+
+                    <!-- ad -->
+                    <div class="col-md-12">
+                        <div class="section-row">
+                            <a href="#">
+                                <img class="img-responsive center-block" src="/img/ad-2.jpg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- ad -->
+
+                    <!-- post -->
+                    <div id="post-list-search">
+                        {{#each news}}
+                        <div class="col-md-12">
+                            <div class="post post-row">
+                                <a class="post-img" href={{this.link}}><img src={{this.avatar}} alt=""></a>
+                                <div class="post-body">
+                                    <div class="post-meta">
+                                        <a class="post-category cat-4" href={{this.sub_category.link}}>{{this.sub_category.name}}</a>
+                                        <span class="post-date">{{this.publicAt}}</span>
+                                    </div>
+                                    <h3 class="post-title"><a href={{this.link}}>{{this.title}}</a></h3>
+                                    <p class="post-abstract">{{this.abstract}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                    <!-- /post -->
+
+                    {{#if isNextPage}}
+                    <div id="load-more-search-container" class="col-md-12">
+                        <div class="section-row">
+                            <button class="primary-button center-block" id="load-more-search" next_page={{next_page}}
+                                per_page={{per_page}} search_key="{{search_key}}">Xem Thêm</button>
+                        </div>
+                    </div>
+                    {{/if}}
+
+                    {{!-- loading --}}
+                    <div id="loading-container" class="col-md-12 loading" hidden>
+                        <img class="center-block" src="/img/loading.gif" alt=""></img>
+                    </div>
+                    {{!-- /loading --}}
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <!-- ad -->
+                <div class="aside-widget text-center">
+                    <a href="#" style="display: inline-block;margin: auto;">
+                        <img class="img-responsive" src="/img/ad-1.jpg" alt="">
+                    </a>
+                </div>
+                <!-- /ad -->
+
+                <!-- post widget -->
+                <div class="aside-widget">
+                    <div class="section-title">
+                        <h2>Mới nhất</h2>
+                    </div>
+
+                    <div id="post-widget">
+
+                    </div>
+                </div>
+                <!-- /post widget -->
+
+                <!-- catagories -->
+                <div class="aside-widget">
+                    <div class="section-title">
+                        <h2>Chuyên Mục</h2>
+                    </div>
+                    <div class="category-widget">
+                        <ul id="ul-category-widget">
+
+                        </ul>
+                    </div>
+                </div>
+                <!-- /catagories -->
+
+
+                {{!--
+                <!-- archive -->
+                <div class="aside-widget">
+                    <div class="section-title">
+                        <h2>Archive</h2>
+                    </div>
+                    <div class="archive-widget">
+                        <ul>
+                            <li><a href="#">Jan 2018</a></li>
+                            <li><a href="#">Feb 2018</a></li>
+                            <li><a href="#">Mar 2018</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /archive --> --}}
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /section -->
+
+<div>
+    <script type="text/javascript">
+        //pagination search_page
+        const load_more_button_search = $("#load-more-search");
+        load_more_button_search.click(function () {
+            $("#load-more-search-container").hide();
+            $("#loading-container").show();
+            $.ajax("/api/news/searchNews?key=" + load_more_button_search.attr("search_key") + "&per_page=" + load_more_button_search.attr("per_page") + "&page=" + load_more_button_search.attr("next_page"),
+                {
+                    type: 'GET',
+                    dataType: 'json',
+                }).done(function (news) {
+                    if (parseInt(news.next_page) > 0) //còn trang tiếp
+                    {
+                        $("#load-more-search-container").show();
+                        load_more_button_search.attr('next_page', news.next_page)
+                        $("#loading-container").hide();
+                    }
+                    else { //hết data rồi
+                        $("#loading-container").hide();
+                    }
+                    const post_list_search = $("#post-list-search");
+                    for (let i = 0, l = news.data.length; i < l; i++) {
+                        post_list_search.append(`<div class="col-md-12">
+                        <div class="post post-row">
+                            <a class="post-img" href=${news.data[i].link}><img src=${news.data[i].avatar} alt=""></a>
+                            <div class="post-body">
+                                <div class="post-meta">
+                                    <a class="post-category cat-4" href=${news.data[i].sub_category.link}>${news.data[i].sub_category.name}</a>
+                                    <span class="post-date">${news.data[i].publicAt}</span>
+                                </div>
+                                <h3 class="post-title"><a href=${news.data[i].link}>${news.data[i].title}</a></h3>
+                                <p class="post-abstract">${news.data[i].abstract}</p>
+                            </div>
+                        </div>
+                    </div>`)
+                    }
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    alert(xhr.responseText);
+                });
+        })
+
+    </script>
+</div>

@@ -31,5 +31,7 @@ router.get('/getCommentByNews/:id', newsController.getCommentByNews);
 
 router.post('/comment', newsController.comment);
 
+router.get('/searchNews', newsController.searchNews);
+
 
 module.exports = router;

@@ -193,3 +193,37 @@ exports.tag_page = async (req, res) => {
         return res.redirect('/');
     }
 }
+
+
+exports.search_page = async (req, res) => {
+    try {
+        const num_each_page = 7;
+        const key_search = req.query.key;
+        const query = {
+            attributes: {
+                exclude: ['content']
+            },
+            where: db.Sequelize.literal(`(LOWER("news"."title") LIKE LOWER('%${key_search}%') OR LOWER("news"."abstract") LIKE LOWER('%${key_search}%') OR "news"."content" LIKE '%${key_search}%') AND "news"."status" = 'published'`),
+            order: [['publicAt', 'DESC']],
+            limit: num_each_page,
+            offset: 0,
+            include: [{
+                model: db.sub_categories
+            }]
+        }
+        const news = await db.news.findAll(query);
+        await helper.fixNews(news);
+        return res.render('search', {
+            search_key: key_search,
+            title: 'search',
+            nav: await helper.getNav(db),
+            news: news,
+            isNextPage: news.length < num_each_page ? false : true,
+            next_page: 2,
+            per_page: num_each_page,
+        })
+    } catch (error) {
+        console.log(error)
+        return res.redirect('/');
+    }
+}

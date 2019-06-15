@@ -43,6 +43,8 @@ router.get('/forgot-password', function (req, res, next) {
 	res.render('forgotpassword', { title: 'Quên mật khẩu' });
 })
 
+router.get('/search', indexController.search_page);
+
 router.get('/writeredit', function (req, res, next) {
 	res.render('WriterEdit', { 
 		title: 'Soạn bài viết',

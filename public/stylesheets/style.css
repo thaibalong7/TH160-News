@@ -441,6 +441,20 @@ textarea.input {
     font-size: 22px;
     padding: 0;
 }
+.nav-btns .search-form .search-click {
+    position: absolute;
+    top: 50%;
+    right: 45px;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    line-height: 20px;
+    color: #212631;
+    font-size: 22px;
+    padding: 0;
+}
 
 /*----------------------------*\
 	nav aside

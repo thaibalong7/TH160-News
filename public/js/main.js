@@ -108,6 +108,16 @@
 
     setStickyPos();
 
+    function search_click() {
+        const key_search = $(".search-input").val();
+        console.log(key_search);
+        if (key_search.length !== 0) {
+            window.location.href = "/search?key=" + key_search;
+        }
+    }
+
+    $(".search-click").click(search_click);
+
     function show_dropdown_logged() {
         $("#check-login").append(`
         <button class="drop-login"><img src="/img/avatar.png" alt="Avatar" style="width:50px;">${localStorage.getItem('user:name')}</button>
@@ -261,28 +271,26 @@
         //không phải trang writers
         check_login_user();
     }
-    
-    if (location.pathname.includes("/category/") || location.pathname.includes("/news/") || location.pathname.includes("/tag/")) {
-        const post_widget = $("#post-widget");
-        if (post_widget) {
-            $.ajax("/api/news/getLatestNews?num_news=5", {
-                type: 'GET',
-                dataType: 'json',
-            }).done((_news) => {
-                for (let i = 0, l = _news.data.length; i < l; i++) {
-                    post_widget.append(`<div class="post post-widget">
+    const post_widget = $("#post-widget");
+    if (post_widget) {
+        $.ajax("/api/news/getLatestNews?num_news=5", {
+            type: 'GET',
+            dataType: 'json',
+        }).done((_news) => {
+            for (let i = 0, l = _news.data.length; i < l; i++) {
+                post_widget.append(`<div class="post post-widget">
                     <a class="post-img" href="${_news.data[i].link}"><img src="${_news.data[i].avatar}" alt=""></a>
                     <div class="post-body">
                         <h3 class="post-title"><a href="${_news.data[i].link}">${_news.data[i].title}</a></h3>
                     </div>
                     </div>`)
-                }
-            }).fail(function (xhr, textStatus, errorThrown) {
-                alert(xhr.responseText);
-            });;
-        }
+            }
+        }).fail(function (xhr, textStatus, errorThrown) {
+            alert(xhr.responseText);
+        });;
+    }
 
-        const ul_category_widget = $("#ul-category-widget");
+    const ul_category_widget = $("#ul-category-widget");
         if (ul_category_widget) {
             $.ajax("/api/categories/getCategoriesAndNumNews", {
                 type: 'GET',
@@ -296,6 +304,8 @@
                 alert(xhr.responseText);
             });
         }
+
+    if (location.pathname.includes("/category/") || location.pathname.includes("/news/") || location.pathname.includes("/tag/")) {
 
         const load_more_button_category = $("#load-more-category");
         load_more_button_category.click(function () {

@@ -1458,6 +1458,28 @@ input[type="file"] {
     text-align: center;
 }
 
+#btn_add_tag
+{
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    background-color: #f57e60;
+    font-size: 25px;
+    font-weight: 600;
+    margin: 10px;
+    text-align: center;
+}
+
+#date_time input[type="datetime-local"]
+{
+    border-radius: 25px;
+    outline: none;
+    border: 1px solid rgb(201, 198, 198);
+    padding: 5px;
+}
+
 .btn_add_tag p:hover {
     cursor: pointer;
 }
@@ -1537,6 +1559,18 @@ input[type="file"] {
     height: 5%;
 }
 
+.btn-modal-cancel:hover
+{
+    width: 200px;
+    height: 60px;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 30px;
+    transition-property: all;
+    transition-duration: 1s;
+    transition-delay: 0.1s;
+}
+
 .btn-modal-send {
     background-color: #0aa778;
     outline: none;
@@ -1545,6 +1579,18 @@ input[type="file"] {
     color: white;
     width: 25%;
     height: 5%;
+}
+
+.btn-modal-send:hover
+{
+    width: 200px;
+    height: 60px;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 30px;
+    transition-property: all;
+    transition-duration: 1s;
+    transition-delay: 0.1s;
 }
 
 .modal-body select {
@@ -1620,7 +1666,7 @@ input[type="file"] {
     width: 100%;
 }
 
-#form-profile input {
+#form-profile input[type="text"]{
     margin-left: 15%;
     border: 1px solid rgb(143, 141, 141);
     outline: none;
@@ -1632,14 +1678,28 @@ input[type="file"] {
     padding-left: 10px;
 }
 
-#form-profile input:focus {
+#form-profile input[type="text"]:focus {
     width: 80%;
     margin-left: 10%;
-    border: 2px solid rgb(250, 84, 84);
+    border: 3px solid rgb(66, 214, 66);
     transition-property: all;
     transition-duration: 1s;
     transition-delay: 0.1s;
 }
+
+#form-profile input[type="date"]{
+    margin-left: 15%;
+    border: 1px solid rgb(143, 141, 141);
+    outline: none;
+    margin-top: 15px;
+    width: 70%;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 25px;
+    padding-left: 10px;
+}
+
+
 
 #form-profile h2 {
     margin-top: 10px;
@@ -1673,6 +1733,28 @@ input[type="file"] {
     background-color: rgb(45, 180, 117);
     font-weight: bold;
     font-size: 20px;
+    transition-property: all;
+    transition-duration: 1s;
+    transition-delay: 0.1s;
+}
+
+#button-xuatban {
+    background-color: rgb(165, 22, 158);;
+    outline: none;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    width: 25%;
+    height: 5%;
+}
+
+#button-xuatban:hover {
+    width: 200px;
+    height: 60px;
+    background-color: rgb(60, 22, 165);
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 30px;
     transition-property: all;
     transition-duration: 1s;
     transition-delay: 0.1s;

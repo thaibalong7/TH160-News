@@ -103,13 +103,25 @@
                         <h3>Bạn có muốn điều chỉnh lại chuyên mục và các nhãn của bài viết này?</h3>
                         <table>
                             <tr>
-                                <td><h4>Chọn chuyên mục</h4></td>
-                                <td> <select id="select_id">
-                                    <option value="none">Chuyên mục</option>
-                                    {{#each chuyenmuc}}
-                                        <option value={{.}}>{{.}}</option>
-                                    {{/each}}
-                        </select></td>
+                                <td>
+                                    <h4>Chuyên mục chính:</h4>
+                                </td>
+                                <td>
+                                    <select onchange="edit_change_select_category()" id="edit_select_category">
+                                        <option value="none">Chuyên mục</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <h4>Chuyên mục phụ: </h4>
+                                </td>
+                                <td>
+                                    <select id="edit_select_sub_category" onchange="edit_change_select_sub_category()" required>
+                                    </select>
+                                </td>
                             </tr>
                         </table>
                         <table>
@@ -121,7 +133,7 @@
                                         {{/each}}
                                     </select>
                                 </td>
-                                <td><button id = "btn_add_tag" onclick="val3()">+</button></td>
+                                <td><button  id = "btn_add_tag" onclick="val3()">+</button></td>
                             </tr>
                         </table>
                          <div>
@@ -129,14 +141,28 @@
                             <div id = "list_tag">
                             </div>
                         </div>
+                        <div id = "date_time">
+                            <table id = "form-profile-xuatban">
+                            <tr>
+                                <td>
+                                    <h4>Ngày xuất bản: </h4>
+                                </td>
+                                <td>
+                                   <div><input type="datetime-local" name="bdaytime">
+                                </td>
+                                
+                            </tr>
+                        </table>
+                        </div>
                     </div>
                     <div class="modal-footer">   
                         <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
                         <button type="button" class="btn-modal-send">Duyệt</button>
+                        <button id = "button-xuatban">Xuất bản ngay</button>
                 </div>
             </div>
         </div>
-        <script>
+        <script >
         var list_tag = []
         function val3()
         {
@@ -184,5 +210,107 @@
             console.log(s);
             document.getElementById("list_tag").innerHTML = s; 
         }
+        
+        let list_sub_category;
+        const edit_news_form = $("#edit-news-form");
+        $.ajax("/api/categories/getAllCategories", {
+            type: 'get',
+            dataType: 'json'
+        }).done(function (data) {
+            const select_category = $("#edit_select_category");
+            for (let i = 0, l = data.data.list_category.length; i < l; i++) {
+                select_category.append(` <option value=${data.data.list_category[i].id}>${data.data.list_category[i].name}</option>`)
+            };
+            list_sub_category = data.data.list_sub_category;
+            //sau đó mới lấy thông tin news
+            $.ajax("/api/writers/getNewsById/" + edit_news_form.attr("idNews") + "/" + edit_news_form.attr("titleNews"), {
+                type: 'get',
+                dataType: 'json'
+            }).done(function (data) {
+                console.log(data.data);
+                //add data vô các input
+                $('#edit-avatar')
+                    .attr('src', data.data.avatar)
+
+                $("#edit-title").val(data.data.title);
+                $("#edit-abstract").val(data.data.abstract);
+                quill.root.innerHTML = data.data.content;
+                $("#edit_select_category").val(data.data.sub_category.fk_category);
+                edit_change_select_category();
+                $("#edit_select_sub_category").val(data.data.sub_category.id);
+                for (let i = 0, l = data.data.tags_news.length; i < l; i++) {
+                    list_tag.push({
+                        name: data.data.tags_news[i].tag.name,
+                        id: data.data.tags_news[i].tag.id
+                    })
+                    $("#edit_list_tag").append(`<label id = "${data.data.tags_news[i].id}">${data.data.tags_news[i].tag.name}<button id ="${data.data.tags_news[i].id}" onClick = 'edit_delete_tag(this.id)'>X</button></label>`)
+                }
+                console.log(list_tag);
+                $("#writer-edit-submit-btn-container").show();
+                $("#loading-writer-edit").hide();
+            }).fail(function (xhr, textStatus, errorThrown) {
+                var err = JSON.parse(xhr.responseText);
+                alert(err.msg);
+            });
+        }).fail(function (xhr, textStatus, errorThrown) {
+            var err = JSON.parse(xhr.responseText);
+            alert(err.msg);
+        });
+        function edit_change_select_category() {
+            e = document.getElementById("edit_select_category");
+            var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 1
+            const select_sub_category = $("#edit_select_sub_category");
+            for (let i = 0, l = list_sub_category[strUser].length; i < l; i++) {
+                select_sub_category.append(` <option value=${list_sub_category[strUser][i].id}>${list_sub_category[strUser][i].name}</option>`)
+            };
+        }
+
+        function edit_change_select_sub_category() {
+            e = document.getElementById("edit_select_sub_category");
+            var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 2
+            var value = e.value; // giá trị được chọn ở chuyên mục cấp 1
+        }
+
+        const form_create = $("#edit-news-form");
+        form_create.submit(function (e) {
+            e.preventDefault();
+            console.log('submit')
+            let form = new FormData();
+            const input_avatar = $("#avatar");
+            $("#loading-writer-edit").show();
+            $("#writer-edit-submit-btn-container").hide();
+            if (input_avatar.prop('files')[0] !== undefined) {
+                form.append('avatar', input_avatar[0].files[0]);
+            }
+
+            if (quill.getLength() > 10) {
+                form.append('title', $("#edit-title").val());
+                form.append('abstract', $("#edit-abstract").val());
+                for (let i = 0, l = list_tag.length; i < l; i++) {
+                    form.append('list_tag', list_tag[i].id);
+                }
+                form.append('sub_category', $('#edit_select_sub_category').val())
+                form.append('content', quill.root.innerHTML);
+                $.ajax("/api/writers/edit_news/" + edit_news_form.attr("idNews"), {
+                    type: 'post',
+                    data: form,
+                    processData: false,
+                    contentType: false,
+                }).done(function (data) {
+                    console.log(data)
+                    $("#loading-writer-edit").hide();
+                    $("#writer-edit-submit-btn-container").show();
+                    location.href = "/writers/w_news/" + edit_news_form.attr("idNews") + "/" + edit_news_form.attr("titleNews");
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    var err = JSON.parse(xhr.responseText);
+                    alert(err.msg);
+                });
+            }
+            else {
+                alert("Vui lòng thêm đủ nội dung")
+            }
+
+        })
+
         </script>
 </div>

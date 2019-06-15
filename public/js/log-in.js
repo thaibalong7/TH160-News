@@ -49,7 +49,22 @@
             })
         }
         if (data.type === 'editor') {
-
+            $.ajax("/api/editor/login", {
+                type: "post",
+                data: {
+                    username: data['username'],
+                    password: data['pass']
+                }
+            }).done(res => {
+                localStorage.setItem('isEditorLogin', true);
+                localStorage.setItem('user:name', res.profile.name);
+                localStorage.setItem('user:email', res.profile.email);
+                localStorage.setItem('user:birthdate', res.profile.birthdate);
+                window.location.href = "/editor";
+            }).fail(function (xhr, status, error) {
+                var err = JSON.parse(xhr.responseText);
+                alert(err.msg);
+            })
         }
         if (data.type === 'administrator') {
 

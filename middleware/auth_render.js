@@ -47,7 +47,7 @@ var middlewareAuthEditorRender = async (req, res, next) => {
     try {
         const token = req.cookies.token;
         const decode = jwt.verify(token, publicKEY, verifyOptions);
-        if (decode.writer === true) {
+        if (decode.editor === true) {
             editors.findOne({
                 where: {
                     id: decode.id,

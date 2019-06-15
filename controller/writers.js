@@ -6,7 +6,7 @@ exports.renderListAll = async (req, res) => {
     try {
         // do something to get data
         res.render('list', {
-            title: 'Home',
+            title: 'Home - Writer',
             nav: await helper.getNavWriter(),
             isWriter: true,
             isAll: true,

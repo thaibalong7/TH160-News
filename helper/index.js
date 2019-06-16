@@ -54,6 +54,15 @@ const fixNews = async (news) => {
     }
 }
 
+const fixRawNews = async (news) => {
+    for (let i = 0, l = news.length; i < l; i++) {
+        news[i].link = '/news/' + news[i].id + '/' + slugify(news[i].title);
+        news[i].publicAt = toStringDate(new Date(news[i].publicAt));
+        news[i].avatar = '/img/news_avatar/' + news[i].avatar;
+        news[i].sub_category.link = '/category/' + news[i].sub_category.id + '/' + slugify(news[i].sub_category.name) + '?isSubCategory=true'
+    }
+}
+
 const fixEditorNews = async (news) => {
     for (let i = 0, l = news.length; i < l; i++) {
         news[i].dataValues.link = '/editor/e_news/' + news[i].id + '/' + slugify(news[i].title);
@@ -209,6 +218,7 @@ module.exports = {
     toStringDate,
     formatNumber,
     fixNews,
+    fixRawNews,
     fixWriterNews,
     fixEditorNews,
     addLinkTagToListTagNew,

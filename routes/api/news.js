@@ -11,6 +11,9 @@ router.get('/getNewsMostViews', newsController.getNewsMostViews);
 //Bài viết nổi bậc nhất tuần (đang xét nhiều view nhất được public trong tuần)
 router.get('/getFeaturedNews', newsController.getFeaturedNews);
 
+//10 chuyên mục nổi bật, mỗi chuyên mục 1 bài viết
+router.get('/getFeatureCategoryWithNews', newsController.getFeatureCategoryWithNews);
+
 router.get('/getNewsById/:id/:name', newsController.getNewsById);
 
 router.get('/increaseView/:id/:name', newsController.increaseView);

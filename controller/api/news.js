@@ -99,6 +99,50 @@ exports.getFeaturedNews = async (req, res) => {
     }
 }
 
+function sort_list_sub_categories(sc1, sc2) {
+    return (sc2.news.length - sc1.news.length);
+}
+
+exports.getFeatureCategoryWithNews = async (req, res) => {
+    try {
+        const query = {
+            include: [{
+                model: db.news,
+                where: {
+                    status: 'published'
+                },
+                attributes: {
+                    exclude: ['content']
+                },
+            },
+            {
+                model: db.categories
+            }],
+            order: [[db.news, 'publicAt', 'DESC']]
+        }
+        db.sub_categories.findAll(query).then(async _sub_categories => {
+            _sub_categories.sort(sort_list_sub_categories);
+            _sub_categories.splice(10, _sub_categories.length);
+            const list_news = [];
+            for (let i = 0, l = _sub_categories.length; i < l; i++) {
+                const news = _sub_categories[i].news[0].dataValues;
+                news.sub_category = {
+                    id: _sub_categories[i].id,
+                    name: _sub_categories[i].name,
+                }
+                list_news.push(news);
+            }
+            await helper.fixRawNews(list_news)
+            return res.status(200).json({
+                data: list_news
+            })
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}
+
 exports.getLatestNewsByCategory = async (req, res) => {
     try {
         const _sub_categories = await db.sub_categories.findAll({

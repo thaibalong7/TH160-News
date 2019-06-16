@@ -50,11 +50,11 @@
                         <h2 class="modal-title">Lý do từ chối vài biết: </h2>
                     </div>
                     <div class="modal-body">
-                        <textarea placeholder="Viết lý do từ chối vào đây"></textarea>
+                        <textarea id="reject-reason" placeholder="Viết lý do từ chối vào đây"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn-modal-send">Gửi</button>
+                        <button type="button" id="modal-reject-news-btn" class="btn-modal-send" onclick="click_send_reject_news(this)">Gửi</button>
                     </div>
                 </div>
             </div>
@@ -279,6 +279,33 @@
                 });
             }
 
+
+            function reject_click(btn) {
+                $("#modal-reject-news-btn").attr("idnews", btn.getAttribute('idnews'));
+            }
+
+            function click_send_reject_news(btn) {
+                const data_reject = {
+                    idNews: btn.getAttribute('idnews'),
+                };
+                if ($("#reject-reason").val().length < 10) { //độ dài lý do quá ngắn
+                    alert("Vui lòng nhập lý do trên 10 ký tự")
+                }
+                else {
+                    data_reject.rejected_reason = $("#reject-reason").val();
+                    console.log(data_reject);
+                    $.ajax("/api/editor/reject_news", {
+                        type: 'post',
+                        dataType: 'json',
+                        data: data_reject
+                    }).done((_data) => {
+                        location.reload();
+                    }).fail(function (xhr, textStatus, errorThrown) {
+                        var err = JSON.parse(xhr.responseText);
+                        alert(err.msg);
+                    });
+                }
+            }
 
             function editor_add_tag_click() {
                 e = document.getElementById("editor-select-tag");

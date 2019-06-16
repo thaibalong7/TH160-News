@@ -17,5 +17,7 @@ router.get('/getCategoryAndTagOfNews/:id', middlewareAuthEditor, editorControlle
 
 router.post('/approve_news', middlewareAuthEditor, editorController.approve_news);
 
+router.post('/reject_news', middlewareAuthEditor, editorController.reject_news);
+
 
 module.exports = router;

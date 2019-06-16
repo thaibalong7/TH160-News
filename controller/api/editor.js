@@ -290,13 +290,45 @@ exports.approve_news = async (req, res) => {
                 }
                 _news.status = "approved";
             }
-            
+
             await _news.save();
 
             return res.status(200).json({
                 msg: 'Cập nhật thành công',
                 data: _news
             })
+        }
+        else {
+            return res.status(400).json({ msg: "Sai id bài viết rồi :((" })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}
+
+exports.reject_news = async (req, res) => {
+    try {
+        const _news = await db.news.findOne({
+            where: {
+                id: req.body.idNews
+            }
+        });
+        if (_news) {
+            if (typeof req.body.rejected_reason !== 'undefined') {
+                _news.rejected_reason = req.body.rejected_reason;
+                _news.status = "rejected";
+
+                await _news.save();
+
+                return res.status(200).json({
+                    msg: 'Từ chối thành công',
+                    data: _news
+                })
+            }
+            else {
+                return res.status(400).json({ msg: "Phải có lý do hủy" })
+            }
         }
         else {
             return res.status(400).json({ msg: "Sai id bài viết rồi :((" })

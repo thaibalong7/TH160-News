@@ -70,6 +70,7 @@
                     </div>
                     <div class="modal-body">
                         <h3>Bạn có muốn điều chỉnh lại chuyên mục và các nhãn của bài viết này?</h3>
+
                         <table>
                             <tr>
                                 <td>
@@ -77,7 +78,6 @@
                                 </td>
                                 <td>
                                     <select onchange="editor_change_select_category()" id="editor_select_category">
-                                        <option value="none">Chuyên mục</option>
                                     </select>
                                 </td>
                             </tr>
@@ -88,8 +88,7 @@
                                     <h4>Chuyên mục phụ: </h4>
                                 </td>
                                 <td>
-                                    <select id="editor_select_sub_category" onchange="editor_change_select_sub_category()"
-                                        required>
+                                    <select id="editor_select_sub_category" onchange="editor_change_select_sub_category()">
                                     </select>
                                 </td>
                             </tr>
@@ -120,23 +119,24 @@
                                         <h4>Ngày xuất bản: </h4>
                                     </td>
                                     <td>
-                                        <div><input type="datetime-local" name="bdaytime">
+                                        <div><input id="release-datetime" type="datetime-local" name="bdaytime">
                                     </td>
-
                                 </tr>
                             </table>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn-modal-send">Duyệt</button>
-                        <button id="button-xuatban">Xuất bản ngay</button>
+                        <button type="button" id="approve-btn-model" class="btn-modal-send" idnews="" onclick="approve_news(this)">Duyệt</button>
+                        <button id="button-xuatban" idnews="" onclick="release_news_now(this)">Xuất bản ngay</button>
                     </div>
                 </div>
             </div>
         </div>
         <script>
             var list_tag = []
+
+            document.getElementById('release-datetime').min = new Date().toISOString().split("T")[0];
 
             function fetchNewsEditor() {
                 $.ajax("/api/editor/getNewsByEditor?page=" + $("#load-more-editor-list-container").attr('next_page') + "&per_page=" + $("#load-more-editor-list-container").attr('per_page'), {
@@ -155,10 +155,10 @@
                                         <span class="post-category cat-1">${_data.data[i].sub_category.category.name}</span>
                                         <span class="post-date">${_data.data[i].createdAt}</span>
 
-                                        <button type="button" class="post-category cat-2" data-toggle="modal"
-                                            data-target="#approve-modal" style="float:right" onclick="approve_click()">Duyệt</button>
-                                        <button type="button" class="post-category cat-3" data-toggle="modal"
-                                            data-target="#reject-modal" style="float:right"onclick="reject_click()">Từ chối</button>
+                                        <button type="button" class="post-category cat-2" data-toggle="modal" idnews="${_data.data[i].id}"
+                                            data-target="#approve-modal" style="float:right" onClick='approve_click(this)'>Duyệt</button>
+                                        <button type="button" class="post-category cat-3" data-toggle="modal" idnews="${_data.data[i].id}"
+                                            data-target="#reject-modal" style="float:right"onClick="reject_click(this)">Từ chối</button>
                                     </div>
                                     <h3 class="post-title"><a href="${_data.data[i].link}">${_data.data[i].title}</a></h3>
                                     <p class="post-abstract">${_data.data[i].abstract}</p>
@@ -186,8 +186,97 @@
                 fetchNewsEditor();
             })
 
-            function approve_click() {
-                console.log('approve click');
+            function approve_click(btn) {
+                $.ajax("/api/editor/getCategoryAndTagOfNews/" + btn.getAttribute('idnews'), {
+                    type: 'get',
+                    dataType: 'json'
+                }).done(data => {
+                    $("#editor_select_category").val(data.data.sub_category.fk_category);
+                    editor_change_select_category();
+                    $("#editor_select_sub_category").val(data.data.sub_category.id);
+                    list_tag = [];
+                    $("#editor_list_tag").empty();
+                    for (let i = 0, l = data.data.tags.length; i < l; i++) {
+                        list_tag.push({
+                            name: data.data.tags[i].tag.name,
+                            id: data.data.tags[i].tag.id
+                        })
+                        $("#editor_list_tag").append(`<label id = "${data.data.tags[i].id}">${data.data.tags[i].tag.name}<button id ="${data.data.tags[i].id}" onClick = 'editor_delete_tag(this.id)'>X</button></label>`)
+                    };
+                    $("#approve-btn-model").attr("idnews", btn.getAttribute('idnews'))
+                    $("#button-xuatban").attr("idnews", btn.getAttribute('idnews'))
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    var err = JSON.parse(xhr.responseText);
+                    alert(err.msg);
+                });
+            }
+
+            function checkIfDateNotValid(d) { //kiểm tra date có invalid hay không
+                try {
+                    var d = new Date(d);
+                    return !(d.getTime() === d.getTime()); //NAN is the only type which is not equal to itself.
+                } catch (e) {
+                    return true;
+                }
+
+            }
+
+            function approve_news(btn) {
+                const data_approve = {
+                    idNews: btn.getAttribute('idnews'),
+                };
+                const list_tag_submit = [];
+                for (let i = 0, l = list_tag.length; i < l; i++) {
+                    list_tag_submit.push(list_tag[i].id);
+                }
+                data_approve.list_tag = list_tag_submit;
+                data_approve.sub_category = $('#editor_select_sub_category').val();
+                const release_date = new Date($('#release-datetime').val())
+                if (checkIfDateNotValid(release_date) === true) {
+                    //release_date is invalid
+                    alert("Vui lòng nhập ngày xuất bản hợp lệ")
+                }
+                else {
+                    if (release_date < new Date()) {
+                        alert("Vui lòng nhập ngày xuất bản ở tương lai")
+                    }
+                    else {
+                        data_approve.publicAt = release_date;
+                        $.ajax("/api/editor/approve_news", {
+                            type: 'post',
+                            dataType: 'json',
+                            data: data_approve
+                        }).done((_data) => {
+                            location.reload();
+                        }).fail(function (xhr, textStatus, errorThrown) {
+                            var err = JSON.parse(xhr.responseText);
+                            alert(err.msg);
+                        });
+                    }
+                }
+            }
+
+            function release_news_now(btn) {
+                const data_approve = {
+                    idNews: btn.getAttribute('idnews'),
+                };
+                const list_tag_submit = [];
+                for (let i = 0, l = list_tag.length; i < l; i++) {
+                    list_tag_submit.push(list_tag[i].id);
+                }
+                data_approve.list_tag = list_tag_submit;
+                data_approve.sub_category = $('#editor_select_sub_category').val();
+                data_approve.isPublicNow = true;
+                $.ajax("/api/editor/approve_news", {
+                    type: 'post',
+                    dataType: 'json',
+                    data: data_approve
+                }).done((_data) => {
+                    location.reload();
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    var err = JSON.parse(xhr.responseText);
+                    alert(err.msg);
+                });
             }
 
 
@@ -258,6 +347,7 @@
                 e = document.getElementById("editor_select_category");
                 var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 1
                 const select_sub_category = $("#editor_select_sub_category");
+                select_sub_category.empty();
                 for (let i = 0, l = list_sub_category[strUser].length; i < l; i++) {
                     select_sub_category.append(` <option value=${list_sub_category[strUser][i].id}>${list_sub_category[strUser][i].name}</option>`)
                 };
@@ -265,8 +355,8 @@
 
             function editor_change_select_sub_category() {
                 e = document.getElementById("edit_select_sub_category");
-                var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 2
-                var value = e.value; // giá trị được chọn ở chuyên mục cấp 1
+                //var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 2
+                //var value = e.value; // giá trị được chọn ở chuyên mục cấp 1
             }
 
         </script>

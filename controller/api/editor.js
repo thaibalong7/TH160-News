@@ -243,3 +243,66 @@ exports.getCategoryAndTagOfNews = async (req, res) => {
         return res.status(400).json({ msg: error.toString() })
     }
 }
+
+exports.approve_news = async (req, res) => {
+    try {
+        const _news = await db.news.findOne({
+            where: {
+                id: req.body.idNews
+            }
+        });
+        if (_news) {
+            if (typeof req.body.sub_category !== 'undefined') {
+                _news.fk_sub_category = parseInt(req.body.sub_category);
+            }
+            if (typeof req.body.list_tag !== 'undefined') {
+                if (Array.isArray(req.body.list_tag)) {
+                    //xóa list tags cũ đi
+                    await db.tags_new.destroy({
+                        where: {
+                            fk_new: _news.id
+                        }
+                    });
+
+                    //sau khi xóa xong, thêm list tags mới vào
+                    //thêm tags news
+                    for (let i = 0, l = req.body.list_tag.length; i < l; i++) {
+                        await db.tags_new.create({
+                            fk_new: _news.id,
+                            fk_tag: req.body.list_tag[i]
+                        })
+                    };
+                }
+                else {
+                    return res.status(400).json({ msg: "Lỗi danh sách tag :((" })
+                }
+            }
+            if (req.body.isPublicNow) {
+                _news.publicAt = new Date();
+                _news.status = "published";
+            }
+            else {
+                if (typeof req.body.publicAt !== 'undefined') {
+                    _news.publicAt = new Date(req.body.publicAt);
+                }
+                else {
+                    return res.status(400).json({ msg: "Không có ngày xuất bản" })
+                }
+                _news.status = "approved";
+            }
+            
+            await _news.save();
+
+            return res.status(200).json({
+                msg: 'Cập nhật thành công',
+                data: _news
+            })
+        }
+        else {
+            return res.status(400).json({ msg: "Sai id bài viết rồi :((" })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}

@@ -13,5 +13,7 @@ router.get('/me', middlewareAuthEditor, editorController.me);
 
 router.get('/getNewsByEditor', middlewareAuthEditor, editorController.getNewsByEditor);
 
+router.get('/getCategoryAndTagOfNews/:id', middlewareAuthEditor, editorController.getCategoryAndTagOfNews)
+
 
 module.exports = router;

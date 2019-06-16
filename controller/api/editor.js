@@ -210,3 +210,36 @@ exports.getNewsByEditor = async (req, res) => {
         return res.status(400).json({ msg: error.toString() })
     }
 }
+
+exports.getCategoryAndTagOfNews = async (req, res) => {
+    try {
+        const query = {
+            where: {
+                id: req.params.id,
+            },
+            include: [{
+                model: db.sub_categories,
+                include: [{
+                    model: db.categories
+                }]
+            },
+            {
+                model: db.tags_new,
+                include: [{
+                    model: db.tags
+                }]
+            }]
+        }
+        db.news.findOne(query).then(_news => {
+            return res.status(200).json({
+                data: {
+                    tags: _news.tags_news,
+                    sub_category: _news.sub_category
+                },
+            })
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}

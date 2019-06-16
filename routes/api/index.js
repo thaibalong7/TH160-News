@@ -11,4 +11,6 @@ router.use('/writers', require('./writers'));
 
 router.use('/editor', require('./editor'));
 
+router.use('/admins', require('./admins'));
+
 module.exports = router;

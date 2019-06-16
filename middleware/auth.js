@@ -93,9 +93,38 @@ var middlewareAuthEditor = (req, res, next) => {
     }
 }
 
+var middlewareAuthAdmin = (req, res, next) => {
+    try {
+        const token = req.cookies.token;
+        const decode = jwt.verify(token, publicKEY, verifyOptions);
+        if (decode.administrators === true) {
+            administrators.findOne({
+                where: {
+                    id: decode.id,
+                    email: decode.email
+                }
+            }).then(_user => {
+                if (!_user) {
+                    res.status(401).json({ msg: 'Auth failed' });
+                }
+                else {
+                    req.administratorsData = _user;
+                    next();
+                }
+            })
+        }
+        else {
+            res.status(401).json({ msg: 'Auth failed' });
+        }
+    } catch (error) {
+        res.status(401).json({ msg: 'Auth failed' });
+    }
+}
+
 
 module.exports = {
     middlewareAuthUser,
     middlewareAuthWriter,
-    middlewareAuthEditor
+    middlewareAuthEditor,
+    middlewareAuthAdmin
 }

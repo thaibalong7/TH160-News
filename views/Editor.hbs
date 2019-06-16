@@ -1,203 +1,255 @@
-<div class="list_cata">
+<div class="section">
+    <div class="container">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="list-cata">
+                    <h1>Danh sách bài viết Draft</h1>
+                    <div id="editor-post-list-category">
+                        {{#each news}}
+                        <div class="col-md-12">
+                            <div class="post post-row">
+                                <a class="post-img" href="#"><img src="{{avatar}}"></a>
+                                <div class="post-body">
+                                    <div class="post-meta">
+                                        <span class="post-category">{{sub_category.name}}</span>
+                                        <span class="post-category cat-1">{{sub_category.category.name}}</span>
+                                        <span class="post-date">{{createdAt}}</span>
 
-    <div class="col-md-12">
-        <div class="row">
-            <div class="list-cata">
-                {{#each category}}
-                <h1>Danh sách bài viết chuyên mục {{name}}</h1>
-                {{/each}}
-                <div id="post-list-category">
-                    {{#each news}}
-                    <div class="col-md-12">
-                        <div class="post post-row">
-                            <a class="post-img" href="#"><img src="./img/{{img}}"></a>
-                            <div class="post-body">
-                                <div class="post-meta">
-                                    <a class="post-category" href="#">{{type}}</a>
-                                    <a class="post-category cat-4" href="#">{{category}}</a>
-                                    <span class="post-date">{{publicAt}}</span>
-
-                                    <button type="button" class="post-category cat-2" data-toggle="modal" data-target="#approve-modal"
-                                        style="float:right">Duyệt</button>
-                                    <button type="button" class="post-category cat-3" data-toggle="modal" data-target="#reject-modal"
-                                        style="float:right">Từ chối</button>
+                                        <button type="button" class="post-category cat-2" data-toggle="modal"
+                                            data-target="#approve-modal" style="float:right">Duyệt</button>
+                                        <button type="button" class="post-category cat-3" data-toggle="modal"
+                                            data-target="#reject-modal" style="float:right">Từ chối</button>
+                                    </div>
+                                    <h3 class="post-title"><a href="{{link}}">{{name}}</a></h3>
+                                    <p class="post-abstract">{{abstract}}</p>
                                 </div>
-                                <h3 class="post-title"><a>{{name}}</a></h3>
-                                <p class="post-abstract">{{abstract}}</p>
                             </div>
                         </div>
+                        {{/each}}
                     </div>
-                    {{/each}}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="reject-modal" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h2 class="modal-title">Lý do từ chối vài biết: </h2>
-            </div>
-            <div class="modal-body">
-                <textarea placeholder="Viết lý do từ chối vào đây"></textarea>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn-modal-send">Gửi</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="approve-modal" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h2 class="modal-title">Bạn đồng ý duyệt bài viết này? </h2>
-            </div>
-            <div class="modal-body">
-                <h3>Bạn có muốn điều chỉnh lại chuyên mục và các nhãn của bài viết này?</h3>
-                <table>
-                    <tr>
-                        <td>
-                            <h4>Chuyên mục chính:</h4>
-                        </td>
-                        <td>
-                            <select onchange="editor_change_select_category()" id="editor_select_category">
-                                <option value="none">Chuyên mục</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td>
-                            <h4>Chuyên mục phụ: </h4>
-                        </td>
-                        <td>
-                            <select id="editor_select_sub_category" onchange="editor_change_select_sub_category()"
-                                required>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td>
-                            <h4>Tag:</h4>
-                        </td>
-                        <td><select id="select_id_3">
-                                {{#each tag}}
-                                <option value={{.}}>{{.}}</option>
-                                {{/each}}
-                            </select>
-                        </td>
-                        <td><button id="editor_btn_add_tag" onclick="val3()">+</button></td>
-                    </tr>
-                </table>
-                <div>
-                    <h4>Danh sách tag đã thêm: </h4>
-                    <div id="edit_list_tag">
+                    <div id="load-more-editor-list-container" class="col-md-12" next_page={{page}} per_page={{per_page}}
+                        hidden>
+                        <div class="section-row">
+                            <button class="primary-button center-block" id="editor-load-more-list">Xem Thêm</button>
+                        </div>
+                    </div>
+                    {{!-- loading --}}
+                    <div id="loading-editor-container" class="col-md-12 loading">
+                        <img class="center-block" src="/img/loading.gif" alt=""></img>
                     </div>
                 </div>
-                <div id="date_time">
-                    <table id="form-profile-xuatban">
-                        <tr>
-                            <td>
-                                <h4>Ngày xuất bản: </h4>
-                            </td>
-                            <td>
-                                <div><input type="datetime-local" name="bdaytime">
-                            </td>
-
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn-modal-send">Duyệt</button>
-                <button id="button-xuatban">Xuất bản ngay</button>
             </div>
         </div>
-    </div>
-    <script>
-        var list_tag = []
-        function val3() {
-            e = document.getElementById("select_id_3");
-            var strUser = e.options[e.selectedIndex].text;
-            var value = e.value;
-            var s = new String("");
-            if (list_tag.length == 0)
-                list_tag.push(strUser);
-            else {
-                let count = 1;
+
+        <div class="modal fade" id="reject-modal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h2 class="modal-title">Lý do từ chối vài biết: </h2>
+                    </div>
+                    <div class="modal-body">
+                        <textarea placeholder="Viết lý do từ chối vào đây"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn-modal-send">Gửi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="approve-modal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h2 class="modal-title">Bạn đồng ý duyệt bài viết này? </h2>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Bạn có muốn điều chỉnh lại chuyên mục và các nhãn của bài viết này?</h3>
+                        <table>
+                            <tr>
+                                <td>
+                                    <h4>Chuyên mục chính:</h4>
+                                </td>
+                                <td>
+                                    <select onchange="editor_change_select_category()" id="editor_select_category">
+                                        <option value="none">Chuyên mục</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <h4>Chuyên mục phụ: </h4>
+                                </td>
+                                <td>
+                                    <select id="editor_select_sub_category" onchange="editor_change_select_sub_category()"
+                                        required>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <h4>Tag:</h4>
+                                </td>
+                                <td><select id="editor-select-tag">
+                                        {{#each tag}}
+                                        <option value={{this.id}}>{{this.name}}</option>
+                                        {{/each}}
+                                    </select>
+                                </td>
+                                <td><button id="editor_btn_add_tag" onclick="editor_add_tag_click()">+</button></td>
+                            </tr>
+                        </table>
+                        <div>
+                            <h4>Danh sách tag đã thêm: </h4>
+                            <div id="editor_list_tag">
+                            </div>
+                        </div>
+                        <div id="date_time">
+                            <table id="form-profile-xuatban">
+                                <tr>
+                                    <td>
+                                        <h4>Ngày xuất bản: </h4>
+                                    </td>
+                                    <td>
+                                        <div><input type="datetime-local" name="bdaytime">
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn-modal-send">Duyệt</button>
+                        <button id="button-xuatban">Xuất bản ngay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var list_tag = []
+
+            $.ajax("/api/editor/getNewsByEditor?page=" + $("#load-more-editor-list-container").attr('next_page') + "&per_page=" + $("#load-more-editor-list-container").attr('per_page'), {
+                type: 'get',
+                dataType: 'json'
+            }).done((_data) => {
+                console.log(_data);
+                const list_post = $("#editor-post-list-category");
+                for (let i = 0, l = _data.data.length; i < l; i++) {
+                    list_post.append(`<div class="col-md-12">
+                            <div class="post post-row">
+                                <a class="post-img" href="${_data.data[i].link}"><img src="${_data.data[i].avatar}"></a>
+                                <div class="post-body">
+                                    <div class="post-meta">
+                                        <span class="post-category">${_data.data[i].sub_category.name}</span>
+                                        <span class="post-category cat-1">${_data.data[i].sub_category.category.name}</span>
+                                        <span class="post-date">${_data.data[i].createdAt}</span>
+
+                                        <button type="button" class="post-category cat-2" data-toggle="modal"
+                                            data-target="#approve-modal" style="float:right">Duyệt</button>
+                                        <button type="button" class="post-category cat-3" data-toggle="modal"
+                                            data-target="#reject-modal" style="float:right">Từ chối</button>
+                                    </div>
+                                    <h3 class="post-title"><a href="${_data.data[i].link}">${_data.data[i].title}</a></h3>
+                                    <p class="post-abstract">${_data.data[i].abstract}</p>
+                                </div>
+                            </div>
+                        </div>`);
+                }
+            }).fail(function (xhr, textStatus, errorThrown) {
+                var err = JSON.parse(xhr.responseText);
+                alert(err.msg);
+            });;
+
+
+
+            function editor_add_tag_click() {
+                e = document.getElementById("editor-select-tag");
+                var strUser = e.options[e.selectedIndex].text;
+                var value = parseInt(e.value);
+                var s = new String("");
+                if (list_tag.length == 0)
+                    list_tag.push({
+                        name: strUser,
+                        id: value
+                    });
+                else {
+                    let count = 1;
+                    for (let i = 0; i < list_tag.length; i++) {
+                        if (list_tag[i].id === value) {
+                            count = -1;
+                            break;
+                        }
+                    }
+                    if (count === 1) list_tag.push({
+                        name: strUser,
+                        id: value
+                    });
+                }
                 for (let i = 0; i < list_tag.length; i++) {
-                    if (list_tag[i] === strUser) {
-                        count = -1;
+                    s = s + "<label id = '" + list_tag[i].id + "'>" + list_tag[i].name + "<button id ='" + list_tag[i].id + "' onClick = 'editor_delete_tag(this.id)'>X</button></label>" + '\n';
+                }
+                document.getElementById("editor_list_tag").innerHTML = s;
+                console.log(list_tag);
+            }
+            function editor_delete_tag(clicked_id) {
+                let idlabel = clicked_id;
+                let index = 0;;
+                for (; index < list_tag.length; index++) {
+                    if (parseInt(idlabel) === list_tag[index].id) {
                         break;
                     }
+
                 }
-                if (count === 1) list_tag.push(strUser);
+                if (index < list_tag.length) {
+                    list_tag.splice(index, 1);
+                }
+                var s = new String("");
+                for (let i = 0; i < list_tag.length; i++) {
+                    s = s + "<label id = '" + list_tag[i].id + "'>" + list_tag[i].name + "<button id ='" + list_tag[i].id + "' onClick = 'editor_delete_tag(this.id)'>X</button></label>" + '\n';
+                }
+                document.getElementById("editor_list_tag").innerHTML = s;
+                console.log(list_tag);
             }
-            for (let i = 0; i < list_tag.length; i++) {
-                s = s + "<label id = 'label" + i + "'>" + list_tag[i] + "<button id ='" + i + "' onClick = 'val4(this.id)'>X</button></label>" + '\n';
-            }
-            console.log(s);
-            document.getElementById("edit_list_tag").innerHTML = s;
-        }
-        function val4(clicked_id) {
-            var s1 = clicked_id;
-            var ss = new String("label" + s1);
-            var sss = document.getElementById(ss).textContent;
-            var subsss = sss.substring(0, sss.length - 1);
-            var index = list_tag.indexOf(subsss);
-            if (index > -1) {
-                list_tag.splice(index, 1);
-            }
-            var s = new String("");
-            for (let i = 0; i < list_tag.length; i++) {
-                s = s + "<label id = 'label" + i + "'>" + list_tag[i] + "<button id ='" + i + "' onClick = 'val4(this.id)'>X</button></label>" + '\n';
-            }
-            console.log(s);
-            document.getElementById("edit_list_tag").innerHTML = s;
-        }
 
-        let list_sub_category;
-        const edit_news_form = $("#edit-news-form");
-        $.ajax("/api/categories/getAllCategories", {
-            type: 'get',
-            dataType: 'json'
-        }).done(function (data) {
-            const select_category = $("#edit_select_category");
-            for (let i = 0, l = data.data.list_category.length; i < l; i++) {
-                select_category.append(` <option value=${data.data.list_category[i].id}>${data.data.list_category[i].name}</option>`)
-            };
-            list_sub_category = data.data.list_sub_category;
-        }).fail(function (xhr, textStatus, errorThrown) {
-            var err = JSON.parse(xhr.responseText);
-            alert(err.msg);
-        });
-        function editor_change_select_category() {
-            e = document.getElementById("edit_select_category");
-            var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 1
-            const select_sub_category = $("#edit_select_sub_category");
-            for (let i = 0, l = list_sub_category[strUser].length; i < l; i++) {
-                select_sub_category.append(` <option value=${list_sub_category[strUser][i].id}>${list_sub_category[strUser][i].name}</option>`)
-            };
-        }
+            let list_sub_category;
+            $.ajax("/api/categories/getAllCategories", {
+                type: 'get',
+                dataType: 'json'
+            }).done(function (data) {
+                const select_category = $("#editor_select_category");
+                for (let i = 0, l = data.data.list_category.length; i < l; i++) {
+                    select_category.append(` <option value=${data.data.list_category[i].id}>${data.data.list_category[i].name}</option>`)
+                };
+                list_sub_category = data.data.list_sub_category;
+            }).fail(function (xhr, textStatus, errorThrown) {
+                var err = JSON.parse(xhr.responseText);
+                alert(err.msg);
+            });
+            function editor_change_select_category() {
+                e = document.getElementById("editor_select_category");
+                var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 1
+                const select_sub_category = $("#editor_select_sub_category");
+                for (let i = 0, l = list_sub_category[strUser].length; i < l; i++) {
+                    select_sub_category.append(` <option value=${list_sub_category[strUser][i].id}>${list_sub_category[strUser][i].name}</option>`)
+                };
+            }
 
-        function editor_change_select_sub_category() {
-            e = document.getElementById("edit_select_sub_category");
-            var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 2
-            var value = e.value; // giá trị được chọn ở chuyên mục cấp 1
-        }
+            function editor_change_select_sub_category() {
+                e = document.getElementById("edit_select_sub_category");
+                var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 2
+                var value = e.value; // giá trị được chọn ở chuyên mục cấp 1
+            }
 
-    </script>
+        </script>
+    </div>
 </div>

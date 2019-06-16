@@ -272,7 +272,7 @@
         check_login_user();
     }
     const post_widget = $("#post-widget");
-    if (post_widget) {
+    if (post_widget.length > 0) {
         $.ajax("/api/news/getLatestNews?num_news=5", {
             type: 'GET',
             dataType: 'json',
@@ -291,19 +291,19 @@
     }
 
     const ul_category_widget = $("#ul-category-widget");
-        if (ul_category_widget) {
-            $.ajax("/api/categories/getCategoriesAndNumNews", {
-                type: 'GET',
-                dataType: 'json',
-            }).done((categories) => {
+    if (ul_category_widget.length > 0) {
+        $.ajax("/api/categories/getCategoriesAndNumNews", {
+            type: 'GET',
+            dataType: 'json',
+        }).done((categories) => {
 
-                for (let i = 0, l = categories.data.length; i < l; i++) {
-                    ul_category_widget.append(`<li><a href="${categories.data[i].link}" class="cat-2">${categories.data[i].name}<span>${categories.data[i].num_news}</span></a></li>`)
-                }
-            }).fail(function (xhr, textStatus, errorThrown) {
-                alert(xhr.responseText);
-            });
-        }
+            for (let i = 0, l = categories.data.length; i < l; i++) {
+                ul_category_widget.append(`<li><a href="${categories.data[i].link}" class="cat-2">${categories.data[i].name}<span>${categories.data[i].num_news}</span></a></li>`)
+            }
+        }).fail(function (xhr, textStatus, errorThrown) {
+            alert(xhr.responseText);
+        });
+    }
 
     if (location.pathname.includes("/category/") || location.pathname.includes("/news/") || location.pathname.includes("/tag/")) {
 

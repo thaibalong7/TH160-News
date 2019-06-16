@@ -139,3 +139,74 @@ exports.me = async (req, res) => {
         return res.status(400).json({ msg: error.toString() })
     }
 }
+
+exports.getNewsByEditor = async (req, res) => {
+    try {
+        const page_default = 1;
+        const per_page_default = 10;
+        var page, per_page;
+        if (typeof req.query.page === 'undefined') page = page_default;
+        else page = req.query.page
+        if (typeof req.query.per_page === 'undefined') per_page = per_page_default;
+        else per_page = req.query.per_page
+        if (isNaN(page) || isNaN(per_page) || parseInt(per_page) <= 0 || parseInt(page) <= 0) {
+            return res.status(400).json({ msg: 'Params is invalid' })
+        }
+        else {
+            page = parseInt(page);
+            per_page = parseInt(per_page);
+            const list_sub_category_editor = await db.sub_categories_editor.findAll({
+                where: {
+                    fk_editor: req.editorData.id
+                }
+            });
+            const list_promise_id_sub_category = list_sub_category_editor.map(async (val) => {
+                return val.fk_sub_category;
+            })
+            const list_id_sub_category = await Promise.all(list_promise_id_sub_category);
+
+            const query = {
+                attributes: {
+                    exclude: ['content']
+                },
+                where: {
+                    fk_sub_category: {
+                        [db.Sequelize.Op.or]: list_id_sub_category
+                    },
+                    status: "draft"
+                },
+                order: [['createdAt', 'DESC']],
+                limit: per_page,
+                offset: (page - 1) * per_page,
+                include: [{
+                    model: db.sub_categories,
+                    include: [{
+                        model: db.categories
+                    }]
+                }]
+            }
+
+            db.news.findAndCountAll(query).then(async _news => {
+                var next_page = page + 1;
+                //Kiểm tra còn dữ liệu không
+                if ((parseInt(_news.rows.length) + (next_page - 2) * per_page) === parseInt(_news.count))
+                    next_page = -1;
+                //Nếu số lượng record nhỏ hơn per_page  ==> không còn dữ liệu nữa => trả về -1 
+                if ((parseInt(_news.rows.length) < per_page))
+                    next_page = -1;
+                if (parseInt(_news.rows.length) === 0)
+                    next_page = -1;
+                await helper.fixEditorNews(_news.rows);
+                return res.status(200).json({
+                    itemCount: _news.count, //số lượng record được trả về
+                    data: _news.rows,
+                    next_page: next_page //trang kế tiếp, nếu là -1 thì hết data rồi
+                })
+            })
+
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}

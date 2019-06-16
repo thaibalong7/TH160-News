@@ -54,6 +54,16 @@ const fixNews = async (news) => {
     }
 }
 
+const fixEditorNews = async (news) => {
+    for (let i = 0, l = news.length; i < l; i++) {
+        news[i].dataValues.link = '/editor/e_news/' + news[i].id + '/' + slugify(news[i].title);
+        news[i].dataValues.createdAt = toStringDatetime(new Date(news[i].dataValues.createdAt));
+        news[i].dataValues.avatar = '/img/news_avatar/' + news[i].avatar;
+        news[i].dataValues.sub_category = news[i].dataValues.sub_category.dataValues;
+        news[i] = news[i].dataValues;
+    }
+}
+
 const fixWriterNews = async (news) => {
     for (let i = 0, l = news.length; i < l; i++) {
         news[i].dataValues.avatar = '/img/news_avatar/' + news[i].avatar;
@@ -200,6 +210,7 @@ module.exports = {
     formatNumber,
     fixNews,
     fixWriterNews,
+    fixEditorNews,
     addLinkTagToListTagNew,
     fixListComments,
     formatDate,

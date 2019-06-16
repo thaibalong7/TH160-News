@@ -11,7 +11,7 @@ router.post('/register', editorController.register);
 
 router.get('/me', middlewareAuthEditor, editorController.me);
 
-
+router.get('/getNewsByEditor', middlewareAuthEditor, editorController.getNewsByEditor);
 
 
 module.exports = router;

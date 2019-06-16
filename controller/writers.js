@@ -89,7 +89,9 @@ exports.renderListPublished = async (req, res) => {
 
 exports.renderCreateNews = async (req, res) => {
     try {
-        const tag = await db.tags.findAll();
+        const tag = await db.tags.findAll({
+            order: [['name', 'ASC']]
+        });
 
         res.render('writer-create-news', {
             nav: await helper.getNavWriter(),
@@ -122,7 +124,7 @@ exports.renderNews = async (req, res) => {
             return res.render('writer-news', {
                 nav: await helper.getNavWriter(),
                 isWriter: true,
-                title: news.name,
+                title: news.title,
                 news: news
             })
         }
@@ -137,7 +139,9 @@ exports.renderNews = async (req, res) => {
 
 exports.renderEditNews = async (req, res) => {
     try {
-        const tag = await db.tags.findAll();
+        const tag = await db.tags.findAll({
+            order: [['name', 'ASC']]
+        });
         return res.render('writer-edit', {
             id: req.params.id,
             titleNews: req.params.name,

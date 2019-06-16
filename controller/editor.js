@@ -4,34 +4,53 @@ const helper = require('../helper');
 
 exports.renderEditorPage = async (req, res) => {
     try {
-        console.log('editor page')
+        const num_each_page = 5;
+
+        const tag = await db.tags.findAll({
+            order: [['name', 'ASC']]
+        });
+
         res.render('editor', {
             title: 'Home - Editor',
             nav: [], //k có gì trên thanh nav
             isEditor: true,
-            category: [{ name: 'Tư vấn', value: "tv" }],
-            chuyenmuc: ['Ảnh số', 'Đồ gia dụng', 'Bảo mật', 'Di động', 'Máy tính'],
-            tag: ['SAMSUNG', 'LG', 'PANASONIC', 'MICROSOFT', 'BẢO MẬT', 'Lee Le', 'HUAWEI', 'OPPO', 'XIAOMI'],
-            news: [
-                {
-                    name: 'BỎ 10.000 USD MUA CAMERA CÓ ĐỘ PHÂN GIẢI 100 MEGAPIXEL, CÓ ĐÁNG KHÔNG?', img: 'samsung.png',
-                    author: 'Lê Hữu Lý', type: "Đánh giá", publicAt: "1/2/2019", category: "Ảnh Số", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."
-                },
-                {
-                    name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png',
-                    author: 'Lê Hữu Lý', type: "Đánh giá", publicAt: "1/2/2019", category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."
-                },
-                {
-                    name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png',
-                    author: 'Lê Hữu Lý', type: "Đánh giá", publicAt: "1/2/2019", category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."
-                },
-                {
-                    name: 'BỘ CÔNG AN CẢNH BÁO THỦ ĐOẠN MỚI CỦA CÁC HACKER NHẰM CHIẾM ĐOẠT TÀI SẢN CÁC TỔ CHỨC, CÁ NHÂN, DOANH NGHIỆP', img: 'samsung.png',
-                    author: 'Lê Hữu Lý', type: "Đánh giá", publicAt: "1/2/2019", category: "An Ninh Mạng", abstract: "Realme, thương hiệu mới của Oppo, từ khi ra mắt năm ngoái đã tung ra thị trường một số sản phẩm với giá bán hấp dẫn như Realme 2, Realme 2 Pro và Realme C1. Chiếc Realme 3 vừa được bán ra thị trường Việt Nam cũng là sản phẩm khá thú vị ở tầm giá dưới 4 triệu đồng."
-                }]
+            tag: tag,
+            per_page: num_each_page,
+            page: 1,
         })
     } catch (error) {
         console.log(error)
         return res.redirect('/');
+    }
+}
+
+exports.renderNews = async (req, res) => {
+    try {
+        const id_news = req.params.id;
+        let news = await db.news.findOne({
+            where: {
+                id: id_news
+            },
+            include: [{
+                model: db.tags_new
+            }]
+        })
+        if (news && helper.slugify(news.title) === req.params.name) {
+            news = news.dataValues;
+            news.createdAt = helper.toStringDate(new Date(news.createdAt));
+            news.avatar = '/img/news_avatar/' + news.avatar;
+            return res.render('writer-news', {
+                nav: [],
+                isEditor: true,
+                title: news.title,
+                news: news
+            })
+        }
+        else {
+            return res.redirect('/writers');
+        }
+    } catch (error) {
+        console.log(error)
+        return res.redirect('/writers');
     }
 }

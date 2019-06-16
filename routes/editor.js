@@ -5,4 +5,6 @@ const { middlewareAuthEditorRender } = require('../middleware/auth_render');
 
 router.get('/', middlewareAuthEditorRender, editorController.renderEditorPage);
 
+router.get('/e_news/:id/:name', middlewareAuthEditorRender, editorController.renderNews);
+
 module.exports = router;

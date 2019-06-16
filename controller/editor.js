@@ -4,7 +4,7 @@ const helper = require('../helper');
 
 exports.renderEditorPage = async (req, res) => {
     try {
-        const num_each_page = 5;
+        const num_each_page = 1;
 
         const tag = await db.tags.findAll({
             order: [['name', 'ASC']]

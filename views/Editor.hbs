@@ -138,14 +138,15 @@
         <script>
             var list_tag = []
 
-            $.ajax("/api/editor/getNewsByEditor?page=" + $("#load-more-editor-list-container").attr('next_page') + "&per_page=" + $("#load-more-editor-list-container").attr('per_page'), {
-                type: 'get',
-                dataType: 'json'
-            }).done((_data) => {
-                console.log(_data);
-                const list_post = $("#editor-post-list-category");
-                for (let i = 0, l = _data.data.length; i < l; i++) {
-                    list_post.append(`<div class="col-md-12">
+            function fetchNewsEditor() {
+                $.ajax("/api/editor/getNewsByEditor?page=" + $("#load-more-editor-list-container").attr('next_page') + "&per_page=" + $("#load-more-editor-list-container").attr('per_page'), {
+                    type: 'get',
+                    dataType: 'json'
+                }).done((_data) => {
+                    console.log(_data);
+                    const list_post = $("#editor-post-list-category");
+                    for (let i = 0, l = _data.data.length; i < l; i++) {
+                        list_post.append(`<div class="col-md-12">
                             <div class="post post-row">
                                 <a class="post-img" href="${_data.data[i].link}"><img src="${_data.data[i].avatar}"></a>
                                 <div class="post-body">
@@ -155,21 +156,39 @@
                                         <span class="post-date">${_data.data[i].createdAt}</span>
 
                                         <button type="button" class="post-category cat-2" data-toggle="modal"
-                                            data-target="#approve-modal" style="float:right">Duyệt</button>
+                                            data-target="#approve-modal" style="float:right" onclick="approve_click()">Duyệt</button>
                                         <button type="button" class="post-category cat-3" data-toggle="modal"
-                                            data-target="#reject-modal" style="float:right">Từ chối</button>
+                                            data-target="#reject-modal" style="float:right"onclick="reject_click()">Từ chối</button>
                                     </div>
                                     <h3 class="post-title"><a href="${_data.data[i].link}">${_data.data[i].title}</a></h3>
                                     <p class="post-abstract">${_data.data[i].abstract}</p>
                                 </div>
                             </div>
                         </div>`);
-                }
-            }).fail(function (xhr, textStatus, errorThrown) {
-                var err = JSON.parse(xhr.responseText);
-                alert(err.msg);
-            });;
+                    }
 
+                    if (_data.next_page > 0) {
+                        $("#load-more-editor-list-container").show();
+                        $("#load-more-editor-list-container").attr("next_page", _data.next_page);
+                    }
+                    $("#loading-editor-container").hide();
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    var err = JSON.parse(xhr.responseText);
+                    alert(err.msg);
+                });
+            }
+
+            fetchNewsEditor();
+
+            $("#editor-load-more-list").click(function () {
+                $("#load-more-editor-list-container").hide();
+                $("#loading-editor-container").show();
+                fetchNewsEditor();
+            })
+
+            function approve_click() {
+                console.log('approve click');
+            }
 
 
             function editor_add_tag_click() {

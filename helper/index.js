@@ -1,4 +1,4 @@
-const slugify = (str) => {
+const slugify = (str, char = '-') => {
     if (!str || str == '') {
         return 'unknown'
     }
@@ -11,9 +11,9 @@ const slugify = (str) => {
         .replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, 'u')
         .replace(/ỳ|ý|ỵ|ỷ|ỹ/g, 'y')
         .replace(/đ/g, 'd')
-        .replace(/\s+/g, '-') // Replace spaces with -
+        .replace(/\s+/g, char) // Replace spaces with -
         .replace(/[^\w-]+/g, '') // Remove all non-word chars
-        .replace(/--+/g, '-') // Replace multiple - with single -
+        .replace(/--+/g, char) // Replace multiple - with single -
         .replace(/^-+/, '') // Trim - from start of text
         .replace(/-+$/, '')
     if (!str || str == '') {
@@ -165,6 +165,7 @@ const getNav = async (db) => {
     const _categories = await db.categories.findAll(query);
 
     for (let i = 0, l = _categories.length; i < l; i++) {
+        console.log(_categories[i].dataValues)
         const sub = [];
         if (_categories[i].sub_categories.length === 0)
             continue;

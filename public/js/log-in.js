@@ -67,7 +67,22 @@
             })
         }
         if (data.type === 'administrator') {
-
+            $.ajax("/api/admins/login", {
+                type: "post",
+                data: {
+                    username: data['username'],
+                    password: data['pass']
+                }
+            }).done(res => {
+                localStorage.setItem('isAdminLogin', true);
+                localStorage.setItem('administrator:name', res.profile.name);
+                localStorage.setItem('administrator:email', res.profile.email);
+                localStorage.setItem('administrator:birthdate', res.profile.birthdate);
+                window.location.href = "/admins";
+            }).fail(function (xhr, status, error) {
+                var err = JSON.parse(xhr.responseText);
+                alert(err.msg);
+            })
         }
 
     })

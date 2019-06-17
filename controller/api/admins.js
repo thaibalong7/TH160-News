@@ -139,3 +139,58 @@ exports.me = async (req, res) => {
         return res.status(400).json({ msg: error.toString() })
     }
 }
+
+// exports.getSubCategories = async (req, res) => {
+//     try {
+//         return res.status(200).json({
+//             msg: 'Ok ok',
+//             data: await db.sub_categories.findAll({
+//                 include: [{
+//                     model: db.categories,
+//                     where: {
+//                         id: req.params.id
+//                     }
+//                 }]
+//             })
+//         })
+//     } catch (error) {
+//         console.log(error)
+//         return res.status(400).json({ msg: error.toString() })
+//     }
+// }
+
+exports.updateSubCategory = async (req, res) => {
+    try {
+        const sub_categories = await db.sub_categories.findByPk(req.params.id);
+        if (sub_categories) {
+            sub_categories.name = req.body.name;
+            await sub_categories.save();
+            return res.status(200).json({
+                msg: 'Cập nhật thành công',
+                data: sub_categories
+            })
+        }
+        else {
+            return res.status(400).json({ msg: "Sai id sub category" })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}
+
+exports.createCategory = async (req, res) => {
+    try {
+        db.categories.create({
+            name: req.body.name
+        }).then(data =>{
+            return res.status(200).json({
+                msg: 'Tạo thành công',
+                data: data
+            })
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}

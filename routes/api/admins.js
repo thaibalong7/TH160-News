@@ -11,4 +11,10 @@ router.post('/register', adminsController.register);
 
 router.get('/me', middlewareAuthAdmin, adminsController.me);
 
+// router.get('/getSubCategories/:id', middlewareAuthAdmin, adminsController.getSubCategories)
+
+router.post('/updateSubCategory/:id', middlewareAuthAdmin, adminsController.updateSubCategory);
+
+router.post('/createCategory', middlewareAuthAdmin, adminsController.createCategory);
+
 module.exports = router;

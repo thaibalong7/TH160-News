@@ -1,116 +1,165 @@
- <div class="admin-div">
-     <div id = "form-admin-manage-category">
-         <h2>Quản lý chuyên mục</h2>
-            <table>
+<div class="admin-div">
+    <div id="form-admin-manage-category">
+        <h2>Quản lý chuyên mục</h2>
+        <table>
+            <tr>
+                <td>
+                    <h3>Chọn chuyên mục:</h3>
+                </td>
+                <td>
+                    <select onchange="selected_option()" id="select_category">
+                        <option value="none">Chuyên mục</option>
+                        {{#each categories}}
+                        <option value={{this.id}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <div id="admin-manage">
+            {{!-- <table>
                 <tr>
-                    <td><h3>Chọn chuyên mục:</h3></td>
                     <td>
-                        <select onchange="selected_option()" id="select_category">
-                            <option value="none">Chuyên mục</option>
-                            {{#each chuyenmuc}}
-                                <option value={{value}}>{{name}}</option>
-                            {{/each}}
-                        </select>
+                        <label>Danh sách Editor quản lý chuyên mục: </label>
+                    </td>
+                    <td id="list-editor-manage">
                     </td>
                 </tr>
-            </table>
-            <div id = "admin-manage">
-                <table >
-                    <tr>
-                        <td>
-                            <label>Danh sách Editor quản lý chuyên mục: </label>
-                        </td>
-                        <td id = "list-editor-manage">
-                        </td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <td>
-                            <label>Số lượng bài viết: 10</label>
-                        </td>
-                    </tr>
-                </table>
-                <label>Danh sách chuyên mục phụ: </label>
-            </div>
-                <table id = "table-sub-category">
-                </table>
-            
-            <div id = 'btn_add_category'>
-                <a>
-                    Thêm chuyên mục
-                </a>
-            </div>
-            <div class="modal fade" id="approve-modal" role="dialog">
+            </table> --}}
+            {{!-- <table>
+                <tr>
+                    <td>
+                        <label>Số lượng bài viết: 10</label>
+                    </td>
+                </tr>
+            </table> --}}
+            <label>Danh sách chuyên mục phụ: </label>
+        </div>
+        <table id="table-sub-category">
+        </table>
+
+        <div id='btn_add_category' data-toggle='modal' data-target='#add-category-modal'>
+            <a>
+                Thêm chuyên mục chính
+            </a>
+        </div>
+        <div class="modal fade" id="edit-sub-category-modal" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h1 class="modal-title">Thay đổi chuyên mục phụ</h1>
+                        <h1 class="modal-title">Đổi tên chuyên mục phụ</h1>
                     </div>
                     <div class="modal-body">
-                        <table>
-                            <tr>
-                                <td><h4>Chọn chuyên mục chính: </h4></td>
-                                <td>
-                                    <select onchange="selected_option()" id="select_category">
-                                        <option value="none">Chuyên mục</option>
-                                        {{#each chuyenmuc}}
-                                            <option value={{value}}>{{name}}</option>
-                                        {{/each}}
-                                    </select>
-                                </td>
-                            </tr>
-                        </table>
-                        <textarea id="reject-reason" placeholder="Tên chuyên mục"></textarea>
+                        <input class="input-name-category" id="name-category" placeholder="Tên chuyên mục"></input>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" id="modal-reject-news-btn" class="btn-modal-send" onclick="click_send_reject_news(this)">Gửi</button>
+                        <button type="button" id="edit-sub-category-btn-send" class="btn-modal-send" onclick="click_send_edit_sub_category(this)"
+                            issubcategory="">Gửi</button>
                     </div>
                 </div>
             </div>
         </div>
-    </script>
-    <script type="text/javascript">
-        function selected_option() {
-            e = document.getElementById("select_category");
-            var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 1
-            var value = e.value; // giá trị được chọn ở chuyên mục cấp 1
-           
-            if(value === 'danhgia') 
-            {
-                var sub = new String("");
-                sub = "{{#each editor_danhgia}}<a href='#'>{{.}}</a>{{/each}}";
-                s_editor_manage = sub;
-                sub = "{{#each danhgia}}<tr><td class = 'td-name'><label>{{.}}</label></td><td class = 'td-btn'><button type='button' class = 'btn-del'><i class='fa fa-trash'></i></button><button type='button' class = 'btn-edit' data-toggle='modal' data-target='#approve-modal'><i class='fa fa-pencil-square-o'></i></button></td></tr>{{/each}}";
-                 s_sub_category = sub;
+        <div class="modal fade" id="add-category-modal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h1 class="modal-title">Thêm chuyên mục chính</h1>
+                    </div>
+                    <div class="modal-body">
+                        <textarea id="name-add-category" placeholder="Tên chuyên mục"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                        <button type="button" id="modal-reject-news-btn" class="btn-modal-send" onclick="click_add_category()">Gửi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </script>
+        <script type="text/javascript">
+
+            function selected_option() {
+                e = document.getElementById("select_category");
+                var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 1
+                //var value = e.value; // giá trị được chọn ở chuyên mục cấp 1
+
+                const table_sub_category = $("#table-sub-category");
+                table_sub_category.empty();
+                if (list_sub_category[strUser]) {
+                    for (let i = 0, l = list_sub_category[strUser].length; i < l; i++) {
+                        table_sub_category.append(`<tr><td class = 'td-name'><label>${list_sub_category[strUser][i].name}</label></td><td class = 'td-btn'><button type='button' class = 'btn-del'><i class='fa fa-trash'></i></button><button onclick="btn_edit_sub_category(this)" type='button' class = 'btn-edit' data-toggle='modal' data-target='#edit-sub-category-modal' idSubCategories=${list_sub_category[strUser][i].id} nameSubCategories="${list_sub_category[strUser][i].name}"><i class='fa fa-pencil-square-o'></i></button></td></tr>`)
+                    };
+                }
             }
-            else if(value === 'tintuc') 
-            {
-                var sub = new String("");
-                sub ="{{#each editor_tintuc}}<a href='#'>{{.}}</a>{{/each}}";
-                s_editor_manage = sub;
-                sub = "{{#each tintuc}}<tr><td class = 'td-name'><label>{{.}}</label></td><td class = 'td-btn'><button type='button' class = 'btn-del'><i class='fa fa-trash'></i></button><button type='button' class = 'btn-edit' data-toggle='modal' data-target='#approve-modal'><i class='fa fa-pencil-square-o'></i></button></td></tr>{{/each}}";
-                 s_sub_category = sub;
+
+            function btn_edit_sub_category(btn) {
+                console.log(btn.getAttribute('namesubcategories'));
+                $("#name-category").val(btn.getAttribute('namesubcategories'));
+                $("#edit-sub-category-btn-send").attr('issubcategory', btn.getAttribute('idsubcategories'))
             }
-            else if (value === 'tuvan') 
-            {
-                var sub = new String("");
-                sub ="{{#each editor_tuvan}}<a href='#'>{{.}}</a>{{/each}}";
-                s_editor_manage = sub;
-                sub = "{{#each tuvan}}<tr><td class = 'td-name'><label>{{.}}</label></td><td class = 'td-btn'><button type='button' class = 'btn-del'><i class='fa fa-trash'></i></button><button type='button' class = 'btn-edit' data-toggle='modal' data-target='#approve-modal'><i class='fa fa-pencil-square-o'></i></button></td></tr>{{/each}}";
-                s_sub_category = sub;
+
+            function click_send_edit_sub_category(btn) {
+                const id_sub_category = btn.getAttribute('issubcategory');
+                const name_sub_category = $("#name-category").val();
+                if (name_sub_category.length < 3) {
+                    alert("Vui lòng nhập đủ độ dài tên")
+                }
+                else {
+                    $.ajax("api/admins/updateSubCategory/" + id_sub_category, {
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            name: name_sub_category
+                        }
+                    }).done(_data => {
+                        location.reload();
+                    }).fail(function (xhr, textStatus, errorThrown) {
+                        var err = JSON.parse(xhr.responseText);
+                        alert(err.msg);
+                    });
+                }
             }
-            else{
-                var sub = new String("");
-                s_editor_manage = sub;
-                s_sub_category = sub;
+
+            function click_add_category() {
+                const name_add_category = $("#name-add-category").val();
+                console.log(name_add_category)
+                if (name_add_category.length < 5) {
+                    alert("Vui lòng nhập đủ ký tự");
+                }
+                else {
+                    $.ajax("/api/admins/createCategory", {
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            name: name_add_category
+                        }
+                    }).done(function (data) {
+                        location.reload();
+                    }).fail(function (xhr, textStatus, errorThrown) {
+                        var err = JSON.parse(xhr.responseText);
+                        alert(err.msg);
+                    });
+                }
             }
-            console.log(s_sub_category);
-            document.getElementById("list-editor-manage").innerHTML = s_editor_manage; 
-            document.getElementById("table-sub-category").innerHTML = s_sub_category; 
-        }
-    </script>
+
+            let list_sub_category;
+
+            $.ajax("/api/categories/getAllCategories", {
+                type: 'get',
+                dataType: 'json'
+            }).done(function (data) {
+                list_sub_category = data.data.list_sub_category;
+                $("#select_category").val("1");
+                selected_option();
+            }).fail(function (xhr, textStatus, errorThrown) {
+                var err = JSON.parse(xhr.responseText);
+                alert(err.msg);
+            });
+        </script>
+    </div>
 </div>

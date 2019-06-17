@@ -60,6 +60,7 @@ models.sequelize.sync().then(function () {
 app.use("/", indexRouter);
 app.use("/writers", require('./routes/writers'));
 app.use("/editor", require('./routes/editor'));
+app.use("/admins", require('./routes/admins'));
 app.use('/api', require('./routes/api'));
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

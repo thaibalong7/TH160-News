@@ -211,3 +211,21 @@ exports.createSubCategory = async (req, res) => {
         return res.status(400).json({ msg: error.toString() })
     }
 }
+
+exports.deleteSubCategory = async (req, res) => {
+    try {
+        const check_sub_category = await db.sub_categories.findByPk(req.params.id);
+        if (check_sub_category) {
+            await check_sub_category.destroy();
+            return res.status(200).json({
+                msg: 'Xóa thành công',
+            })
+        }
+        else {
+            return res.status(400).json({ msg: "Tiểu mục không tồn tại" })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}

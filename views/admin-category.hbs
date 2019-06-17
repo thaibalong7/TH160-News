@@ -33,9 +33,9 @@
                     </td>
                 </tr>
             </table> --}}
-            <label>Danh sách chuyên mục phụ: </label>
+            <label>Danh sách tiểu mục: </label>
             <div class="add-sub-category-modal" data-toggle='modal' data-target='#add-sub-category-modal'><a>Thêm
-                    chuyên mục phụ</a></div>
+                    tiểu mục</a></div>
         </div>
         <table id="table-sub-category">
         </table>
@@ -49,7 +49,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h1 class="modal-title">Đổi tên chuyên mục phụ</h1>
+                        <h1 class="modal-title">Đổi tên tiểu mục</h1>
                     </div>
                     <div class="modal-body">
                         <input class="input-name-category" id="name-category" placeholder="Tên chuyên mục"></input>
@@ -57,7 +57,26 @@
                     <div class="modal-footer">
                         <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
                         <button type="button" id="edit-sub-category-btn-send" class="btn-modal-send" onclick="click_send_edit_sub_category(this)"
-                            issubcategory="">Gửi</button>
+                            idsubcategory="">Gửi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="delete-sub-category-modal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="center-block">Bạn có thực sự muốn xóa tiểu mục này</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                        <button type="button" id="delete-sub-category-btn" idsubcategory="" class="btn-modal-send"
+                            onclick="click_delete_sub_category(this)">Gửi</button>
                     </div>
                 </div>
             </div>
@@ -69,7 +88,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h1 class="modal-title">Thêm chuyên mục phụ</h1>
+                        <h1 class="modal-title">Thêm tiểu mục</h1>
                     </div>
                     <h4 id="name-category-add-modal"></h4>
                     <div class="modal-body">
@@ -114,7 +133,10 @@
                 table_sub_category.empty();
                 if (list_sub_category[strUser]) {
                     for (let i = 0, l = list_sub_category[strUser].length; i < l; i++) {
-                        table_sub_category.append(`<tr><td class = 'td-name'><label>${list_sub_category[strUser][i].name}</label></td><td class = 'td-btn'><button type='button' class = 'btn-del'><i class='fa fa-trash'></i></button><button onclick="btn_edit_sub_category(this)" type='button' class = 'btn-edit' data-toggle='modal' data-target='#edit-sub-category-modal' idSubCategories=${list_sub_category[strUser][i].id} nameSubCategories="${list_sub_category[strUser][i].name}"><i class='fa fa-pencil-square-o'></i></button></td></tr>`)
+                        table_sub_category.append(`<tr><td class = 'td-name'><label>${list_sub_category[strUser][i].name}</label></td><td class = 'td-btn'>
+                            <button onclick="btn_delete_sub_category(this)" type='button' class='btn-del' data-toggle='modal' data-target='#delete-sub-category-modal' idSubCategories="${list_sub_category[strUser][i].id}"><i class='fa fa-trash'></i></button>
+                            <button onclick="btn_edit_sub_category(this)" type='button' class = 'btn-edit' data-toggle='modal' data-target='#edit-sub-category-modal' idSubCategories=${list_sub_category[strUser][i].id} nameSubCategories="${list_sub_category[strUser][i].name}"><i class='fa fa-pencil-square-o'></i></button>
+                            </td></tr>`)
                     };
                 }
                 $("#add-sub-category-btn").attr("idcategory", value)
@@ -124,11 +146,15 @@
             function btn_edit_sub_category(btn) {
                 console.log(btn.getAttribute('namesubcategories'));
                 $("#name-category").val(btn.getAttribute('namesubcategories'));
-                $("#edit-sub-category-btn-send").attr('issubcategory', btn.getAttribute('idsubcategories'))
+                $("#edit-sub-category-btn-send").attr('idsubcategory', btn.getAttribute('idsubcategories'))
+            }
+
+            function btn_delete_sub_category(btn) {
+                $("#delete-sub-category-btn").attr("idsubcategory", btn.getAttribute('idsubcategories'))
             }
 
             function click_send_edit_sub_category(btn) {
-                const id_sub_category = btn.getAttribute('issubcategory');
+                const id_sub_category = btn.getAttribute('idsubcategory');
                 const name_sub_category = $("#name-category").val();
                 if (name_sub_category.length < 3) {
                     alert("Vui lòng nhập đủ độ dài tên")
@@ -192,6 +218,18 @@
                         alert(err.msg);
                     });
                 }
+            }
+
+            function click_delete_sub_category(btn) {
+                $.ajax("/api/admins/deleteSubCategory/" + btn.getAttribute('idsubcategory'), {
+                    type: 'get',
+                    dataType: 'json',
+                }).done(function (data) {
+                    location.reload();
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    var err = JSON.parse(xhr.responseText);
+                    alert(err.msg);
+                });
             }
 
             let list_sub_category;

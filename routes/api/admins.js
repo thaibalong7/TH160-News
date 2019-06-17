@@ -19,4 +19,6 @@ router.post('/createCategory', middlewareAuthAdmin, adminsController.createCateg
 
 router.post('/createSubCategory', middlewareAuthAdmin, adminsController.createSubCategory);
 
+router.get('/deleteSubCategory/:id', middlewareAuthAdmin, adminsController.deleteSubCategory);
+
 module.exports = router;

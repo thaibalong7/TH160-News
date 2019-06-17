@@ -96,28 +96,42 @@ exports.category_page = async (req, res) => {
                     include: [{
                         model: db.sub_categories
                     }]
-                }
-                category.dataValues.link = '/category/' + category.id + '/' + helper.slugify(category.name) + '?isSubCategory=true';
-                const news = await db.news.findAll(query);
-                await helper.fixNews(news);
-                const hightlight_news = news.splice(0, 3);
+                };
 
-                const new1 = hightlight_news[0];
-                const new2 = hightlight_news[1];
-                const new3 = hightlight_news[2];
-                return res.render('category', {
-                    title: category.name,
-                    nav: await helper.getNav(db),
-                    isUser: true,
-                    category: category.dataValues,
-                    new1: new1,
-                    new2: new2,
-                    new3: new3,
-                    news: news,
-                    isNextPage: news.length < num_each_page ? false : true,
-                    next_page: 2,
-                    isSubCategory: false,
-                })
+                if (list_id_sub_category.length === 0) {
+                    return res.render('category', {
+                        title: category.name,
+                        nav: await helper.getNav(db),
+                        isUser: true,
+                        category: category.dataValues,
+                        isNextPage: false,
+                        next_page: 2,
+                        isSubCategory: false,
+                    })
+                }
+                else {
+                    category.dataValues.link = '/category/' + category.id + '/' + helper.slugify(category.name) + '?isSubCategory=true';
+                    const news = await db.news.findAll(query);
+                    await helper.fixNews(news);
+                    const hightlight_news = news.splice(0, 3);
+
+                    const new1 = hightlight_news[0];
+                    const new2 = hightlight_news[1];
+                    const new3 = hightlight_news[2];
+                    return res.render('category', {
+                        title: category.name,
+                        nav: await helper.getNav(db),
+                        isUser: true,
+                        category: category.dataValues,
+                        new1: new1,
+                        new2: new2,
+                        new3: new3,
+                        news: news,
+                        isNextPage: news.length < num_each_page ? false : true,
+                        next_page: 2,
+                        isSubCategory: false,
+                    })
+                }
             }
             else {
                 return res.render('index', {

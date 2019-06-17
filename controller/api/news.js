@@ -168,6 +168,11 @@ exports.getLatestNewsByCategory = async (req, res) => {
             offset: 0,
             order: [['createdAt', 'DESC']]
         }
+        if (list_id_sub_category.length === 0) {
+            return res.status(200).json({
+                data: []
+            })
+        }
         db.news.findAll(query).then(_data => {
             const result = [];
             for (let i = 0, l = _data.length; i < l; i++) {
@@ -223,6 +228,11 @@ exports.getLatestNewsByIdNews = async (req, res) => {
             limit: 5, //lấy 3 bài thôi
             offset: 0,
             order: [['createdAt', 'DESC']]
+        }
+        if (list_id_sub_category.length === 0) {
+            return res.status(200).json({
+                data: []
+            })
         }
         db.news.findAll(query).then(_data => {
             const result = [];
@@ -459,23 +469,31 @@ exports.getNewsByCategory = async (req, res) => {
                     model: db.sub_categories
                 }]
             }
-            const news = await db.news.findAndCountAll(query);
-            var next_page = page + 1;
-            //Kiểm tra còn dữ liệu không
-            if ((parseInt(news.rows.length) + (next_page - 2) * per_page) === parseInt(news.count))
-                next_page = -1;
-            //Nếu số lượng record nhỏ hơn per_page  ==> không còn dữ liệu nữa => trả về -1 
-            if ((parseInt(news.rows.length) < per_page))
-                next_page = -1;
-            if (parseInt(news.rows.length) === 0)
-                next_page = -1;
-            await helper.fixNews(news.rows);
-            return res.status(200).json({
-                itemCount: news.count, //số lượng record được trả về
-                data: news.rows,
-                next_page: next_page //trang kế tiếp, nếu là -1 thì hết data rồi
-            })
-
+            if (list_id_sub_category.length === 0) {
+                return res.status(200).json({
+                    itemCount: 0, //số lượng record được trả về
+                    data: [],
+                    next_page: -1 //trang kế tiếp, nếu là -1 thì hết data rồi
+                })
+            }
+            else {
+                const news = await db.news.findAndCountAll(query);
+                var next_page = page + 1;
+                //Kiểm tra còn dữ liệu không
+                if ((parseInt(news.rows.length) + (next_page - 2) * per_page) === parseInt(news.count))
+                    next_page = -1;
+                //Nếu số lượng record nhỏ hơn per_page  ==> không còn dữ liệu nữa => trả về -1 
+                if ((parseInt(news.rows.length) < per_page))
+                    next_page = -1;
+                if (parseInt(news.rows.length) === 0)
+                    next_page = -1;
+                await helper.fixNews(news.rows);
+                return res.status(200).json({
+                    itemCount: news.count, //số lượng record được trả về
+                    data: news.rows,
+                    next_page: next_page //trang kế tiếp, nếu là -1 thì hết data rồi
+                })
+            }
         }
     } catch (error) {
         console.log(error)

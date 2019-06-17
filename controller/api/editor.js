@@ -186,24 +186,32 @@ exports.getNewsByEditor = async (req, res) => {
                 }]
             }
 
-            db.news.findAndCountAll(query).then(async _news => {
-                var next_page = page + 1;
-                //Kiểm tra còn dữ liệu không
-                if ((parseInt(_news.rows.length) + (next_page - 2) * per_page) === parseInt(_news.count))
-                    next_page = -1;
-                //Nếu số lượng record nhỏ hơn per_page  ==> không còn dữ liệu nữa => trả về -1 
-                if ((parseInt(_news.rows.length) < per_page))
-                    next_page = -1;
-                if (parseInt(_news.rows.length) === 0)
-                    next_page = -1;
-                await helper.fixEditorNews(_news.rows);
+            if (list_id_sub_category.length === 0) {
                 return res.status(200).json({
-                    itemCount: _news.count, //số lượng record được trả về
-                    data: _news.rows,
-                    next_page: next_page //trang kế tiếp, nếu là -1 thì hết data rồi
+                    itemCount: 0,
+                    data: [],
+                    next_page: -1 //trang kế tiếp, nếu là -1 thì hết data rồi
                 })
-            })
-
+            }
+            else {
+                db.news.findAndCountAll(query).then(async _news => {
+                    var next_page = page + 1;
+                    //Kiểm tra còn dữ liệu không
+                    if ((parseInt(_news.rows.length) + (next_page - 2) * per_page) === parseInt(_news.count))
+                        next_page = -1;
+                    //Nếu số lượng record nhỏ hơn per_page  ==> không còn dữ liệu nữa => trả về -1 
+                    if ((parseInt(_news.rows.length) < per_page))
+                        next_page = -1;
+                    if (parseInt(_news.rows.length) === 0)
+                        next_page = -1;
+                    await helper.fixEditorNews(_news.rows);
+                    return res.status(200).json({
+                        itemCount: _news.count, //số lượng record được trả về
+                        data: _news.rows,
+                        next_page: next_page //trang kế tiếp, nếu là -1 thì hết data rồi
+                    })
+                })
+            }
         }
     } catch (error) {
         console.log(error)

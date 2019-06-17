@@ -34,14 +34,14 @@
                 </tr>
             </table> --}}
             <label>Danh sách chuyên mục phụ: </label>
+            <div class="add-sub-category-modal" data-toggle='modal' data-target='#add-sub-category-modal'><a>Thêm
+                    chuyên mục phụ</a></div>
         </div>
         <table id="table-sub-category">
         </table>
 
         <div id='btn_add_category' data-toggle='modal' data-target='#add-category-modal'>
-            <a>
-                Thêm chuyên mục chính
-            </a>
+            <a>Thêm chuyên mục chính</a>
         </div>
         <div class="modal fade" id="edit-sub-category-modal" role="dialog">
             <div class="modal-dialog">
@@ -62,6 +62,27 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="add-sub-category-modal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h1 class="modal-title">Thêm chuyên mục phụ</h1>
+                    </div>
+                    <h4 id="name-category-add-modal"></h4>
+                    <div class="modal-body">
+                        <textarea id="name-add-sub-category" placeholder="Tên chuyên mục"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                        <button type="button" id="add-sub-category-btn" class="btn-modal-send" onclick="click_add_sub_category(this)">Gửi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="modal fade" id="add-category-modal" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
@@ -75,18 +96,19 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" id="modal-reject-news-btn" class="btn-modal-send" onclick="click_add_category()">Gửi</button>
+                        <button type="button" class="btn-modal-send" onclick="click_add_category()">Gửi</button>
                     </div>
                 </div>
             </div>
         </div>
+
         </script>
         <script type="text/javascript">
 
             function selected_option() {
                 e = document.getElementById("select_category");
                 var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 1
-                //var value = e.value; // giá trị được chọn ở chuyên mục cấp 1
+                var value = e.value; // giá trị được chọn ở chuyên mục cấp 1
 
                 const table_sub_category = $("#table-sub-category");
                 table_sub_category.empty();
@@ -95,6 +117,8 @@
                         table_sub_category.append(`<tr><td class = 'td-name'><label>${list_sub_category[strUser][i].name}</label></td><td class = 'td-btn'><button type='button' class = 'btn-del'><i class='fa fa-trash'></i></button><button onclick="btn_edit_sub_category(this)" type='button' class = 'btn-edit' data-toggle='modal' data-target='#edit-sub-category-modal' idSubCategories=${list_sub_category[strUser][i].id} nameSubCategories="${list_sub_category[strUser][i].name}"><i class='fa fa-pencil-square-o'></i></button></td></tr>`)
                     };
                 }
+                $("#add-sub-category-btn").attr("idcategory", value)
+                $("#name-category-add-modal").text(strUser);
             }
 
             function btn_edit_sub_category(btn) {
@@ -137,6 +161,29 @@
                         dataType: 'json',
                         data: {
                             name: name_add_category
+                        }
+                    }).done(function (data) {
+                        location.reload();
+                    }).fail(function (xhr, textStatus, errorThrown) {
+                        var err = JSON.parse(xhr.responseText);
+                        alert(err.msg);
+                    });
+                }
+            }
+
+            function click_add_sub_category(btn) {
+                const name_add_sub_category = $("#name-add-sub-category").val();
+                console.log(name_add_sub_category)
+                if (name_add_sub_category.length < 3) {
+                    alert("Vui lòng nhập đủ ký tự");
+                }
+                else {
+                    $.ajax("/api/admins/createSubCategory", {
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            name: name_add_sub_category,
+                            idCategory: btn.getAttribute('idcategory')
                         }
                     }).done(function (data) {
                         location.reload();

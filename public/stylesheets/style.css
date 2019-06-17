@@ -1887,6 +1887,30 @@ input[type="file"] {
     margin-left: 30px;
 }
 
+.add-sub-category-modal {
+    float: right;
+}
+
+.add-sub-category-modal a {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border: none;
+    border-radius: 25px;
+    background-color: #18bb20;
+    color: white;
+    text-decoration: none;
+    transition-duration: 1s;
+    transition-delay: 0.1s;
+    cursor: pointer;
+}
+
+#name-category-add-modal {
+    color: black;
+    margin: 15px
+}
+
 #table-sub-category .td-name {
     width: 75%;
 }

@@ -183,7 +183,24 @@ exports.createCategory = async (req, res) => {
     try {
         db.categories.create({
             name: req.body.name
-        }).then(data =>{
+        }).then(data => {
+            return res.status(200).json({
+                msg: 'Tạo thành công',
+                data: data
+            })
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}
+
+exports.createSubCategory = async (req, res) => {
+    try {
+        db.sub_categories.create({
+            name: req.body.name,
+            fk_category: req.body.idCategory
+        }).then(data => {
             return res.status(200).json({
                 msg: 'Tạo thành công',
                 data: data

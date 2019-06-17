@@ -17,4 +17,6 @@ router.post('/updateSubCategory/:id', middlewareAuthAdmin, adminsController.upda
 
 router.post('/createCategory', middlewareAuthAdmin, adminsController.createCategory);
 
+router.post('/createSubCategory', middlewareAuthAdmin, adminsController.createSubCategory);
+
 module.exports = router;

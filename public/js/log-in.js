@@ -74,10 +74,10 @@
                     password: data['pass']
                 }
             }).done(res => {
-                localStorage.setItem('isAdminLogin', true);
-                localStorage.setItem('administrator:name', res.profile.name);
-                localStorage.setItem('administrator:email', res.profile.email);
-                localStorage.setItem('administrator:birthdate', res.profile.birthdate);
+                localStorage.setItem('isAdminsLogin', true);
+                localStorage.setItem('user:name', res.profile.name);
+                localStorage.setItem('user:email', res.profile.email);
+                localStorage.setItem('user:birthdate', res.profile.birthdate);
                 window.location.href = "/admins";
             }).fail(function (xhr, status, error) {
                 var err = JSON.parse(xhr.responseText);

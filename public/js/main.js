@@ -292,7 +292,7 @@
         }
     }
 
-    if (!location.pathname.includes("/writers") && !location.pathname.includes("/editor")) {
+    if (!location.pathname.includes("/writers") && !location.pathname.includes("/editor") && !location.pathname.includes("/admins")) {
         //không phải trang writers
         check_login_user();
     }

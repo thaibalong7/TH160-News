@@ -24,10 +24,20 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "xzkgscqxuzaxfy",
+    "password": "5c715618ed437f666eb2fd00f454018b90b6161c6debe9431d452c9df4037c0b",
+    "database": "d80lo6kjjqt0d4",
+    "host": "ec2-54-235-167-210.compute-1.amazonaws.com",
+    "dialect": "postgres",
+    "port": "5432",
+    "logging": true,
+    "pool": {
+      "max": 9,
+      "min": 0,
+      "idle": 10000
+    },
+    "dialectOptions": {
+      "ssl": true
+    }
   }
 }

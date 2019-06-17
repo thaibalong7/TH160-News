@@ -195,4 +195,18 @@ router.get('/editor-tintuc',function(req,res,next){
 	});
 })
 
+
+router.get('/admin-category',function(req,res,next){
+	res.render('admin-category',{
+		title: 'Quản lý chuyên mục',
+		chuyenmuc: [{name:'Đánh giá', value: "danhgia"}, {name:'Tin tức',value:'tintuc'},{name:'Tư vấn',value:'tuvan'}],
+		danhgia:['Di động','Laptop','Máy tính bảng','Máy ảnh số','Tivi'],
+		tintuc: ['An ninh mạng','Sản phẩm mới','Thị trường','Kinh doanh'],
+		tuvan: ['Ảnh số', 'Đồ gia dụng', 'Bảo mật', 'Máy tính'],
+		editor_danhgia: ['Lê Hữu Lý','Nguyễn Văn A'],
+		editor_tintuc: ['Thái bá long','Nguyên Văn B'],
+		editor_tuvan: ['Nguyễn Huy Hùng','Nguyễn Văn C']
+	});
+})
+
 module.exports = router;

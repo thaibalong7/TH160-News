@@ -1536,7 +1536,6 @@ input[type="file"] {
 
 .table-writer tr td {
     border: 1px solid black;
-    padding: 10px;
 }
 
 .table-writer tr button {
@@ -1571,6 +1570,8 @@ input[type="file"] {
     color: white;
     width: 25%;
     height: 5%;
+    transition-duration: 1s;
+    transition-delay: 0.1s;
 }
 
 .btn-modal-cancel:hover
@@ -1593,6 +1594,8 @@ input[type="file"] {
     color: white;
     width: 25%;
     height: 5%;
+    transition-duration: 1s;
+    transition-delay: 0.1s;
 }
 
 .btn-modal-send:hover
@@ -1690,6 +1693,8 @@ input[type="file"] {
     font-size: 18px;
     border-radius: 25px;
     padding-left: 10px;
+    transition-duration: 1s;
+    transition-delay: 0.1s;
 }
 
 #form-profile input[type="text"]:focus {
@@ -1739,6 +1744,8 @@ input[type="file"] {
     background-color: rgb(247, 136, 136);
     color: white;
     font-size: 16px;
+    transition-duration: 1s;
+    transition-delay: 0.1s;
 }
 
 #form-profile button:hover {
@@ -1760,6 +1767,8 @@ input[type="file"] {
     color: white;
     width: 25%;
     height: 5%;
+    transition-duration: 1s;
+    transition-delay: 0.1s;
 }
 
 #button-xuatban:hover {
@@ -1774,8 +1783,144 @@ input[type="file"] {
     transition-delay: 0.1s;
 }
 
+
 #brinfo {
     width: 100%;
     height: 100%;
     background-image: url("./images/brinfo1.jpg");
 }
+
+#list-editor-manage
+{
+    padding-bottom: 15px;
+}
+
+#list-editor-manage a{
+    margin-right: 10px;
+    margin-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border: none;
+    border-radius: 25px;
+    background-color: #9941a1;
+    color: white;
+    text-decoration:none;
+    transition-duration: 1s;
+    transition-delay: 0.1s;
+}
+
+#list-editor-manage a:hover{
+    padding-right: 30px;
+    padding-left: 30px;
+    transition-property: all;
+    transition-duration: 1s;
+    transition-delay: 0.1s;
+}
+
+#btn_add_category{
+    margin-top: 30px;
+    text-align: center;
+}
+
+#btn_add_category a{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border: none;
+    border-radius: 25px;
+    background-color: #4157a1;
+    color: white;
+    text-decoration:none;
+    transition-duration: 1s;
+    transition-delay: 0.1s;
+    cursor: pointer;
+}
+
+#btn_add_category a:hover{
+
+    padding: 20px;
+    border-radius: 30px;
+    background-color: #7b41a1;
+    transition-property: all;
+    transition-duration: 1s;
+    transition-delay: 0.1s;
+}
+
+.admin-div
+{
+    width: 100%;
+    height: 100%;
+    background-image: url("./images/bradmin2.jpg");
+}
+
+#form-admin-manage-category
+{
+    margin-left: 20%;
+    width: 60%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.103);
+    padding: 10px;
+    border: none;
+}
+
+#form-admin-manage-category label, #form-admin-manage-category h2,#form-admin-manage-category h3{
+    color: white;
+}
+
+#form-admin-manage-category h2
+{
+    text-align: center;
+}
+
+#table-sub-category
+{
+    width: 100%;
+    border: 1px solid white;
+    margin-top: 20px;
+}
+
+#table-sub-category td{
+    border: 1px solid white;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#admin-manage{
+    margin-left: 30px;
+}
+
+#table-sub-category .td-name{
+    width: 75%;
+}
+
+#table-sub-category .td-btn
+{
+    text-align: center;
+}
+
+#table-sub-category .btn-del{
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: rgba(241, 116, 116, 0.5);
+}
+
+#table-sub-category .btn-edit{
+    margin-left: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: rgba(57, 226, 57, 0.363);
+}
+

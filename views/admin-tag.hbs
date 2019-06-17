@@ -1,0 +1,94 @@
+ <div class="admin-div">
+     <div id = "form-admin-manage-category">
+         <h2>Quản lý tag</h2>
+         <div id = "form-view-list-tag">
+         <table id = "table-sub-category">
+             {{#each tags}}
+             <tr>
+                 <td id='lb{{id}}' class = 'td-name'><label>{{name}}</label></td>
+                 <td class = 'td-btn'>
+                     <button type='button' class = 'btn-del'><i class='fa fa-trash'></i></button>
+                     <button id={{id}} type='button' class = 'btn-edit' data-toggle='modal' data-target='#approve-modal' onclick="click_view_modal(this.id)"><i class='fa fa-pencil-square-o'></i></button>
+                </td>
+                </tr>
+             {{/each}}
+        </table>
+        </div>
+            <div id = 'btn_add_category' >
+                <a data-toggle='modal' data-target='#approve-modal' onclick="click_view_modal_add_new()" onchange="">
+                    Thêm tag
+                </a>
+            </div>
+            <div id = "view-modal-here">
+
+            </div>
+        <script>
+            var value = new String("");
+            function click_view_modal(id)
+            {
+                var s = new String("");
+                s = s + 'lb' +id;
+                value = document.getElementById(s).textContent;
+                var e = document.getElementById(s);
+                var ss = '123123123'
+                var str = new String("");
+                str = `<div class= 'modal fade' id='approve-modal' role='dialog'>
+                            <div class='modal-dialog'>
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h1 class="modal-title">Thay đổi tag</h1>
+                                    </div>
+                                    <div class="modal-body">
+                                        <textarea id="reject-reason" placeholder="Tên tag" onchange="text_change()">${e.textContent}</textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                                        <button type="button" id="modal-reject-news-btn" class="btn-modal-send" onclick="click_edit_tag_name('${s}')">Chỉnh sữa</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+                document.getElementById("view-modal-here").innerHTML = str;
+            }
+            
+            function click_view_modal_add_new()
+            {
+                var str = new String("");
+                str = `<div class= 'modal fade' id='approve-modal' role='dialog'>
+                            <div class='modal-dialog'>
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h1 class="modal-title">Thay đổi tag</h1>
+                                    </div>
+                                    <div class="modal-body">
+                                        <textarea id="reject-reason" placeholder="Tên tag" ></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                                        <button type="button" id="modal-reject-news-btn" class="btn-modal-send">Thêm</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+                document.getElementById("view-modal-here").innerHTML = str;
+            }
+
+            
+
+            function text_change()
+            {
+                var e = document.getElementById("reject-reason");
+                value = e.value;
+            }
+
+            function click_edit_tag_name(lable_id)
+            {
+                var s = "<label>"+ value + "</label>"
+                document.getElementById(lable_id).innerHTML = s;
+                $('#approve-modal').modal('hide');
+            }
+        </script>
+
+</div>

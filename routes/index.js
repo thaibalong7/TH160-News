@@ -209,4 +209,11 @@ router.get('/admin-category',function(req,res,next){
 	});
 })
 
+router.get('/admin-tag',function(req,res,next){
+	res.render('admin-tag',{
+		title: 'Quản lý tag',
+		tags:[{id:'01',name:'SAMSUNG'},{id:'02',name:'LG'},{id:'03',name:'PANASONIC'},{id:'04',name:'Lee Le'},{id:'05',name:'MICROSOFT'},{id:'06',name:'BẢO MẬT'},{id:'07',name:'HP'},{id:'08',name:'Dell'},{id:'09',name:'VAIO'},{id:'10',name:'IPHONE'},{id:'11',name:'MAC'}]
+	});
+})
+
 module.exports = router;

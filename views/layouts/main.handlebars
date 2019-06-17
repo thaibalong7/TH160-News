@@ -96,6 +96,21 @@
 						</li>
 						{{/each}}
 						{{/if}}
+
+						{{#if isAdmin}}
+						{{#each nav}}
+						<li class="cat-3">
+							<div class="dropdown">
+								<a class="dropbtntravel" href={{this.link}}><button class="drop dropbtntravel">{{this.name}}</button></a>
+								<div class="dropdown-content">
+									{{#each this.sub}}
+									<a href={{this.link}}>{{this.name}}</a>
+									{{/each}}
+								</div>
+							</div>
+						</li>
+						{{/each}}
+						{{/if}}
 					</ul>
 					<!-- /nav -->
 

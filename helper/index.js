@@ -213,6 +213,35 @@ const getNavWriter = async () => {
     return nav;
 }
 
+const getNavAdmin = async () => {
+    const nav = [];
+    nav.push({
+        name: 'Quản Lý',
+        link: '/admins/',
+        sub: [{
+            name: 'Bài Viết',
+            link: '/admins/manage-news'
+        },
+        {
+            name: 'Chuyên Mục',
+            link: '/admins/'
+        },
+        {
+            name: 'Tags',
+            link: '/admins/manage-tags'
+        }]
+    });
+    nav.push({
+        name: 'Quản Lý Users',
+        link: '/admins/manage-subcribers',
+    });
+    nav.push({
+        name: 'Quản lý Editor',
+        link: '/admins/manage-editors',
+    });
+    return nav;
+}
+
 module.exports = {
     slugify,
     toStringDatetime,
@@ -229,5 +258,6 @@ module.exports = {
     generateIDNews,
     validateEmail,
     getNav,
-    getNavWriter
+    getNavWriter,
+    getNavAdmin
 }

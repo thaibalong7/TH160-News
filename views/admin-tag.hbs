@@ -35,8 +35,14 @@
                         <textarea id="tag-name" placeholder="Tên tag"></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" id="modal-add-tag-btn" class="btn-modal-send" onclick="click_add_tag()">Thêm</button>
+                        <div id="modal-add-tag-btn-container">
+                            <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="modal-add-tag-btn" class="btn-modal-send" onclick="click_add_tag()">Thêm</button>
+                        </div>
+                        {{!-- loading --}}
+                        <div id="modal-add-tag-loading-container" class="col-md-12 loading" hidden>
+                            <img class="center-block" src="/img/loading.gif" alt=""></img>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -53,8 +59,14 @@
                         <textarea id="name-tag-modal-edit" placeholder="Tên tag"></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" id="modal-edit-tag-btn" idtag="" class="btn-modal-send" onclick="click_edit_tag_name(this)">Lưu</button>
+                        <div id="modal-edit-tag-btn-container">
+                            <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="modal-edit-tag-btn" idtag="" class="btn-modal-send" onclick="click_edit_tag_name(this)">Lưu</button>
+                        </div>
+                        {{!-- loading --}}
+                        <div id="modal-edit-tag-loading-container" class="col-md-12 loading" hidden>
+                            <img class="center-block" src="/img/loading.gif" alt=""></img>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -71,9 +83,15 @@
                         <div class="center-block">Bạn có thực sự muốn xóa tag này</div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" id="modal-delete-tag-btn" idtag="" class="btn-modal-send" onclick="click_send_delete_tag(this)">Xóa
-                            đi</button>
+                        <div id="modal-delete-tag-btn-container">
+                            <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="modal-delete-tag-btn" idtag="" class="btn-modal-send" onclick="click_send_delete_tag(this)">Xóa
+                                đi</button>
+                        </div>
+                        {{!-- loading --}}
+                        <div id="modal-delete-tag-loading-container" class="col-md-12 loading" hidden>
+                            <img class="center-block" src="/img/loading.gif" alt=""></img>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -89,15 +107,21 @@
 
         function click_send_delete_tag(btn) {
             //nút xóa ở modal
+            $("#modal-delete-tag-btn-container").hide();
+            $("#modal-delete-tag-loading-container").show();
             $.ajax("/api/admins/deleteTag/" + btn.getAttribute("idtag"), {
                 type: 'get',
                 dataType: 'json',
             }).done(data => {
                 $("#modal-delete-tag").modal('hide');
                 $("#tag" + btn.getAttribute("idtag")).remove();
+                $("#modal-delete-tag-btn-container").show();
+                $("#modal-delete-tag-loading-container").hide();
             }).fail(function (xhr, textStatus, errorThrown) {
                 var err = JSON.parse(xhr.responseText);
                 alert(err.msg);
+                $("#modal-delete-tag-btn-container").show();
+                $("#modal-delete-tag-loading-container").hide();
             });
         }
 
@@ -110,9 +134,14 @@
 
         function click_edit_tag_name(btn) {
             //nhất nút lưu ở modal
+            $("#modal-edit-tag-btn-container").hide();
+            $("#modal-edit-tag-loading-container").show();
+
             const name_tag = $("#name-tag-modal-edit").val();
             if (name_tag.length < 2) {
                 alert("Vui lòng nhập đủ độ dài của tags")
+                $("#modal-edit-tag-btn-container").show();
+                $("#modal-edit-tag-loading-container").hide();
             }
             else {
                 $.ajax("/api/admins/updateTag/" + btn.getAttribute("idtag"), {
@@ -124,18 +153,26 @@
                 }).done(data => {
                     $("#modal-edit-tag").modal('hide');
                     $("#label-name" + data.data.id).text(data.data.name);
-                    $("#edit-btn" + data.data.id).attr("nametag", data.data.name)
+                    $("#edit-btn" + data.data.id).attr("nametag", data.data.name);
+                    $("#modal-edit-tag-btn-container").show();
+                    $("#modal-edit-tag-loading-container").hide();
                 }).fail(function (xhr, textStatus, errorThrown) {
                     var err = JSON.parse(xhr.responseText);
                     alert(err.msg);
+                    $("#modal-edit-tag-btn-container").show();
+                    $("#modal-edit-tag-loading-container").hide();
                 });
             }
         }
 
         function click_add_tag() {
+            $("#modal-add-tag-loading-container").show();
+            $("#modal-add-tag-btn-container").hide();
             const name_tag = $("#tag-name").val();
             if (name_tag.length < 2) {
                 alert("Vui lòng nhập đủ độ dài của tags")
+                $("#modal-add-tag-loading-container").hide();
+                $("#modal-add-tag-btn-container").show();
             }
             else {
                 $.ajax("/api/admins/createTag", {
@@ -145,7 +182,6 @@
                         name: name_tag
                     }
                 }).done(data => {
-                    console.log(data);
                     $("#modal-add-tag").modal('hide');
                     $("#table-sub-category").prepend(`<tr id='tag${data.data.id}'>
                     <td class='td-name'><label id="label-name${data.data.id}">${data.data.name}</label></td>
@@ -156,9 +192,13 @@
                             onclick="click_edit_tag_btn(this)"><i class='fa fa-pencil-square-o'></i></button>
                     </td>
                 </tr>`)
+                    $("#modal-add-tag-loading-container").hide();
+                    $("#modal-add-tag-btn-container").show();
                 }).fail(function (xhr, textStatus, errorThrown) {
                     var err = JSON.parse(xhr.responseText);
                     alert(err.msg);
+                    $("#modal-add-tag-loading-container").hide();
+                    $("#modal-add-tag-btn-container").show();
                 });
             }
         }

@@ -51,12 +51,18 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                         <div class="center-block">Bạn có thực sự muốn xuất bản bài viết này bây giờ ?</div>
+                        <div class="center-block">Bạn có thực sự muốn xuất bản bài viết này bây giờ ?</div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" id="modal-approved-now-btn" idnews="" class="btn-modal-send" onclick="click_modal_approved_now(this)">Xuất
-                            bản ngay</button>
+                        <div id="admin-modal-approve-now-btn-container">
+                            <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="modal-approved-now-btn" idnews="" class="btn-modal-send" onclick="click_modal_approved_now(this)">Xuất
+                                bản ngay</button>
+                        </div>
+                        {{!-- loading --}}
+                        <div id="admin-modal-approve-now-loading-container" class="col-md-12 loading" hidden>
+                            <img class="center-block" src="/img/loading.gif" alt=""></img>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,9 +124,15 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Hủy</button>
-                        <button type="button" idnews="" id="admin-modal-approve-btn-approve" class="btn-modal-send"
-                            onclick="click_approve_now_form(this)">Xuất bản ngay</button>
+                        <div id="admin-modal-approve-btn-container">
+                            <button type="button" class="btn-modal-cancel" data-dismiss="modal">Hủy</button>
+                            <button type="button" idnews="" id="admin-modal-approve-btn-approve" class="btn-modal-send"
+                                onclick="click_approve_now_form(this)">Xuất bản ngay</button>
+                        </div>
+                        {{!-- loading --}}
+                        <div id="admin-modal-approve-loading-container" class="col-md-12 loading" hidden>
+                            <img class="center-block" src="/img/loading.gif" alt=""></img>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -198,6 +210,8 @@
 
             function approve_click(btn) {
                 //khi nhấn nút duyệt
+                $("#admin-modal-approve-btn-container").hide();
+                $("#admin-modal-approve-loading-container").show();
                 $.ajax("/api/editor/getCategoryAndTagOfNews/" + btn.getAttribute('idnews'), {
                     type: 'get',
                     dataType: 'json'
@@ -215,13 +229,19 @@
                         $("#admin-list-tag").append(`<label id = "${data.data.tags[i].id}">${data.data.tags[i].tag.name}<button id ="${data.data.tags[i].id}" onClick = 'admin_delete_tag(this.id)'>X</button></label>`)
                     };
                     $("#admin-modal-approve-btn-approve").attr("idnews", btn.getAttribute('idnews'));
+                    $("#admin-modal-approve-btn-container").show();
+                    $("#admin-modal-approve-loading-container").hide();
                 }).fail(function (xhr, textStatus, errorThrown) {
                     var err = JSON.parse(xhr.responseText);
                     alert(err.msg);
+                    $("#admin-modal-approve-btn-container").show();
+                    $("#admin-modal-approve-loading-container").hide();
                 });
             }
 
             function click_approve_now_form(btn) {
+                $("#admin-modal-approve-btn-container").hide();
+                $("#admin-modal-approve-loading-container").show();
                 const data_approve = {
                     idNews: btn.getAttribute('idnews'),
                     list_tag: [],
@@ -239,6 +259,8 @@
                 }).fail(function (xhr, textStatus, errorThrown) {
                     var err = JSON.parse(xhr.responseText);
                     alert(err.msg);
+                    $("#admin-modal-approve-btn-container").show();
+                    $("#admin-modal-approve-loading-container").hide();
                 });
             }
 
@@ -277,7 +299,8 @@
             }
 
             function click_modal_approved_now(btn) {
-                console.log(btn.getAttribute('idnews'))
+                $("#admin-modal-approve-now-loading-container").show();
+                $("#admin-modal-approve-now-btn-container").hide();
                 $.ajax("/api/admins/approveNews/" + btn.getAttribute('idnews'), {
                     type: 'get',
                     dataType: 'json'
@@ -286,6 +309,8 @@
                 }).fail(function (xhr, textStatus, errorThrown) {
                     var err = JSON.parse(xhr.responseText);
                     alert(err.msg);
+                    $("#admin-modal-approve-now-loading-container").hide();
+                    $("#admin-modal-approve-now-btn-container").show();
                 });
             }
 

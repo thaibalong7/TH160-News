@@ -5,12 +5,13 @@
             <table id="table-sub-category">
                 {{#each tags}}
                 <tr id='tag{{id}}'>
-                    <td class='td-name'><label>{{name}}</label></td>
+                    <td class='td-name'><label id="label-name{{id}}">{{name}}</label></td>
                     <td class='td-btn'>
-                        <button idtags={{id}} type='button' class='btn-del' data-toggle='modal' data-target='#modal-delete-tag'
+                        <button idtag={{id}} type='button' class='btn-del' data-toggle='modal' data-target='#modal-delete-tag'
                             onclick="click_delete_tag(this.id)"><i class='fa fa-trash'></i></button>
-                        <button idtags={{id}} type='button' class='btn-edit' data-toggle='modal' data-target='#modal-edit-tag'
-                            onclick="click_edit_tag_btn(this)"><i class='fa fa-pencil-square-o'></i></button>
+                        <button id="edit-btn{{id}}" idtag={{id}} nametag="{{name}}" type='button' class='btn-edit'
+                            data-toggle='modal' data-target='#modal-edit-tag' onclick="click_edit_tag_btn(this)"><i
+                                class='fa fa-pencil-square-o'></i></button>
                     </td>
                 </tr>
                 {{/each}}
@@ -46,14 +47,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h1 class="modal-title">Thay đổi tag</h1>
+                        <h1 class="modal-title">Chỉnh sửa tag</h1>
                     </div>
                     <div class="modal-body">
-                        <textarea id="reject-reason" placeholder="Tên tag"></textarea>
+                        <textarea id="name-tag-modal-edit" placeholder="Tên tag"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" id="modal-edit-tag-btn" class="btn-modal-send" onclick="click_edit_tag_name(this)">Lưu</button>
+                        <button type="button" id="modal-edit-tag-btn" idtag="" class="btn-modal-send" onclick="click_edit_tag_name(this)">Lưu</button>
                     </div>
                 </div>
             </div>
@@ -92,11 +93,33 @@
 
         function click_edit_tag_btn(btn) {
             //khi nhấn nút edit, hiện modal
+            $("#modal-edit-tag-btn").attr("idtag", btn.getAttribute("idtag"))
+            $("#name-tag-modal-edit").val(btn.getAttribute("nametag"));
         }
 
 
-        function click_edit_tag_name(lable_id) {
+        function click_edit_tag_name(btn) {
             //nhất nút lưu ở modal
+            const name_tag = $("#name-tag-modal-edit").val();
+            if (name_tag.length < 2) {
+                alert("Vui lòng nhập đủ độ dài của tags")
+            }
+            else {
+                $.ajax("/api/admins/updateTag/" + btn.getAttribute("idtag"), {
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        name: name_tag
+                    }
+                }).done(data => {
+                    $("#modal-edit-tag").modal('hide');
+                    $("#label-name" + data.data.id).text(data.data.name);
+                    $("#edit-btn" + data.data.id).attr("nametag", data.data.name)
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    var err = JSON.parse(xhr.responseText);
+                    alert(err.msg);
+                });
+            }
         }
 
         function click_add_tag() {
@@ -105,7 +128,6 @@
                 alert("Vui lòng nhập đủ độ dài của tags")
             }
             else {
-                console.log(name_tag);
                 $.ajax("/api/admins/createTag", {
                     type: 'post',
                     dataType: 'json',
@@ -116,11 +138,11 @@
                     console.log(data);
                     $("#modal-add-tag").modal('hide');
                     $("#table-sub-category").prepend(`<tr id='tag${data.data.id}'>
-                    <td class='td-name'><label>${data.data.name}</label></td>
+                    <td class='td-name'><label id="label-name${data.data.id}">${data.data.name}</label></td>
                     <td class='td-btn'>
-                        <button idtags=${data.data.id} type='button' class='btn-del' data-toggle='modal' data-target='#modal-delete-tag'
+                        <button idtag=${data.data.id} type='button' class='btn-del' data-toggle='modal' data-target='#modal-delete-tag'
                             onclick="click_delete_tag(this.id)"><i class='fa fa-trash'></i></button>
-                        <button idtags=${data.data.id} type='button' class='btn-edit' data-toggle='modal' data-target='#modal-edit-tag'
+                        <button id="edit-btn${data.data.id}" idtag=${data.data.id} nametag="${data.data.name}" type='button' class='btn-edit' data-toggle='modal' data-target='#modal-edit-tag'
                             onclick="click_edit_tag_btn(this)"><i class='fa fa-pencil-square-o'></i></button>
                     </td>
                 </tr>`)

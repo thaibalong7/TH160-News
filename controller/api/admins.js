@@ -245,3 +245,23 @@ exports.createTag = async (req, res) => {
         return res.status(400).json({ msg: error.toString() })
     }
 }
+
+exports.updateTag = async (req, res) => {
+    try {
+        const check_tag = await db.tags.findByPk(req.params.id);
+        if (check_tag) {
+            check_tag.name = req.body.name;
+            await check_tag.save();
+            return res.status(200).json({
+                msg: 'Cập nhật thành công',
+                data: check_tag
+            })
+        }
+        else {
+            return res.status(400).json({ msg: "Sai id tag" })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}

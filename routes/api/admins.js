@@ -23,4 +23,6 @@ router.get('/deleteSubCategory/:id', middlewareAuthAdmin, adminsController.delet
 
 router.post('/createTag', middlewareAuthAdmin, adminsController.createTag);
 
+router.post('/updateTag/:id', middlewareAuthAdmin, adminsController.updateTag);
+
 module.exports = router;

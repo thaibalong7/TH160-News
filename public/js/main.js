@@ -599,7 +599,7 @@
         }).done((news) => {
             for (let i = 0, l = news.data.length; i < l-7; i++) {
                 home_topLatestNewsNo1.append(`
-                <div class="col-md-4">
+                <div class="col-md-3" style="margin-right: 30px">
                     <div class="post">
                         <a class="post-img" href="${news.data[i].link}"><img src="${news.data[i].avatar}" alt=""></a>
                         <div class="post-body">
@@ -625,7 +625,7 @@
         }).done((news) => {
             for (let i = 3, l = news.data.length; i < 5; i++) {
                 home_topLatestNewsNo2.append(`
-                <div class="col-md-12">
+                <div class="col-md-12" style="margin-right: 30px">
                     <div class="post">
                         <a class="post-img" href="${news.data[i].link}"><img src="${news.data[i].avatar}" alt=""></a>
                         <div class="post-body">
@@ -651,7 +651,7 @@
         }).done((news) => {
             for (let i = 5, l = news.data.length; i < 7; i++) {
                 home_topLatestNewsNo3.append(`
-                <div class="col-md-12">
+                <div class="col-md-12" style="margin-right: 30px">
                     <div class="post">
                         <a class="post-img" href="${news.data[i].link}"><img src="${news.data[i].avatar}" alt=""></a>
                         <div class="post-body">
@@ -677,7 +677,7 @@
         }).done((news) => {
             for (let i = 7, l = news.data.length; i < l; i++) {
                 home_topLatestNewsNo4.append(`
-                <div class="col-md-4">
+                <div class="col-md-3" style="margin-right: 30px">
                     <div class="post">
                         <a class="post-img" href="${news.data[i].link}"><img src="${news.data[i].avatar}" alt=""></a>
                         <div class="post-body">
@@ -707,7 +707,7 @@
         }).done((news) => {
             for (let i = 0, l = news.data.length; i < l-7; i++) {
                 home_topOfCategoryNo1.append(`
-                <div class="col-md-4" style="margin-right: 30px">
+                <div class="col-md-3" style="margin-right: 30px">
                     <div class="post">
                         <a class="post-img" href="${news.data[i].link}"><img src="${news.data[i].avatar}" alt=""></a>
                         <div class="post-body">
@@ -785,7 +785,7 @@
         }).done((news) => {
             for (let i = 7, l = news.data.length; i < l; i++) {
                 home_topOfCategoryNo4.append(`
-                <div class="col-md-4" style="margin-right: 30px">
+                <div class="col-md-3" style="margin-right: 30px">
                     <div class="post">
                         <a class="post-img" href="${news.data[i].link}"><img src="${news.data[i].avatar}" alt=""></a>
                         <div class="post-body">

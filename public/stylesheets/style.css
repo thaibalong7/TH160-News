@@ -1521,6 +1521,10 @@ input[type="file"] {
     margin-right: 1.75%;
 }
 
+.list-cata h1 {
+    text-align: center;
+}
+
 .list-cata button {
     outline: none;
     border: none;
@@ -1947,5 +1951,7 @@ input[type="file"] {
     height: 70%;
     overflow-y: auto;    
     overflow-x: hidden;
+
+
 }
 

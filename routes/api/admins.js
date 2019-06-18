@@ -25,4 +25,6 @@ router.post('/createTag', middlewareAuthAdmin, adminsController.createTag);
 
 router.post('/updateTag/:id', middlewareAuthAdmin, adminsController.updateTag);
 
+router.get('/deleteTag/:id', middlewareAuthAdmin, adminsController.deleteTag);
+
 module.exports = router;

@@ -265,3 +265,33 @@ exports.updateTag = async (req, res) => {
         return res.status(400).json({ msg: error.toString() })
     }
 }
+
+exports.deleteTag = async (req, res) => {
+    try {
+        const check_tag = await db.tags.findOne({
+            where: {
+                id: req.params.id
+            },
+            include: [{
+                model: db.tags_new
+            }]
+        });
+        if (check_tag) {
+            if (check_tag.tags_news.length > 0) {
+                return res.status(400).json({ msg: "Tag này có nhiều bài viết liên quan" })
+            }
+            else {
+                await check_tag.destroy();
+                return res.status(200).json({
+                    msg: 'Xóa thành công',
+                })
+            }
+        }
+        else {
+            return res.status(400).json({ msg: "Sai id tag" })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}

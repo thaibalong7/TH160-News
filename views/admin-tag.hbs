@@ -8,7 +8,7 @@
                     <td class='td-name'><label id="label-name{{id}}">{{name}}</label></td>
                     <td class='td-btn'>
                         <button idtag={{id}} type='button' class='btn-del' data-toggle='modal' data-target='#modal-delete-tag'
-                            onclick="click_delete_tag(this.id)"><i class='fa fa-trash'></i></button>
+                            onclick="click_delete_tag(this)"><i class='fa fa-trash'></i></button>
                         <button id="edit-btn{{id}}" idtag={{id}} nametag="{{name}}" type='button' class='btn-edit'
                             data-toggle='modal' data-target='#modal-edit-tag' onclick="click_edit_tag_btn(this)"><i
                                 class='fa fa-pencil-square-o'></i></button>
@@ -84,11 +84,21 @@
 
         function click_delete_tag(btn) {
             //nhấn nút delete, hiện modal
-
+            $("#modal-delete-tag-btn").attr("idtag", btn.getAttribute("idtag"));
         }
 
         function click_send_delete_tag(btn) {
             //nút xóa ở modal
+            $.ajax("/api/admins/deleteTag/" + btn.getAttribute("idtag"), {
+                type: 'get',
+                dataType: 'json',
+            }).done(data => {
+                $("#modal-delete-tag").modal('hide');
+                $("#tag" + btn.getAttribute("idtag")).remove();
+            }).fail(function (xhr, textStatus, errorThrown) {
+                var err = JSON.parse(xhr.responseText);
+                alert(err.msg);
+            });
         }
 
         function click_edit_tag_btn(btn) {
@@ -141,7 +151,7 @@
                     <td class='td-name'><label id="label-name${data.data.id}">${data.data.name}</label></td>
                     <td class='td-btn'>
                         <button idtag=${data.data.id} type='button' class='btn-del' data-toggle='modal' data-target='#modal-delete-tag'
-                            onclick="click_delete_tag(this.id)"><i class='fa fa-trash'></i></button>
+                            onclick="click_delete_tag(this)"><i class='fa fa-trash'></i></button>
                         <button id="edit-btn${data.data.id}" idtag=${data.data.id} nametag="${data.data.name}" type='button' class='btn-edit' data-toggle='modal' data-target='#modal-edit-tag'
                             onclick="click_edit_tag_btn(this)"><i class='fa fa-pencil-square-o'></i></button>
                     </td>

@@ -1,14 +1,14 @@
 <!-- Hiển thị 3-4 bài viết nổi bật -->
-<div class="section section-grey">
+<div class="section section-grey topFeaturedNews">
     <div class="container">
-        <div class="row">
+        <div class="row" style="margin-left: 100px">
             <div class="col-md-12">
-                <div class="section-title text-center">
+                <div class="section-title">
                     <h2>Bài viết nổi bật</h2>
                 </div>
             </div>
 
-            <div id="home-topFuturedNews">
+            <div id="home-topFeaturedNews">
             </div>
         </div>
     </div>
@@ -16,10 +16,9 @@
 
 
 <!-- Hiển thị top 10 bài viết được xem nhiều nhất -->
-<div class="section">
-    <!-- container -->
+<div class="section topMostView">
     <div class="container">
-        <div class="row">
+        <div class="row" style="margin-left: 100px">
             <div class="col-md-12">
                 <div class="section-title">
                     <h2>Top 10 bài viết được xem nhiều nhất</h2>
@@ -30,10 +29,10 @@
             </div>
 
             
-            <div id="home-topMostViewNo2" class="col-md-8">
+            <div id="home-topMostViewNo2" class="col-md-6">
             </div>
 
-            <div id="home-topMostViewNo3" class="col-md-4">
+            <div id="home-topMostViewNo3" class="col-md-3">
             </div>
 
             <div id="home-topMostViewNo4" class="col-md-12">
@@ -41,327 +40,56 @@
         </div>
     </div>
 </div>
-<!-- /section -->
 
 
-{{!-- <!-- Hiển thị top 10 bài viết mới nhất -->
-<div class="section">
-    <!-- container -->
+<!-- Hiển thị top 10 bài viết mới nhất -->
+<div class="section topLatestNews">
     <div class="container">
-        <div class="row">
+        <div class="row" style="margin-left: 100px">
             <div class="col-md-12">
                 <div class="section-title">
                     <h2>Top 10 bài viết mới nhất</h2>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-3.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-1" href="catalog-business">business</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Pagedraw UI Builder Turns Your Website Design
-                                Mockup Into Code Automatically</a></h3>
-                    </div>
-                </div>
+            <div id="home-topLatestNewsNo1">
             </div>
 
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-4.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-2" href="catalog-sport">sport</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Chrome Extension Protects Against
-                                sport-Based CPU Side-Channel Attacks</a></h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-5.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-3" href="catalog-health">Health</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Ask HN: Does Anybody Still Use Health?</a></h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="clearfix visible-md visible-lg"></div>
-
-            <div class="col-md-8">
-                <div class="post post-row">
-                    <a class="post-img" href="blog-post"><img src="/img/post-4.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-2" href="catalog-sport">sport</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Chrome Extension Protects Against
-                                sport-Based CPU Side-Channel Attacks</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-2.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-1" href="catalog-business">business</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Tell-A-Tool: Guide To business And
-                                Development Tools</a></h3>
-                    </div>
-                </div>
-            </div>
             
-            <div class="col-md-8">
-                <div class="post post-row">
-                    <a class="post-img" href="blog-post"><img src="/img/post-4.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-2" href="catalog-sport">sport</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Chrome Extension Protects Against
-                                sport-Based CPU Side-Channel Attacks</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                    </div>
-                </div>
+            <div id="home-topLatestNewsNo2" class="col-md-8">
             </div>
 
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-2.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-1" href="catalog-business">business</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Tell-A-Tool: Guide To business And
-                                Development Tools</a></h3>
-                    </div>
-                </div>
+            <div id="home-topLatestNewsNo3" class="col-md-4">
             </div>
 
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-3.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-1" href="catalog-business">business</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Pagedraw UI Builder Turns Your Website Design
-                                Mockup Into Code Automatically</a></h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-4.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-2" href="catalog-sport">sport</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Chrome Extension Protects Against
-                                sport-Based CPU Side-Channel Attacks</a></h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-5.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-3" href="catalog-health">Health</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Ask HN: Does Anybody Still Use Health?</a></h3>
-                    </div>
-                </div>
+            <div id="home-topLatestNewsNo4" class="col-md-12">
             </div>
         </div>
-
     </div>
-
 </div>
-<!-- /section -->
 
 <!-- Hiển thị top 10 bài viết mỗi chuyên mục -->
 <div class="section">
-    <!-- container -->
     <div class="container">
-        <div class="row">
+        <div class="row" style="margin-left: 100px">
             <div class="col-md-12">
                 <div class="section-title">
                     <h2>Top 10 bài viết mỗi chuyên mục</h2>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-3.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-1" href="catalog-business">business</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Pagedraw UI Builder Turns Your Website Design
-                                Mockup Into Code Automatically</a></h3>
-                    </div>
-                </div>
+            <div id="home-topOfCategoryNo1">
             </div>
 
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-4.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-2" href="catalog-sport">sport</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Chrome Extension Protects Against
-                                sport-Based CPU Side-Channel Attacks</a></h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-5.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-3" href="catalog-health">Health</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Ask HN: Does Anybody Still Use Health?</a></h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="clearfix visible-md visible-lg"></div>
-
-            <div class="col-md-8">
-                <div class="post post-row">
-                    <a class="post-img" href="blog-post"><img src="/img/post-4.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-2" href="catalog-sport">sport</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Chrome Extension Protects Against
-                                sport-Based CPU Side-Channel Attacks</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-2.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-1" href="catalog-business">business</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Tell-A-Tool: Guide To business And
-                                Development Tools</a></h3>
-                    </div>
-                </div>
-            </div>
             
-            <div class="col-md-8">
-                <div class="post post-row">
-                    <a class="post-img" href="blog-post"><img src="/img/post-4.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-2" href="catalog-sport">sport</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Chrome Extension Protects Against
-                                sport-Based CPU Side-Channel Attacks</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                    </div>
-                </div>
+            <div id="home-topOfCategoryNo2" class="col-md-8">
             </div>
 
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-2.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-1" href="catalog-business">business</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Tell-A-Tool: Guide To business And
-                                Development Tools</a></h3>
-                    </div>
-                </div>
+            <div id="home-topOfCategoryNo3" class="col-md-4">
             </div>
 
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-3.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-1" href="catalog-business">business</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Pagedraw UI Builder Turns Your Website Design
-                                Mockup Into Code Automatically</a></h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-4.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-2" href="catalog-sport">sport</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Chrome Extension Protects Against
-                                sport-Based CPU Side-Channel Attacks</a></h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="post">
-                    <a class="post-img" href="blog-post"><img src="/img/post-5.jpg" alt=""></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-3" href="catalog-health">Health</a>
-                            <span class="post-date">March 27, 2018</span>
-                        </div>
-                        <h3 class="post-title"><a href="blog-post">Ask HN: Does Anybody Still Use Health?</a></h3>
-                    </div>
-                </div>
+            <div id="home-topOfCategoryNo4" class="col-md-12">
             </div>
         </div>
-
     </div>
-
 </div>
-<!-- /section --> --}}

@@ -1,0 +1,278 @@
+
+<div>
+<div class = "list_cata">
+    <div >
+        <div > 
+            <div >
+                <div class="col-md-12">
+                    <div class="row">
+                        <div>
+                            <div class="list-cata">
+                                <h1>Danh sách bài viết </h1>
+                                            <div id="post-list-category">
+                                                {{#each news}}
+                                                <div class="col-md-12">
+                                                    <div class="post post-row">
+                                                        <a class="post-img" ><img src="./img/{{img}}"></a>
+                                                        <div class="post-body">
+                                                            <div class="post-meta">
+                                                                <a class="post-category" >{{type}}</a>
+                                                                <a class="post-category cat-4" >{{category}}</a>
+                                                                <span class="post-date">{{publicAt}}</span>
+                                                                <a class="post-category cat-3">{{status}}</a>
+                                                                {{#if edit}}
+                                                                <a class="post-category cat-2" data-toggle='modal' data-target='#myModal-duyet'>Xuất bản vượt cấp</a>
+                                                                {{/if}}
+                                                            </div>
+                                                            <h3 class="post-title"><a >{{name}}</a></h3>
+                                                            <p class="post-abstract">{{abstract}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+		<script>
+		var toolbarOptions = [
+            ['bold', 'italic', 'underline', 'strike'],        
+            ['blockquote', 'code-block'],
+
+            [{ 'header': 1 }, { 'header': 2 }],               
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'script': 'sub'}, { 'script': 'super' }],      
+            [{ 'indent': '-1'}, { 'indent': '+1' }],          
+            [{ 'direction': 'rtl' }],                         
+
+            [{ 'size': ['small', false, 'large', 'huge'] }],  
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+            [{ 'color': [] }, { 'background': [] }],          
+            [{ 'font': [] }],
+            [{ 'align': [] }],
+            ['clean']                                         
+];
+
+        var quill = new Quill('#editor', {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'snow'
+        });
+	</script>
+     <div class="modal fade" id="myModal-duyet" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title">Bạn muốn xuất bản vượt cấp</h2>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Trước khi xuấ bản bạn có muốn điều chỉnh lại chuyên mục và các nhãn của bài viết này?</h3>
+                        <table>
+                            <tr>
+                                <td>
+                                    <h4>Chuyên mục chính:</h4>
+                                </td>
+                                <td>
+                                    <select onchange="edit_change_select_category()" id="edit_select_category">
+                                        <option value="none">Chuyên mục</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <h4>Chuyên mục phụ: </h4>
+                                </td>
+                                <td>
+                                    <select id="edit_select_sub_category" onchange="edit_change_select_sub_category()" required>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td><h4>Tag:</h4></td>
+                                <td><select id="select_id_3">
+                                        {{#each tag}}
+                                            <option value={{.}}>{{.}}</option>
+                                        {{/each}}
+                                    </select>
+                                </td>
+                                <td><button id = "btn_add_tag" onclick="click_to_add_tag()">+</button></td>
+                            </tr>
+                        </table>
+                         <div>
+                            <h4>Danh sách tag đã thêm: </h4>
+                            <div id = "list_tag">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">   
+                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn-modal-send" onclick="">Xuất bản</button>
+                </div>
+            </div>
+        </div>
+        <script>
+        var list_tag = []
+        function click_to_add_tag()
+        {
+            e = document.getElementById("select_id_3");
+            var strUser = e.options[e.selectedIndex].text; 
+            var value = e.value; 
+            var s = new String("");
+            if(list_tag.length == 0)
+                list_tag.push(strUser);
+            else
+            {
+                let count = 1;
+                for(let i = 0;i<list_tag.length;i++)
+                {
+                    if(list_tag[i] === strUser)
+                        {
+                            count = -1;
+                            break;
+                        }
+                }
+                if(count === 1) list_tag.push(strUser);
+            }
+            for(let i=0;i<list_tag.length;i++)
+            {
+                s = s + "<label id = 'label" + i +"'>"  +list_tag[i]+"<button id ='"+ i +"' onClick = 'click_to_close_tag(this.id)'>X</button></label>"+'\n';
+            }
+            console.log(s);
+            document.getElementById("list_tag").innerHTML = s; 
+        }
+        function click_to_close_tag(clicked_id)
+        {
+            var s1 = clicked_id;
+            var ss = new String("label"+s1);
+            var sss = document.getElementById(ss).textContent;
+            var subsss = sss.substring(0,sss.length-1);
+            var index = list_tag.indexOf(subsss);
+            if (index > -1) {
+                list_tag.splice(index, 1);
+            }
+            var s = new String("");
+            for(let i=0;i<list_tag.length;i++)
+            {
+                s = s + "<label id = 'label" + i +"'>"  +list_tag[i]+"<button id ='"+ i +"' onClick = 'val4(this.id)'>X</button></label>"+'\n';
+            }
+            console.log(s);
+            document.getElementById("list_tag").innerHTML = s; 
+        }
+
+        let list_sub_category;
+        const edit_news_form = $("#edit-news-form");
+        $.ajax("/api/categories/getAllCategories", {
+            type: 'get',
+            dataType: 'json'
+        }).done(function (data) {
+            const select_category = $("#edit_select_category");
+            for (let i = 0, l = data.data.list_category.length; i < l; i++) {
+                select_category.append(` <option value=${data.data.list_category[i].id}>${data.data.list_category[i].name}</option>`)
+            };
+            list_sub_category = data.data.list_sub_category;
+            //sau đó mới lấy thông tin news
+            $.ajax("/api/writers/getNewsById/" + edit_news_form.attr("idNews") + "/" + edit_news_form.attr("titleNews"), {
+                type: 'get',
+                dataType: 'json'
+            }).done(function (data) {
+                console.log(data.data);
+                //add data vô các input
+                $('#edit-avatar')
+                    .attr('src', data.data.avatar)
+
+                $("#edit-title").val(data.data.title);
+                $("#edit-abstract").val(data.data.abstract);
+                quill.root.innerHTML = data.data.content;
+                $("#edit_select_category").val(data.data.sub_category.fk_category);
+                edit_change_select_category();
+                $("#edit_select_sub_category").val(data.data.sub_category.id);
+                for (let i = 0, l = data.data.tags_news.length; i < l; i++) {
+                    list_tag.push({
+                        name: data.data.tags_news[i].tag.name,
+                        id: data.data.tags_news[i].tag.id
+                    })
+                    $("#edit_list_tag").append(`<label id = "${data.data.tags_news[i].id}">${data.data.tags_news[i].tag.name}<button id ="${data.data.tags_news[i].id}" onClick = 'edit_delete_tag(this.id)'>X</button></label>`)
+                }
+                console.log(list_tag);
+                $("#writer-edit-submit-btn-container").show();
+                $("#loading-writer-edit").hide();
+            }).fail(function (xhr, textStatus, errorThrown) {
+                var err = JSON.parse(xhr.responseText);
+                alert(err.msg);
+            });
+        }).fail(function (xhr, textStatus, errorThrown) {
+            var err = JSON.parse(xhr.responseText);
+            alert(err.msg);
+        });
+        function edit_change_select_category() {
+            e = document.getElementById("edit_select_category");
+            var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 1
+            const select_sub_category = $("#edit_select_sub_category");
+            for (let i = 0, l = list_sub_category[strUser].length; i < l; i++) {
+                select_sub_category.append(` <option value=${list_sub_category[strUser][i].id}>${list_sub_category[strUser][i].name}</option>`)
+            };
+        }
+
+        function edit_change_select_sub_category() {
+            e = document.getElementById("edit_select_sub_category");
+            var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 2
+            var value = e.value; // giá trị được chọn ở chuyên mục cấp 1
+        }
+
+        const form_create = $("#edit-news-form");
+        form_create.submit(function (e) {
+            e.preventDefault();
+            console.log('submit')
+            let form = new FormData();
+            const input_avatar = $("#avatar");
+            $("#loading-writer-edit").show();
+            $("#writer-edit-submit-btn-container").hide();
+            if (input_avatar.prop('files')[0] !== undefined) {
+                form.append('avatar', input_avatar[0].files[0]);
+            }
+
+            if (quill.getLength() > 10) {
+                form.append('title', $("#edit-title").val());
+                form.append('abstract', $("#edit-abstract").val());
+                for (let i = 0, l = list_tag.length; i < l; i++) {
+                    form.append('list_tag', list_tag[i].id);
+                }
+                form.append('sub_category', $('#edit_select_sub_category').val())
+                form.append('content', quill.root.innerHTML);
+                $.ajax("/api/writers/edit_news/" + edit_news_form.attr("idNews"), {
+                    type: 'post',
+                    data: form,
+                    processData: false,
+                    contentType: false,
+                }).done(function (data) {
+                    console.log(data)
+                    $("#loading-writer-edit").hide();
+                    $("#writer-edit-submit-btn-container").show();
+                    location.href = "/writers/w_news/" + edit_news_form.attr("idNews") + "/" + edit_news_form.attr("titleNews");
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    var err = JSON.parse(xhr.responseText);
+                    alert(err.msg);
+                });
+            }
+            else {
+                alert("Vui lòng thêm đủ nội dung")
+            }
+
+        })
+        </script>
+</div>

@@ -81,7 +81,7 @@
                                     <h4>Chuyên mục chính:</h4>
                                 </td>
                                 <td>
-                                    <select onchange="edit_change_select_category()" id="admin_select_category">
+                                    <select onchange="admin_change_select_category()" id="admin_select_category">
                                         <option value="none">Chuyên mục</option>
                                     </select>
                                 </td>
@@ -93,7 +93,7 @@
                                     <h4>Chuyên mục phụ: </h4>
                                 </td>
                                 <td>
-                                    <select id="admin_select_sub_category" onchange="admin_change_select_sub_category()">
+                                    <select id="admin_select_sub_category">
                                     </select>
                                 </td>
                             </tr>
@@ -205,7 +205,7 @@
                     dataType: 'json'
                 }).done(data => {
                     $("#admin_select_category").val(data.data.sub_category.fk_category);
-                    editor_change_select_category();
+                    admin_change_select_category();
                     $("#admin_select_sub_category").val(data.data.sub_category.id);
                     list_tag = [];
                     $("#admin-list-tag").empty();
@@ -214,7 +214,7 @@
                             name: data.data.tags[i].tag.name,
                             id: data.data.tags[i].tag.id
                         })
-                        $("#admin-list-tag").append(`<label id = "${data.data.tags[i].id}">${data.data.tags[i].tag.name}<button id ="${data.data.tags[i].id}" onClick = 'editor_delete_tag(this.id)'>X</button></label>`)
+                        $("#admin-list-tag").append(`<label id = "${data.data.tags[i].id}">${data.data.tags[i].tag.name}<button id ="${data.data.tags[i].id}" onClick = 'admin_delete_tag(this.id)'>X</button></label>`)
                     };
                     $("#admin-modal-approve-btn-approve").attr("idnews", btn.getAttribute('idnews'));
                 }).fail(function (xhr, textStatus, errorThrown) {
@@ -226,12 +226,11 @@
             function click_approve_now_form(btn) {
                 const data_approve = {
                     idNews: btn.getAttribute('idnews'),
+                    list_tag: [],
                 };
-                const list_tag_submit = [];
                 for (let i = 0, l = list_tag.length; i < l; i++) {
-                    list_tag_submit.push(list_tag[i].id);
+                    data_approve.list_tag.push(list_tag[i].id);
                 }
-                data_approve.list_tag = list_tag_submit;
                 data_approve.sub_category = $('#admin_select_sub_category').val();
                 $.ajax("/api/admins/adjustedAndApproveNewsNow", {
                     type: 'post',
@@ -292,7 +291,7 @@
                 });
             }
 
-            function editor_delete_tag(clicked_id) {
+            function admin_delete_tag(clicked_id) {
                 let idlabel = clicked_id;
                 let index = 0;;
                 for (; index < list_tag.length; index++) {
@@ -306,7 +305,7 @@
                 }
                 var s = new String("");
                 for (let i = 0; i < list_tag.length; i++) {
-                    s = s + "<label id = '" + list_tag[i].id + "'>" + list_tag[i].name + "<button id ='" + list_tag[i].id + "' onClick = 'editor_delete_tag(this.id)'>X</button></label>" + '\n';
+                    s = s + "<label id = '" + list_tag[i].id + "'>" + list_tag[i].name + "<button id ='" + list_tag[i].id + "' onClick = 'admin_delete_tag(this.id)'>X</button></label>" + '\n';
                 }
                 document.getElementById("admin-list-tag").innerHTML = s;
                 console.log(list_tag);
@@ -328,7 +327,7 @@
                 var err = JSON.parse(xhr.responseText);
                 alert(err.msg);
             });
-            function editor_change_select_category() {
+            function admin_change_select_category() {
                 e = document.getElementById("admin_select_category");
                 var strUser = e.options[e.selectedIndex].text; // chuỗi được chọn ở chuyên mục cấp 1
                 const select_sub_category = $("#admin_select_sub_category");

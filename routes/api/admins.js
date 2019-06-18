@@ -31,6 +31,6 @@ router.get('/getAllNews', middlewareAuthAdmin, adminsController.getAllNews);
 
 router.get('/approveNews/:id', middlewareAuthAdmin, adminsController.approveNews);
 
-router.get('/adjustedAndApproveNewsNow', middlewareAuthAdmin, adminsController.adjustedAndApproveNewsNow);
+router.post('/adjustedAndApproveNewsNow', middlewareAuthAdmin, adminsController.adjustedAndApproveNewsNow);
 
 module.exports = router;

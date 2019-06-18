@@ -1,28 +1,28 @@
 <div class="section">
     <div class="container">
         <div class="editor-div">
-            <h1>Soạn bài viết</h1>
+            <h3>Soạn bài viết</h3>
             <form id="edit-news-form" idNews={{id}} titleNews={{titleNews}}>
-                <h2>Ảnh đại diện bài viết: </h2>
+                <h4>Ảnh đại diện bài viết: </h4>
                 <img class="edit-avatar" id="edit-avatar" src="/img/loading.gif" alt="your image" />
                 <label class="custom-file-upload">
                     <input type="file" name="avatar" id="avatar" onchange="readURL(this);" />
                     Chọn ảnh
                 </label>
-                <h2>Tiêu đề bài viết: </h2>
-                <input type="text" placeholder="Tiêu đề" id="edit-title" required />
+                <h4>Tiêu đề bài viết: </h4>
+                <input type="text" id="edit-title" required />
 
-                <h2>Tóm tắt: </h2>
-                <textarea placeholder="Viết nội dung tóm tắt vào đây" id="edit-abstract" class="abstract-text" required
+                <h4>Tóm tắt: </h4>
+                <textarea  id="edit-abstract" class="abstract-text" required
                     value="{{news.abstract}}"></textarea>
 
-                <h2>Nội dung: </h2>
+                <h4>Nội dung: </h4>
                 <div id="edit-editor"></div>
 
                 <table>
                     <tr>
                         <td>
-                            <h2>Chuyên mục chính:</h2>
+                            <h4>Chuyên mục chính:</h4>
                         </td>
                         <td>
                             <select onchange="edit_change_select_category()" id="edit_select_category">
@@ -30,20 +30,19 @@
 
                             </select>
                         </td>
+                    </tr>
+                    <tr>
                         <td>
-                            <h2>Chuyên mục phụ: </h2>
+                            <h4>Chuyên mục phụ: </h4>
                         </td>
                         <td>
                             <select id="edit_select_sub_category" onchange="edit_change_select_sub_category()" required>
                             </select>
                         </td>
                     </tr>
-                </table>
-
-                <table>
                     <tr>
-                        <td>
-                            <h2>Tag:</h2>
+                       <td>
+                            <h4>Tag:</h4>
                         </td>
                         <td><select id="edit_select_tags">
                                 {{#each tag}}
@@ -57,7 +56,7 @@
                     </tr>
                 </table>
                 <div>
-                    <h2>Danh sách tag đã thêm: </h2>
+                    <h4>Danh sách tag đã thêm: </h4>
                     <div id="edit_list_tag">
                     </div>
                 </div>

@@ -1376,6 +1376,16 @@ textarea.input {
 
 #editor {
     height: 50%;
+    border: none;
+    outline: none;
+    background-color: rgba(238, 237, 237, 0.836); 
+}
+
+#edit-editor
+{
+    border: none;
+    outline: none;
+    background-color: rgba(238, 237, 237, 0.836);
 }
 
 input[type="file"] {
@@ -1405,11 +1415,11 @@ input[type="file"] {
     border-bottom-right-radius: 25px;
 }
 
-.editor-div h1 {
+.editor-div h3 {
     text-align: center;
 }
 
-.editor-div h2 {
+.editor-div h4 {
     margin-top: 10px;
 }
 
@@ -1418,8 +1428,9 @@ input[type="file"] {
     height: auto;
 }
 
-.editor-div table h2 {
+.editor-div table h4 {
     margin-left: 10px;
+    margin-top: 30px;
 }
 
 .editor-div input[type="text"] {
@@ -1428,15 +1439,22 @@ input[type="file"] {
     border-radius: 25px;
     outline: none;
     font-size: 20px;
+    border: none;
+    outline: none;
+    background-color: rgba(238, 237, 237, 0.836);
+    border-radius: 25px; 
+    padding-left: 20px;
 }
 
 .editor-div select {
-    margin-left: 10px;
+    margin-left: 100px;
     height: 40px;
-    width: 188px;
+    width: 250px;
     outline: none;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    margin-top: 20px;
+    border: none;
+    outline: none;
+    background-color: rgba(238, 237, 237, 0.836);
 }
 
 .editor-div div label {
@@ -1468,7 +1486,8 @@ input[type="file"] {
     background-color: #f57e60;
     font-size: 25px;
     font-weight: 600;
-    margin: 10px;
+    margin-top: 40px;
+    margin-left: 20px;
     text-align: center;
 }
 
@@ -1481,7 +1500,7 @@ input[type="file"] {
     background-color: #f57e60;
     font-size: 25px;
     font-weight: 600;
-    margin: 10px;
+    margin-top: 30px;
     text-align: center;
 }
 
@@ -1671,8 +1690,12 @@ input[type="file"] {
 .abstract-text {
     width: 100%;
     height: 40%;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+    padding-left: 20px;
+    padding-top: 10px;
+    border: none;
+    outline: none;
+    background-color: rgba(238, 237, 237, 0.836);
+    border-radius: 5px; 
 }
 
 #form-profile {

@@ -229,3 +229,19 @@ exports.deleteSubCategory = async (req, res) => {
         return res.status(400).json({ msg: error.toString() })
     }
 }
+
+exports.createTag = async (req, res) => {
+    try {
+        db.tags.create({
+            name: req.body.name,
+        }).then(data => {
+            return res.status(200).json({
+                msg: 'Tạo thành công',
+                data: data
+            })
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}

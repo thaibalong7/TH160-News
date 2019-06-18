@@ -21,4 +21,6 @@ router.post('/createSubCategory', middlewareAuthAdmin, adminsController.createSu
 
 router.get('/deleteSubCategory/:id', middlewareAuthAdmin, adminsController.deleteSubCategory);
 
+router.post('/createTag', middlewareAuthAdmin, adminsController.createTag);
+
 module.exports = router;

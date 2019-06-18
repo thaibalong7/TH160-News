@@ -16,3 +16,20 @@ exports.renderManageCategoryPage = async (req, res) => {
         return res.redirect('/');
     }
 }
+
+exports.renderManageTagPage = async (req, res) => {
+    try {
+        const tags = await db.tags.findAll({
+            order: [['name', 'ASC']]
+        });
+
+        res.render('admin-tag', {
+            nav: await helper.getNavAdmin(),
+            isAdmin: true,
+            tags: tags,
+        });
+    } catch (error) {
+        console.log(error)
+        return res.redirect('/');
+    }
+}

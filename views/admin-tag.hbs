@@ -1,100 +1,137 @@
- <div class="admin-div">
-     <div id = "form-admin-manage-category">
-         <h2>Quản lý tag</h2>
-         <div id = "form-view-list-tag">
-         <table id = "table-sub-category">
-             {{#each tags}}
-             <tr id = 'tr{{id}}'>
-                 <td id='lb{{id}}' class = 'td-name'><label>{{name}}</label></td>
-                 <td class = 'td-btn'>
-                     <button id={{id}} type='button' class = 'btn-del' onclick ="del_tag(this.id)"><i class='fa fa-trash' ></i></button>
-                     <button id={{id}} type='button' class = 'btn-edit' data-toggle='modal' data-target='#approve-modal' onclick="click_view_modal(this.id)"><i class='fa fa-pencil-square-o'></i></button>
-                </td>
+<div class="admin-div">
+    <div id="form-admin-manage-category">
+        <h2>Quản lý tag</h2>
+        <div id="form-view-list-tag">
+            <table id="table-sub-category">
+                {{#each tags}}
+                <tr id='tag{{id}}'>
+                    <td class='td-name'><label>{{name}}</label></td>
+                    <td class='td-btn'>
+                        <button idtags={{id}} type='button' class='btn-del' data-toggle='modal' data-target='#modal-delete-tag'
+                            onclick="click_delete_tag(this.id)"><i class='fa fa-trash'></i></button>
+                        <button idtags={{id}} type='button' class='btn-edit' data-toggle='modal' data-target='#modal-edit-tag'
+                            onclick="click_edit_tag_btn(this)"><i class='fa fa-pencil-square-o'></i></button>
+                    </td>
                 </tr>
-             {{/each}}
-        </table>
+                {{/each}}
+            </table>
         </div>
-            <div id = 'btn_add_category' >
-                <a data-toggle='modal' data-target='#approve-modal' onclick="click_view_modal_add_new()" onchange="">
-                    Thêm tag
-                </a>
+        <div id='btn_add_category'>
+            <a data-toggle='modal' data-target='#modal-add-tag'>
+                Thêm tag
+            </a>
+        </div>
+
+
+        <div class='modal fade' id='modal-add-tag' role='dialog'>
+            <div class='modal-dialog'>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h1 class="modal-title">Thêm tag</h1>
+                    </div>
+                    <div class="modal-body">
+                        <textarea id="tag-name" placeholder="Tên tag"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                        <button type="button" id="modal-add-tag-btn" class="btn-modal-send" onclick="click_add_tag()">Thêm</button>
+                    </div>
+                </div>
             </div>
-            <div id = "view-modal-here">
+        </div>
 
+        <div class='modal fade' id='modal-edit-tag' role='dialog'>
+            <div class='modal-dialog'>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h1 class="modal-title">Thay đổi tag</h1>
+                    </div>
+                    <div class="modal-body">
+                        <textarea id="reject-reason" placeholder="Tên tag"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                        <button type="button" id="modal-edit-tag-btn" class="btn-modal-send" onclick="click_edit_tag_name(this)">Lưu</button>
+                    </div>
+                </div>
             </div>
-        <script>
-            var value = new String("");
-            function click_view_modal(id)
-            {
-                var s = new String("");
-                s = s + 'lb' +id;
-                value = document.getElementById(s).textContent;
-                var e = document.getElementById(s);
-                var ss = '123123123'
-                var str = new String("");
-                str = `<div class= 'modal fade' id='approve-modal' role='dialog'>
-                            <div class='modal-dialog'>
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h1 class="modal-title">Thay đổi tag</h1>
-                                    </div>
-                                    <div class="modal-body">
-                                        <textarea id="reject-reason" placeholder="Tên tag" onchange="text_change()">${e.textContent}</textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                                        <button type="button" id="modal-reject-news-btn" class="btn-modal-send" onclick="click_edit_tag_name('${s}')">Chỉnh sữa</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`
-                document.getElementById("view-modal-here").innerHTML = str;
-            }
-            
-            function click_view_modal_add_new()
-            {
-                var str = new String("");
-                str = `<div class= 'modal fade' id='approve-modal' role='dialog'>
-                            <div class='modal-dialog'>
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h1 class="modal-title">Thay đổi tag</h1>
-                                    </div>
-                                    <div class="modal-body">
-                                        <textarea id="reject-reason" placeholder="Tên tag" ></textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                                        <button type="button" id="modal-reject-news-btn" class="btn-modal-send">Thêm</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`
-                document.getElementById("view-modal-here").innerHTML = str;
-            }
+        </div>
 
-            
+        <div class="modal fade" id="modal-delete-tag" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="center-block">Bạn có thực sự muốn xóa tag này</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                        <button type="button" id="modal-delete-tag-btn" idtag="" class="btn-modal-send" onclick="click_send_delete_tag(this)">Xóa
+                            đi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            function text_change()
-            {
-                var e = document.getElementById("reject-reason");
-                value = e.value;
-            }
+    </div>
+    <script>
 
-            function click_edit_tag_name(lable_id)
-            {
-                var s = "<label>"+ value + "</label>"
-                document.getElementById(lable_id).innerHTML = s;
-                $('#approve-modal').modal('hide');
-            }
+        function click_delete_tag(btn) {
+            //nhấn nút delete, hiện modal
 
-            function del_tag(clicked_id)
-            {
-                var s = "#tr"+clicked_id;
-                $(s).remove();
+        }
+
+        function click_send_delete_tag(btn) {
+            //nút xóa ở modal
+        }
+
+        function click_edit_tag_btn(btn) {
+            //khi nhấn nút edit, hiện modal
+        }
+
+
+        function click_edit_tag_name(lable_id) {
+            //nhất nút lưu ở modal
+        }
+
+        function click_add_tag() {
+            const name_tag = $("#tag-name").val();
+            if (name_tag.length < 2) {
+                alert("Vui lòng nhập đủ độ dài của tags")
             }
-        </script>
+            else {
+                console.log(name_tag);
+                $.ajax("/api/admins/createTag", {
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        name: name_tag
+                    }
+                }).done(data => {
+                    console.log(data);
+                    $("#modal-add-tag").modal('hide');
+                    $("#table-sub-category").prepend(`<tr id='tag${data.data.id}'>
+                    <td class='td-name'><label>${data.data.name}</label></td>
+                    <td class='td-btn'>
+                        <button idtags=${data.data.id} type='button' class='btn-del' data-toggle='modal' data-target='#modal-delete-tag'
+                            onclick="click_delete_tag(this.id)"><i class='fa fa-trash'></i></button>
+                        <button idtags=${data.data.id} type='button' class='btn-edit' data-toggle='modal' data-target='#modal-edit-tag'
+                            onclick="click_edit_tag_btn(this)"><i class='fa fa-pencil-square-o'></i></button>
+                    </td>
+                </tr>`)
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    var err = JSON.parse(xhr.responseText);
+                    alert(err.msg);
+                });
+            }
+        }
+
+
+    </script>
 
 </div>

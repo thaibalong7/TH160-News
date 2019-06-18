@@ -7,4 +7,6 @@ router.get('/', middlewareAuthAdminsRender, adminsController.renderManageCategor
 
 //router.get('/e_news/:id/:name', middlewareAuthEditorRender, editorController.renderNews);
 
+router.get('/manage-tags', middlewareAuthAdminsRender, adminsController.renderManageTagPage)
+
 module.exports = router;

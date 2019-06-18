@@ -165,7 +165,6 @@ const getNav = async (db) => {
     const _categories = await db.categories.findAll(query);
 
     for (let i = 0, l = _categories.length; i < l; i++) {
-        console.log(_categories[i].dataValues)
         const sub = [];
         if (_categories[i].sub_categories.length === 0)
             continue;

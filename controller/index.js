@@ -61,7 +61,7 @@ exports.category_page = async (req, res) => {
             else {
                 return res.render('index', {
                     title: 'News',
-                    nav: await getNav(),
+                    nav: await helper.getNav(db),
                     isUser: true,
                 })
             }
@@ -136,7 +136,7 @@ exports.category_page = async (req, res) => {
             else {
                 return res.render('index', {
                     title: 'News',
-                    nav: await getNav(),
+                    nav: await helper.getNav(db),
                     isUser: true,
                 })
             }

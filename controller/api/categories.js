@@ -8,6 +8,9 @@ exports.getCategoriesAndNumNews = async (req, res) => {
                 model: db.sub_categories,
                 include: [{
                     model: db.news,
+                    where:{
+                        status: "published"
+                    },
                     attributes: ['id']
                 }]
             }]

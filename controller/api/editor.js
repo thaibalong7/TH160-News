@@ -259,12 +259,13 @@ exports.approve_news = async (req, res) => {
                 id: req.body.idNews
             }
         });
+        console.log(req.body)
         if (_news) {
             if (typeof req.body.sub_category !== 'undefined') {
                 _news.fk_sub_category = parseInt(req.body.sub_category);
             }
-            if (typeof req.body.list_tag !== 'undefined') {
-                if (Array.isArray(req.body.list_tag)) {
+            if (typeof req.body['list_tag[]'] !== 'undefined') {
+                if (Array.isArray(req.body['list_tag[]'])) {
                     //xóa list tags cũ đi
                     await db.tags_new.destroy({
                         where: {
@@ -274,10 +275,10 @@ exports.approve_news = async (req, res) => {
 
                     //sau khi xóa xong, thêm list tags mới vào
                     //thêm tags news
-                    for (let i = 0, l = req.body.list_tag.length; i < l; i++) {
+                    for (let i = 0, l = req.body['list_tag[]'].length; i < l; i++) {
                         await db.tags_new.create({
                             fk_new: _news.id,
-                            fk_tag: req.body.list_tag[i]
+                            fk_tag: req.body['list_tag[]'][i]
                         })
                     };
                 }

@@ -27,4 +27,10 @@ router.post('/updateTag/:id', middlewareAuthAdmin, adminsController.updateTag);
 
 router.get('/deleteTag/:id', middlewareAuthAdmin, adminsController.deleteTag);
 
+router.get('/getAllNews', middlewareAuthAdmin, adminsController.getAllNews);
+
+router.get('/approveNews/:id', middlewareAuthAdmin, adminsController.approveNews);
+
+router.get('/adjustedAndApproveNewsNow', middlewareAuthAdmin, adminsController.adjustedAndApproveNewsNow);
+
 module.exports = router;

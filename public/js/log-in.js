@@ -4,6 +4,8 @@
     const form_login = $("#login-form");
     form_login.submit(function (e) {
         e.preventDefault();
+        $("#container-login-btn").hide();
+        $("#login-loading-container").show();
         const dataArray = $(this).serializeArray();
         const data = {};
         for (var i = 0; i < dataArray.length; i++) {
@@ -27,6 +29,8 @@
             }).fail(function (xhr, status, error) {
                 var err = JSON.parse(xhr.responseText);
                 alert(err.msg);
+                $("#container-login-btn").show();
+                $("#login-loading-container").hide();
             })
         }
         if (data.type === 'writer') {
@@ -46,6 +50,8 @@
             }).fail(function (xhr, status, error) {
                 var err = JSON.parse(xhr.responseText);
                 alert(err.msg);
+                $("#container-login-btn").show();
+                $("#login-loading-container").hide();
             })
         }
         if (data.type === 'editor') {
@@ -64,6 +70,8 @@
             }).fail(function (xhr, status, error) {
                 var err = JSON.parse(xhr.responseText);
                 alert(err.msg);
+                $("#container-login-btn").show();
+                $("#login-loading-container").hide();
             })
         }
         if (data.type === 'administrator') {
@@ -82,6 +90,8 @@
             }).fail(function (xhr, status, error) {
                 var err = JSON.parse(xhr.responseText);
                 alert(err.msg);
+                $("#container-login-btn").show();
+                $("#login-loading-container").hide();
             })
         }
 

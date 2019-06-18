@@ -47,14 +47,20 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h2 class="modal-title">Lý do từ chối vài biết: </h2>
+                        <h2 class="modal-title">Lý do từ chối bài biết: </h2>
                     </div>
                     <div class="modal-body">
                         <textarea id="reject-reason" placeholder="Viết lý do từ chối vào đây"></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" id="modal-reject-news-btn" class="btn-modal-send" onclick="click_send_reject_news(this)">Gửi</button>
+                        <div id="footer-reject-model-contaner">
+                            <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="modal-reject-news-btn" class="btn-modal-send" onclick="click_send_reject_news(this)">Gửi</button>
+                        </div>
+                        {{!-- loading --}}
+                        <div id="reject-loading-container" class="col-md-12 loading" hidden>
+                            <img class="center-block" src="/img/loading.gif" alt=""></img>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -126,9 +132,15 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" id="approve-btn-model" class="btn-modal-send" idnews="" onclick="approve_news(this)">Duyệt</button>
-                        <button id="button-xuatban" idnews="" onclick="release_news_now(this)">Xuất bản ngay</button>
+                        <div id="footer-model-contaner">
+                            <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="approve-btn-model" class="btn-modal-send" idnews="" onclick="approve_news(this)">Duyệt</button>
+                            <button id="button-xuatban" idnews="" onclick="release_news_now(this)">Xuất bản ngay</button>
+                        </div>
+                        {{!-- loading --}}
+                        <div id="loading-container" class="col-md-12 loading" hidden>
+                            <img class="center-block" src="/img/loading.gif" alt=""></img>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -187,6 +199,8 @@
             })
 
             function approve_click(btn) {
+                $("#loading-container").show();
+                $("#footer-model-contaner").hide();
                 $.ajax("/api/editor/getCategoryAndTagOfNews/" + btn.getAttribute('idnews'), {
                     type: 'get',
                     dataType: 'json'
@@ -203,8 +217,10 @@
                         })
                         $("#editor_list_tag").append(`<label id = "${data.data.tags[i].id}">${data.data.tags[i].tag.name}<button id ="${data.data.tags[i].id}" onClick = 'editor_delete_tag(this.id)'>X</button></label>`)
                     };
-                    $("#approve-btn-model").attr("idnews", btn.getAttribute('idnews'))
-                    $("#button-xuatban").attr("idnews", btn.getAttribute('idnews'))
+                    $("#approve-btn-model").attr("idnews", btn.getAttribute('idnews'));
+                    $("#button-xuatban").attr("idnews", btn.getAttribute('idnews'));
+                    $("#loading-container").hide();
+                    $("#footer-model-contaner").show();
                 }).fail(function (xhr, textStatus, errorThrown) {
                     var err = JSON.parse(xhr.responseText);
                     alert(err.msg);
@@ -222,6 +238,8 @@
             }
 
             function approve_news(btn) {
+                $("#loading-container").show();
+                $("#footer-model-contaner").hide();
                 const data_approve = {
                     idNews: btn.getAttribute('idnews'),
                 };
@@ -251,12 +269,16 @@
                         }).fail(function (xhr, textStatus, errorThrown) {
                             var err = JSON.parse(xhr.responseText);
                             alert(err.msg);
+                            $("#loading-container").hide();
+                            $("#footer-model-contaner").show();
                         });
                     }
                 }
             }
 
             function release_news_now(btn) {
+                $("#loading-container").show();
+                $("#footer-model-contaner").hide();
                 const data_approve = {
                     idNews: btn.getAttribute('idnews'),
                 };
@@ -276,6 +298,8 @@
                 }).fail(function (xhr, textStatus, errorThrown) {
                     var err = JSON.parse(xhr.responseText);
                     alert(err.msg);
+                    $("#loading-container").hide();
+                    $("#footer-model-contaner").show();
                 });
             }
 
@@ -285,6 +309,8 @@
             }
 
             function click_send_reject_news(btn) {
+                $("#reject-loading-container").show();
+                $("#footer-reject-model-contaner").hide();
                 const data_reject = {
                     idNews: btn.getAttribute('idnews'),
                 };
@@ -303,6 +329,8 @@
                     }).fail(function (xhr, textStatus, errorThrown) {
                         var err = JSON.parse(xhr.responseText);
                         alert(err.msg);
+                        $("#reject-loading-container").show();
+                        $("#footer-reject-model-contaner").hide();
                     });
                 }
             }

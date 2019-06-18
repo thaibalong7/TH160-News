@@ -3,6 +3,7 @@ var router = express.Router();
 var newsController = require('../../controller/api/news');
 
 //Bài viết mới nhất mọi chuyên mục
+// /api/news/getLatestNews
 router.get('/getLatestNews', newsController.getLatestNews);
 
 //Bài viết nhiều view nhất mọi chuyên mục

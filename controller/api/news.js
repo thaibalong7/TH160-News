@@ -1,6 +1,7 @@
 const db = require('../../models');
 const helper = require('../../helper');
 
+//Top 10 mới nhất
 exports.getLatestNews = async (req, res) => {
     try {
         const default_num_news = 10;
@@ -32,6 +33,7 @@ exports.getLatestNews = async (req, res) => {
     }
 }
 
+//Top 10 xem nhiều nhất
 exports.getNewsMostViews = async (req, res) => {
     try {
         const default_num_news = 10;
@@ -64,6 +66,7 @@ exports.getNewsMostViews = async (req, res) => {
     }
 }
 
+//Top nổi bật
 exports.getFeaturedNews = async (req, res) => {
     try {
         const default_num_news = 3;

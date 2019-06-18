@@ -55,9 +55,15 @@
                         <input class="input-name-category" id="name-category" placeholder="Tên chuyên mục"></input>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" id="edit-sub-category-btn-send" class="btn-modal-send" onclick="click_send_edit_sub_category(this)"
-                            idsubcategory="">Gửi</button>
+                        <div id="edit-sub-category-btn-container">
+                            <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="edit-sub-category-btn-send" class="btn-modal-send" onclick="click_send_edit_sub_category(this)"
+                                idsubcategory="">Gửi</button>
+                        </div>
+                        {{!-- loading --}}
+                        <div id="edit-sub-category-loading-container" class="col-md-12 loading" hidden>
+                            <img class="center-block" src="/img/loading.gif" alt=""></img>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -74,9 +80,15 @@
                         <div class="center-block">Bạn có thực sự muốn xóa tiểu mục này</div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" id="delete-sub-category-btn" idsubcategory="" class="btn-modal-send"
-                            onclick="click_delete_sub_category(this)">Gửi</button>
+                        <div id="delete-sub-category-btn-container">
+                            <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="delete-sub-category-btn" idsubcategory="" class="btn-modal-send"
+                                onclick="click_delete_sub_category(this)">Gửi</button>
+                        </div>
+                        {{!-- loading --}}
+                        <div id="delete-sub-category-loading-container" class="col-md-12 loading" hidden>
+                            <img class="center-block" src="/img/loading.gif" alt=""></img>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -95,8 +107,14 @@
                         <textarea id="name-add-sub-category" placeholder="Tên chuyên mục"></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" id="add-sub-category-btn" class="btn-modal-send" onclick="click_add_sub_category(this)">Gửi</button>
+                        <div id="add-sub-category-btn-container">
+                            <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                            <button type="button" id="add-sub-category-btn" class="btn-modal-send" onclick="click_add_sub_category(this)">Gửi</button>
+                        </div>
+                        {{!-- loading --}}
+                        <div id="add-sub-category-loading-container" class="col-md-12 loading" hidden>
+                            <img class="center-block" src="/img/loading.gif" alt=""></img>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -114,8 +132,14 @@
                         <textarea id="name-add-category" placeholder="Tên chuyên mục"></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn-modal-send" onclick="click_add_category()">Gửi</button>
+                        <div id="add-category-btn-container">
+                            <button type="button" class="btn-modal-cancel" data-dismiss="modal">Đóng</button>
+                            <button type="button" class="btn-modal-send" onclick="click_add_category()">Gửi</button>
+                        </div>
+                        {{!-- loading --}}
+                        <div id="add-category-loading-container" class="col-md-12 loading" hidden>
+                            <img class="center-block" src="/img/loading.gif" alt=""></img>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -154,6 +178,8 @@
             }
 
             function click_send_edit_sub_category(btn) {
+                $("#edit-sub-category-loading-container").show();
+                $("#edit-sub-category-btn-container").hide();
                 const id_sub_category = btn.getAttribute('idsubcategory');
                 const name_sub_category = $("#name-category").val();
                 if (name_sub_category.length < 3) {
@@ -171,13 +197,16 @@
                     }).fail(function (xhr, textStatus, errorThrown) {
                         var err = JSON.parse(xhr.responseText);
                         alert(err.msg);
+                        $("#edit-sub-category-loading-container").hide();
+                        $("#edit-sub-category-btn-container").show();
                     });
                 }
             }
 
             function click_add_category() {
+                $("#add-category-loading-container").show();
+                $("#add-category-btn-container").hide();
                 const name_add_category = $("#name-add-category").val();
-                console.log(name_add_category)
                 if (name_add_category.length < 5) {
                     alert("Vui lòng nhập đủ ký tự");
                 }
@@ -193,13 +222,16 @@
                     }).fail(function (xhr, textStatus, errorThrown) {
                         var err = JSON.parse(xhr.responseText);
                         alert(err.msg);
+                        $("#add-category-loading-container").hide();
+                        $("#add-category-btn-container").show();
                     });
                 }
             }
 
             function click_add_sub_category(btn) {
+                $("#add-sub-category-loading-container").show();
+                $("#add-sub-category-btn-container").hide();
                 const name_add_sub_category = $("#name-add-sub-category").val();
-                console.log(name_add_sub_category)
                 if (name_add_sub_category.length < 3) {
                     alert("Vui lòng nhập đủ ký tự");
                 }
@@ -216,11 +248,15 @@
                     }).fail(function (xhr, textStatus, errorThrown) {
                         var err = JSON.parse(xhr.responseText);
                         alert(err.msg);
+                        $("#add-sub-category-loading-container").hide();
+                        $("#add-sub-category-btn-contaner").show();
                     });
                 }
             }
 
             function click_delete_sub_category(btn) {
+                $("#delete-sub-category-loading-container").show();
+                $("#delete-sub-category-btn-container").hide();
                 $.ajax("/api/admins/deleteSubCategory/" + btn.getAttribute('idsubcategory'), {
                     type: 'get',
                     dataType: 'json',
@@ -229,6 +265,8 @@
                 }).fail(function (xhr, textStatus, errorThrown) {
                     var err = JSON.parse(xhr.responseText);
                     alert(err.msg);
+                    $("#delete-sub-category-loading-container").hide();
+                    $("#delete-sub-category-btn-container").show();
                 });
             }
 

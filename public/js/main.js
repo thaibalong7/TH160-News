@@ -418,27 +418,27 @@
 
 
         //pagination tag_page
-    const load_more_button_tag = $("#load-more-tag");
-    load_more_button_tag.click(function () {
-        $("#load-more-tag-container").hide();
-        $("#loading-container").show();
-        $.ajax("/api/news/getNewsByTag/" + load_more_button_tag.attr("idTag") + "?per_page=" + load_more_button_tag.attr("per_page") + "&page=" + load_more_button_tag.attr("next_page"),
-            {
-                type: 'GET',
-                dataType: 'json',
-            }).done(function (news) {
-                if (parseInt(news.next_page) > 0) //còn trang tiếp
+        const load_more_button_tag = $("#load-more-tag");
+        load_more_button_tag.click(function () {
+            $("#load-more-tag-container").hide();
+            $("#loading-container").show();
+            $.ajax("/api/news/getNewsByTag/" + load_more_button_tag.attr("idTag") + "?per_page=" + load_more_button_tag.attr("per_page") + "&page=" + load_more_button_tag.attr("next_page"),
                 {
-                    $("#load-more-tag-container").show();
-                    load_more_button_category.attr('next_page', news.next_page)
-                    $("#loading-container").hide();
-                }
-                else { //hết data rồi
-                    $("#loading-container").hide();
-                }
-                const post_list_tag = $("#post-list-tag");
-                for (let i = 0, l = news.data.length; i < l; i++) {
-                    post_list_tag.append(`<div class="col-md-12">
+                    type: 'GET',
+                    dataType: 'json',
+                }).done(function (news) {
+                    if (parseInt(news.next_page) > 0) //còn trang tiếp
+                    {
+                        $("#load-more-tag-container").show();
+                        load_more_button_category.attr('next_page', news.next_page)
+                        $("#loading-container").hide();
+                    }
+                    else { //hết data rồi
+                        $("#loading-container").hide();
+                    }
+                    const post_list_tag = $("#post-list-tag");
+                    for (let i = 0, l = news.data.length; i < l; i++) {
+                        post_list_tag.append(`<div class="col-md-12">
                     <div class="post post-row">
                         <a class="post-img" href=${news.data[i].link}><img src=${news.data[i].avatar} alt=""></a>
                         <div class="post-body">
@@ -451,10 +451,10 @@
                         </div>
                     </div>
                 </div>`)
-                }
-            }).fail(function (xhr, textStatus, errorThrown) {
-                alert(xhr.responseText);
-            });
+                    }
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    alert(xhr.responseText);
+                });
         })
     }
 
@@ -490,7 +490,7 @@
             type: 'GET',
             dataType: 'json',
         }).done((news) => {
-            for (let i = 0, l = news.data.length; i < l-7; i++) {
+            for (let i = 0, l = news.data.length; i < l - 7; i++) {
                 home_topMostViewNo1.append(`
                 <div class="col-md-3" style="margin-right: 30px">
                     <div class="post">
@@ -590,14 +590,14 @@
 
 
 
-    
+
     const home_topLatestNewsNo1 = $("#home-topLatestNewsNo1");
     if (home_topLatestNewsNo1) {
         $.ajax("/api/news/getLatestNews", {
             type: 'GET',
             dataType: 'json',
         }).done((news) => {
-            for (let i = 0, l = news.data.length; i < l-7; i++) {
+            for (let i = 0, l = news.data.length; i < l - 7; i++) {
                 home_topLatestNewsNo1.append(`
                 <div class="col-md-3" style="margin-right: 30px">
                     <div class="post">
@@ -695,17 +695,13 @@
         });
     }
 
-
-
-
-    
     const home_topOfCategoryNo1 = $("#home-topOfCategoryNo1");
     if (home_topOfCategoryNo1) {
-        $.ajax("/api/news/getLatestNews", {
+        $.ajax("/api/news/getFeatureCategoryWithNews", {
             type: 'GET',
             dataType: 'json',
         }).done((news) => {
-            for (let i = 0, l = news.data.length; i < l-7; i++) {
+            for (let i = 0, l = news.data.length; i < l - 7; i++) {
                 home_topOfCategoryNo1.append(`
                 <div class="col-md-3" style="margin-right: 30px">
                     <div class="post">
@@ -727,7 +723,7 @@
 
     const home_topOfCategoryNo2 = $("#home-topOfCategoryNo2");
     if (home_topOfCategoryNo2) {
-        $.ajax("/api/news/getNewsMostViews", {
+        $.ajax("/api/news/getFeatureCategoryWithNews", {
             type: 'GET',
             dataType: 'json',
         }).done((news) => {
@@ -753,7 +749,7 @@
 
     const home_topOfCategoryNo3 = $("#home-topOfCategoryNo3");
     if (home_topOfCategoryNo3) {
-        $.ajax("/api/news/getNewsMostViews", {
+        $.ajax("/api/news/getFeatureCategoryWithNews", {
             type: 'GET',
             dataType: 'json',
         }).done((news) => {
@@ -779,7 +775,7 @@
 
     const home_topOfCategoryNo4 = $("#home-topOfCategoryNo4");
     if (home_topOfCategoryNo4) {
-        $.ajax("/api/news/getLatestNews", {
+        $.ajax("/api/news/getFeatureCategoryWithNews", {
             type: 'GET',
             dataType: 'json',
         }).done((news) => {
@@ -803,5 +799,5 @@
         });
     }
 
-    
+
 })(jQuery);

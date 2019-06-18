@@ -22,8 +22,8 @@ const slugify = (str, char = '-') => {
     return str;
 }
 
-const arr_days_of_week = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba',
-    'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy']
+const arr_days_of_week = ['CN', 'T2', 'T3',
+    'T4', 'T5', 'T6', 'T7']
 
 const toStringDatetime = (date) => {
     var ampm = date.getHours() >= 12 ? 'PM' : 'AM';
@@ -70,6 +70,29 @@ const fixEditorNews = async (news) => {
         news[i].dataValues.avatar = '/img/news_avatar/' + news[i].avatar;
         news[i].dataValues.sub_category = news[i].dataValues.sub_category.dataValues;
         news[i] = news[i].dataValues;
+    }
+}
+
+const fixAdminNews = async (news) => {
+    for (let i = 0, l = news.length; i < l; i++) {
+        news[i].dataValues.link = '/admins/a_news/' + news[i].id + '/' + slugify(news[i].title);
+        news[i].dataValues.createdAt = toStringDatetime(new Date(news[i].dataValues.createdAt));
+        news[i].dataValues.avatar = '/img/news_avatar/' + news[i].avatar;
+        news[i].dataValues.sub_category = news[i].dataValues.sub_category.dataValues;
+        news[i] = news[i].dataValues;
+        if (news[i].status === 'rejected') {
+            news[i].status_vi = 'Bị từ chối'
+        }
+        if (news[i].status === 'draft') {
+            news[i].status_vi = 'Chờ duyệt'
+        }
+        if (news[i].status === 'approved') {
+            news[i].status_vi = 'Chờ xuất bản'
+            news[i].publicAt = toStringDatetime(new Date(news[i].publicAt));
+        }
+        if (news[i].status === 'published') {
+            news[i].status_vi = 'Đã xuất bản'
+        }
     }
 }
 
@@ -250,6 +273,7 @@ module.exports = {
     fixRawNews,
     fixWriterNews,
     fixEditorNews,
+    fixAdminNews,
     addLinkTagToListTagNew,
     fixListComments,
     formatDate,

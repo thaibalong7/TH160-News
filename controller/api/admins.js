@@ -295,3 +295,98 @@ exports.deleteTag = async (req, res) => {
         return res.status(400).json({ msg: error.toString() })
     }
 }
+
+// const sort_weight_value = {
+//     draft: 1,
+//     approved: 2,
+//     rejected: 3,
+//     published: 4
+// }
+
+// function sort_news_by_status(news1, news2){
+//     return sort_weight_value[news1.status] - sort_news_by_status[news2.status];
+// }
+
+exports.getAllNews = async (req, res) => {
+    try {
+        const page_default = 1;
+        const per_page_default = 10;
+        var page, per_page;
+        if (typeof req.query.page === 'undefined') page = page_default;
+        else page = req.query.page
+        if (typeof req.query.per_page === 'undefined') per_page = per_page_default;
+        else per_page = req.query.per_page
+        if (isNaN(page) || isNaN(per_page) || parseInt(per_page) <= 0 || parseInt(page) <= 0) {
+            return res.status(400).json({ msg: 'Params is invalid' })
+        }
+        else {
+            page = parseInt(page);
+            per_page = parseInt(per_page);
+            const query = {
+                limit: per_page,
+                offset: (page - 1) * per_page,
+                include: [{
+                    model: db.sub_categories,
+                    include: [{
+                        model: db.categories
+                    }]
+                }],
+                order: [['createdAt', 'DESC']]
+            }
+            db.news.findAndCountAll(query).then(async _news => {
+                var next_page = page + 1;
+                //Kiểm tra còn dữ liệu không
+                if ((parseInt(_news.rows.length) + (next_page - 2) * per_page) === parseInt(_news.count))
+                    next_page = -1;
+                //Nếu số lượng record nhỏ hơn per_page  ==> không còn dữ liệu nữa => trả về -1 
+                if ((parseInt(_news.rows.length) < per_page))
+                    next_page = -1;
+                if (parseInt(_news.rows.length) === 0)
+                    next_page = -1;
+                await helper.fixAdminNews(_news.rows);
+                return res.status(200).json({
+                    itemCount: _news.count, //số lượng record được trả về
+                    data: _news.rows,
+                    next_page: next_page //trang kế tiếp, nếu là -1 thì hết data rồi
+                })
+            })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}
+
+exports.approveNews = async (req, res) => {
+    try {
+        const check_news = await db.news.findByPk(req.params.id);
+        if (check_news) {
+            if (check_news.status === 'approved') {
+                check_news.status = 'published';
+                check_news.publicAt = new Date();
+                await check_news.save();
+                return res.status(200).json({
+                    msg: 'Xuất bản thành công',
+                })
+            }
+            else {
+                return res.status(400).json({ msg: "Không thể xuất bản bài viết này" })
+            }
+        }
+        else {
+            return res.status(400).json({ msg: "Sai id bài viết" })
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}
+
+exports.adjustedAndApproveNewsNow = async (req, res) => {
+    try {
+
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ msg: error.toString() })
+    }
+}
